@@ -1,0 +1,42 @@
+/* pages/index/loginDevice.wxss */
+page {
+  background: #F7F7F7;
+  height: 100%;
+}
+
+.container {
+  padding-bottom: 50rpx;
+}
+
+
+.button-view{
+    display: flex;
+    flex-direction: row;
+    padding: 20rpx 32rpx 0;
+}
+
+.tip-view{
+    padding: 0 32rpx;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15rpx;
+    height: 80rpx;
+    margin:0 auto 0;
+    background-color: rgba(118,188, 254, 1);
+    color: white;
+  }
+
+ input {
+    height: 80rpx;
+    font-size: 32rpx;
+    color: #f5a94e;
+    line-height: 1.4em;
+    border: 1px solid rgba(118,188, 254, 1);
+    border-radius: 15rpx;
+    width: 100%;
+    padding: 0 15rpx;
+  }

@@ -1,0 +1,35 @@
+<!--pages/index/loginDevice.wxml-->
+<view class='container'>
+    <div class="button-view">
+        <input class="input" name="serverIp" value="{{serverIp}}" bindinput="inputServerIp" placeholder="输入服务器地址（http/https）"/>
+    </div>
+    <div class="button-view">
+        <input class="input" name="token" value="{{token}}" bindinput="inputToken" placeholder="输入token"/>
+    </div>
+    <div class="button-view">
+        <input class="input" name="channelID" value="{{channelID}}" bindinput="inputChannelID" placeholder="输入渠道号"/>
+    </div>
+    <div class="button-view">
+        <button class="btn">连接服务器</button>
+    </div>
+    <div class="button-view">
+        <input class="input" name="dviceID" value="{{dviceID}}" bindinput="inputDeviceID" placeholder="输入密文ID"/>
+    </div>
+    <div class="button-view">
+        <input class="input" name="deviceCersion" value="{{deviceVersion}}" bindinput="inputDeviceVersion" placeholder="输入固件版本号"/>
+    </div>
+    <div class="button-view">
+        <button class="btn">升级固件</button>
+    </div>
+    <view class="tip-view">
+        <label>选择绑定位置</label>
+    </view>
+    <div class="button-view">
+        <button class="btn">左侧</button>
+        <button class="btn">右侧</button>
+    </div>
+    <div class="button-view">
+        <button class="btn">绑定设备</button>
+        <button class="btn">解绑设备</button>
+    </div>
+</view>

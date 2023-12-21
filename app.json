@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/loginDevice",
+    "pages/index/sleep",
+    "pages/index/realtimeData",
+    "pages/index/report",
+    "pages/index/bleConfigWiFi",
+    "pages/index/searchDevice"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "js sdk",
+    "navigationBarTextStyle": "black",
+    "disableScroll": false
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#f5a94e",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/bleConfigWiFi",
+        "text": "蓝牙配网",
+        "iconPath": "img/a_tab_icon_home_nor.png",
+        "selectedIconPath": "img/a_tab_icon_home_pre.png"
+      },
+      {
+        "pagePath": "pages/index/loginDevice",
+        "text": "登录",
+        "iconPath": "img/a_tab_icon_home_nor.png",
+        "selectedIconPath": "img/a_tab_icon_home_pre.png"
+      },
+      {
+        "pagePath": "pages/index/sleep",
+        "text": "睡眠干预",
+        "iconPath": "img/a_tab_icon_me_nor.png",
+        "selectedIconPath": "img/a_tab_icon_me_pre.png"
+      },
+      {
+        "pagePath": "pages/index/realtimeData",
+        "text": "实时数据",
+        "iconPath": "img/a_tab_icon_assist_nor.png",
+        "selectedIconPath": "img/a_tab_icon_assist_pre.png"
+      },
+      {
+        "pagePath": "pages/index/report",
+        "text": "报告",
+        "iconPath": "img/a_tab_icon_report_nor.png",
+        "selectedIconPath": "img/a_tab_icon_report_pre.png"
+      }
+    ]
+  }
+}

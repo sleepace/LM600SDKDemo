@@ -1,0 +1,93 @@
+/* pages/index/bleConfigWiFi.wxss */
+.container{
+    padding: 0 32rpx;
+    align-items: flex-start;
+  }
+  
+  .step{
+  width: 100%;
+  margin-top: 10rpx;
+  font-size: 40rpx;
+  }
+  
+  .label{
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, .6);
+  }
+  
+  .select-val{
+    width: calc(100% - 30rpx);
+    height: 88rpx;
+    border: 1px solid rgba(118,188, 254, 1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 15rpx;
+    padding-right: 15rpx;
+    border-radius: 15rpx;
+    margin-top: 10rpx;
+    justify-content: space-between;
+  }
+  
+  .item-label{
+    color: rgba(0, 0, 0, .8);
+  }
+  
+  .item-right{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-items: center;
+  }
+  
+  .item-value{
+    margin-right: 10rpx;
+    color: rgba(0, 0, 0, .6);
+  }
+  
+  .right-arrow{
+    width: 20rpx;
+  }
+  
+  .ver{
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 50rpx;
+    color: rgba(0, 0, 0, .8);
+  }
+  
+  .btn{
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 50rpx;
+  }
+  
+  .btn button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15rpx;
+    height: 80rpx;
+    margin:0 auto 0;
+    background-color: rgba(118,188, 254, 1);
+    color: white;
+  }
+  
+  .btn button.button-hover {
+    background-color: #54a4ef;
+  }
+  
+  .tips-m901l{
+    color: red;
+  }
+  
+  /* input {
+    height: 80rpx;
+    font-size: 32rpx;
+    color: #f5a94e;
+    line-height: 1.4em;
+    border: 1px solid rgba(118,188, 254, 1);
+    border-radius: 15rpx;
+    width: 100%;
+    padding: 0 15rpx;
+  } */
