@@ -145,11 +145,24 @@ function BleWifiConfigHelper(){
     }
   }
 
-  // 查询设备连接WiFi情况
-  this.checkConnectWiFiStatus = ()=>{
-    
-
-
+  /**
+   * 查询设备连接WiFi情况
+   *  0x00:未连接 0x01:正在连接 0x02:已连接
+   */
+  this.checkWIFiConnectStatus = (deviceType,callback)=>{
+    if(this.isCommApi3(deviceType)){
+      bleApi.getWifiStatus({deviceType, timeout:10000, handler: (code,status)=>{
+        console.log("checkWIFiConnectStatus code--->:",code,status);
+        if(code == 0){
+          callback(true,status)
+        }
+        else{
+          callback(false,null)
+        }
+      }})
+    }else if(this.isCommApi(deviceType)){
+      bleApi.queryWifiStatus({deviceType, timeout:10000, handler: callback})
+    }
   } 
 
   this.isCommApi = (deviceType)=>{
@@ -174,7 +187,6 @@ function BleWifiConfigHelper(){
       case DeviceType.DEVICE_TYPE_BM8701_2:
       case DeviceType.DEVICE_TYPE_M901L:
       case DeviceType.DEVICE_TYPE_LM600:
-
         return true;
     }
     return false;
