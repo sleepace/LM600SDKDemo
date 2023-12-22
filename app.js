@@ -8,7 +8,6 @@ App({
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     wx.getSystemInfo({
       success: (res)=> {
         console.log("getSystemInfo", res)
@@ -26,9 +25,19 @@ App({
     })
   },
   globalData: {
+		host: 'https://jmwechat.com.cn',
+    tcpHost: 'jmwechat.com.cn',
+    tcpPort: '9010',
+    webSoket: 'wss://jmwechat.com.cn/socket',
+    header:{
+      channelId: 11600,
+      appVe: 10000,
+      status: 3
+		},
     userInfo: null,
     medicaBase: medicaBase,
     loginCode: '',
-    appVersion: "1.0.0"
+    appVersion: "1.0.0",
+    
   }
 })
