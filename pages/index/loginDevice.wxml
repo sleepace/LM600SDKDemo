@@ -10,7 +10,7 @@
         <input class="input" name="channelID" value="{{channelID}}" bindinput="inputChannelID" placeholder="输入渠道号"/>
     </div>
     <div class="button-view">
-        <button class="btn">连接服务器</button>
+        <view class="normal-btn">连接服务器</view>
     </div>
     <div class="button-view">
         <input class="input" name="dviceID" value="{{dviceID}}" bindinput="inputDeviceID" placeholder="输入密文ID"/>
@@ -19,7 +19,7 @@
         <input class="input" name="deviceCersion" value="{{deviceVersion}}" bindinput="inputDeviceVersion" placeholder="输入固件版本号"/>
     </div>
     <div class="button-view">
-        <button class="btn">升级固件</button>
+        <view class="normal-btn">升级固件</view>
     </div>
     <view class="tip-view">
         <label>选择绑定位置</label>

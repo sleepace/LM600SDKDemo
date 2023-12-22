@@ -1,2 +1,41 @@
 <!--pages/index/sleep.wxml-->
-<text>pages/index/sleep.wxml</text>
+<view class='container'>
+	<view class="label-view">
+		<view>负电位开关</view>
+		<view class="normal-btn" bindtap="checkDeviceOnline">负电位开关</view>
+	</view>
+	<view class="button-view">
+		<button class="btn">左侧</button>
+		<button class="btn">右侧</button>
+	</view>
+	<view class="button-view">
+		<view>睡眠干预</view>
+	</view>
+	<view>
+		<view class="switch-view">
+			<view>干预开关</view>
+		<switch></switch>	
+		</view>
+		<view class="switch-view">干预模式</view>
+		<view class="switch-view">干预等级</view>
+	</view>
+	<view class="button-view">
+		<view>异常报警</view>
+	</view>
+	<view class="switch-view">
+		<view>呼吸异常报警</view>
+		<switch></switch>
+	</view>
+	<view class="button-view">呼吸异常报警条件：当呼吸暂停10秒，或持续1分钟呼吸率大于24次/分或小于8次/分</view>
+	<view class="switch-view">
+		<view>心率异常报警</view>
+		<switch></switch>
+	</view>
+	<view class="button-view">心率异常报警条件：持续1分钟心率大于120次/分或小于40次/分</view>
+	<view class="switch-view">
+		<view>离床报警</view>
+		<switch></switch>	
+	</view>
+	<view class="button-view">离床报警条件：离床时间超过30分钟</view>
+
+</view>

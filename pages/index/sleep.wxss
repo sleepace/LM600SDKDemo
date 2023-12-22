@@ -7,3 +7,53 @@ page {
 .container {
   padding-bottom: 50rpx;
 }
+
+.button-view{
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx 32rpx 0;
+}
+
+.button-view{
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx 32rpx 0;
+}
+
+.btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15rpx;
+  height: 80rpx;
+  background-color: rgba(118,188, 254, 1);
+  color: white;
+}
+
+.normal-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15rpx;
+  height: 80rpx;
+  background-color: rgba(118,188, 254, 1);
+  color: white;
+}
+
+
+.label-view{
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx 32rpx;
+  justify-content: flex-start;
+}
+
+.switch-view{
+  margin: 5rpx 32rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom:1px solid rgba(195,203, 214, 1);
+  padding: 5rpx 0;
+}

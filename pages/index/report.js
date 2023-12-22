@@ -5,6 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    startTime: "",
+    score: ""
 
   },
 
@@ -62,5 +64,14 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+  
+     /**
+   * 查询设备状态
+   */
+  getNewReport(){
+
+    
+  },
+
 })

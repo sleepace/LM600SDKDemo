@@ -30,13 +30,26 @@ page {
     color: white;
   }
 
+  .normal-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15rpx;
+    height: 80rpx;
+    background-color: rgba(118,188, 254, 1);
+    color: white;
+    width: 100%;
+  }
+
  input {
     height: 80rpx;
     font-size: 32rpx;
     color: #f5a94e;
     line-height: 1.4em;
-    border: 1px solid rgba(118,188, 254, 1);
+    border: 1px solid rgba(195,203, 214, 1);
     border-radius: 15rpx;
     width: 100%;
     padding: 0 15rpx;
   }
+
+

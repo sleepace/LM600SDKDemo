@@ -5,6 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    status: "",
+    breathRate: "",
+    heartRate: ""
 
   },
 
@@ -62,5 +65,33 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+    /**
+   * 开始获取数据
+   */
+  startRealtimeData(){
+
+  },
+   /**
+   * 停止获取数据
+   */
+  stopRealtimeData(){
+
+  },
+
+    /**
+   * 手动结束监测
+   */
+  handStopMonitoring(){
+
+  },
+   /**
+   * 查询设备状态
+   */
+  checkDeviceOnline(){
+
+    
+  },
+
+
 })
