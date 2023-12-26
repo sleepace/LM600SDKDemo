@@ -44,7 +44,7 @@ page {
  input {
     height: 80rpx;
     font-size: 32rpx;
-    color: #f5a94e;
+    /* color: #f5a94e; */
     line-height: 1.4em;
     border: 1px solid rgba(195,203, 214, 1);
     border-radius: 15rpx;

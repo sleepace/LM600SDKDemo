@@ -154,7 +154,7 @@ button.btn-main[disabled]{
 
 /* input */
 input,.input{
-  color: #EB9300;
+  /* color: #EB9300; */
 }
 
 /* 槽宽 */

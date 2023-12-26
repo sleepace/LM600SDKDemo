@@ -15,6 +15,7 @@ function deviceList(params){
   _params.url = baseService.urlList.device.devicelist;
   baseService.request(_params);
 }
+
 /**
  * 设备列表(左右两侧)
  * 参数：{user: app.globalData.users }
@@ -27,12 +28,9 @@ function deviceListAll(params){
         success(response){
           resolve(response)
         },
-        fail(){
+        fail(err){
           reject(...arguments)
         },
-        sleepaceFail(){
-          reject(...arguments)
-        }
       })
     })
   })
@@ -50,7 +48,7 @@ function deviceListAll(params){
 名称： 设备绑定
 参数：
   {
-    user: app.globalData.users[0],
+      sid: 可选（option）,
     data: {
       deviceId:
       deviceName:
@@ -62,7 +60,6 @@ function deviceListAll(params){
 function bind(params)
 {
   const _params = Object.assign({}, params);
-
   _params.url = baseService.urlList.device.bind;
   baseService.request(_params);
 }
@@ -71,7 +68,7 @@ function bind(params)
 名称： 设备解绑
 参数：
   {
-    user: app.globalData.users[0],
+    sid: 可选（option）,
     data: {
       deviceId:
       deviceName:
@@ -146,56 +143,6 @@ function infoUpdate(params)
   baseService.request(_params);
 }
 
-/*
-名称： 设置(用于Reston)
-参数：
-  {
-    user: app.globalData.users[0],
-    data: {
-      deviceId:
-      deviceType:
-      startHour:'	设置自动监测 - 开始-小时'
-      startMinute:'设置自动监测 - 开始-分钟'
-      flag:'设置自动监测 - 开关 0关 1开'
-      weekday:'设置自动监测 - 周 位与计算：00000001 表示星期一，00000010 星期二，依此类推'
-    }
-  }
-*/
-function setConfigReston(params)
-{
-  const _params = Object.assign({}, params);
-  
-  if (! _params.data.sceneId)
-  {
-    _params.data.sceneId = 100;
-  }
-  
-  _params.url = baseService.urlList.device.setConfigReston;
-  baseService.request(_params);
-}
-
-/*
-名称： 获取设置（自动开始）
-参数：
-  {
-    user: app.globalData.users[0],
-    data: {
-      deviceId:
-      deviceType:
-    }
-  }
-*/
-function getConfig(params)
-{
-  const _params = Object.assign({}, params);
-
-  if (!_params.data.sceneId) {
-    _params.data.sceneId = 100;
-  }
-
-  _params.url = baseService.urlList.device.getConfig;
-  baseService.request(_params);
-}
 
 /*
 名称： 设备状态（是否在线，监测状态）
@@ -356,8 +303,6 @@ module.exports = {
   unbindAll: unbindAll,
   bind: bind,
   infoUpdate: infoUpdate,
-  setConfigReston: setConfigReston,
-  getConfig: getConfig,
   zhongmaiSleepAid: zhongmaiSleepAid,
   sleepAidPreview: sleepAidPreview,
   sleepIntervenePreview: sleepIntervenePreview,

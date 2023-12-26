@@ -1,34 +1,31 @@
 
 const app = getApp();
 
-const host = app.globalData.host || '';
-const channelId = app.globalData.header.channelId || '';
-const appVe = app.globalData.header.appVe;
-const status = app.globalData.header.status;
+let host = app.globalData.host || '';
+let channelId = app.globalData.header.channelId ||'';
+let appVe = app.globalData.header.appVe;
+let status = app.globalData.header.status;
 const timezone = - (new Date().getTimezoneOffset() * 60);
-const sid = ''
+let sid = ''
 
 const urlList = {
   user:{
-    login: host + '/pro/zhongmai/account/login',
-    sendCode: host + '/pro/account/user/bind/step1',
-    bindMobileEmail: host + '/pro/account/user/bind/step2',
-    shareCode: host + '/pro/zhongmai/account/share/code',
-    shareAccount: host + '/pro/zhongmai/account/share/account',
-    shareAccountInfo: host + '/pro/zhongmai/account/share/account/info',
-    cancelShareAccountInfo: host + '/pro/partner/secondary/unShare',
-    getAlert: host + '/pro/zhongmai/sleepAlertConf/get',
-    updateAlert: host + '/pro/zhongmai/sleepAlertConf/update',
-    getIntervene: host + '/pro/zhongmai/sleepAidInterveneConf/get',
-    updateIntervene: host + '/pro/zhongmai/sleepAidInterveneConf/update',
-    userInfoEdit: host + '/pro/account/user/edit',
-    getPhoneCode: host + '/pro/account/user/sendMsg',
-    checkPhoneCode: host + '/pro/account/user/code/check'
+    login: '/pro/zhongmai/account/login',
+    sendCode: '/pro/account/user/bind/step1',
+    bindMobileEmail: '/pro/account/user/bind/step2',
+    shareCode:  '/pro/zhongmai/account/share/code',
+    shareAccount: '/pro/zhongmai/account/share/account',
+    shareAccountInfo: '/pro/zhongmai/account/share/account/info',
+    cancelShareAccountInfo: '/pro/partner/secondary/unShare',
+    getAlert: '/pro/zhongmai/sleepAlertConf/get',
+    updateAlert:'/pro/zhongmai/sleepAlertConf/update',
+    getIntervene:  '/pro/zhongmai/sleepAidInterveneConf/get',
+    updateIntervene: '/pro/zhongmai/sleepAidInterveneConf/update',
+    userInfoEdit: '/pro/account/user/edit',
+    getPhoneCode:  '/pro/account/user/sendMsg',
+    checkPhoneCode:  '/pro/account/user/code/check'
   },
   device:{
-    devicelist: host + '/pro/account/device/info',
-    bind: host + '/pro/account/device/bind',
-    unbind: host + '/pro/account/device/unbind',
     setConfigReston: host + '/pro/scene/config/reston',
     getConfig: host + '/pro/scene/device/config',
     infoUpdate: host + '/pro/account/device/update',
@@ -38,7 +35,11 @@ const urlList = {
     sleepAidPreview: host + '/pro/zhongmai/sleepAidIntervene/sleepAidPreview',
     sleepIntervenePreview: host + '/pro/zhongmai/sleepAidIntervene/sleepIntervenePreview',
     batterySwitchSet: host + '/pro/zhongmai/sleepAlertConf/saveNegativeCharge', //负电量开关
-    getBatterySwitch: host + '/pro/zhongmai/sleepAlertConf/getNegativeCharge' ///获取负电量状态
+    getBatterySwitch: host + '/pro/zhongmai/sleepAlertConf/getNegativeCharge' ,///获取负电量状态
+
+    devicelist: '/app/bindInfo',
+    bind:  '/app/bind',
+    unbind: '/app/unbind',
   },
   data:{
     dayWeekMonth: host + '/pro/data/dayweekmonth/get',
@@ -58,11 +59,15 @@ const urlList = {
     deleteEmeContact: host + '/pro/partner/secondary/deleteContacts',
     getEmeContactList: host + '/pro/partner/secondary/getContactsList'
   },
+  token:{
+    tokenCheck: '/app/tokenCheck',
+  }
 }
 
 function request(params) {
   var header = {
-    'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+    'content-type': 'application/json',
+    'Accept': 'application/json',
     'S-timezone': timezone,
     'S-channelId': channelId,
     'S-appVer': appVe,
@@ -74,16 +79,21 @@ function request(params) {
   {
     header['S-sid']=params.sid;
   }
-
+//   if(params.user)
+//   {
+//     header['S-sid']=params.user.sid;
+//   }
   wx.request({
     method:'POST',
-    url: params.url,
+    url: host + params.url,
     header: header,
-    data: params.data,
+    data: {
+        data: params.data
+    },
     success: function (res) {
       console.group(params.url)
       console.log(new Date().toLocaleString())
-      console.log("请求URL：" + params.url)
+      console.log("请求URL：" + host + params.url)
       console.log("请求Header：" + JSON.stringify(header));
       console.log("请求参数：" + JSON.stringify(params.data));
       console.log("请求成功：" + JSON.stringify(res.data));
@@ -100,7 +110,8 @@ function request(params) {
           // do nothing
         }
         // Sleepace逻辑错误
-        else if (params.sleepaceFail) {
+        else if (params.fail) {
+            console.log('-----Sleepace逻辑错误',res)
           params.fail({code: res.data.status,message: res.data.msg});
         }
         // Sleepace逻辑错误且没有sleepaceFail的callback，使用默认事件
@@ -141,21 +152,23 @@ function request(params) {
     }
   }
 */
-
 function initHttpAuthorize(params){
     if(params.data){
         host = params.data.url
         channelId = params.data.channelId
-
-        const _params = Object.assign({}, params);
-        _params.url = ''
+        // const _params = Object.assign({}, params);
+        // _params.url =  
+        // baseService.request(_params);
+        console.log('----initHttpAuthorize2-',params.data,host,channelId)
         this.request({
             data: {
-                token: params.data.token.data,
-                channelId: params.data.channelId
+                    token: params.data.token,
+                    channelId: params.data.channelId
             }, 
-            url:  '',
-            success: function (res) {
+            url:  urlList.token.tokenCheck,
+            success: function (res){
+                console.log('----initHttpAuthorize-',res)
+                sid = res.sid
                 if(params.success){
                     params.success(res)
                 }

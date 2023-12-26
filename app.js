@@ -25,12 +25,12 @@ App({
     })
   },
   globalData: {
-		host: 'https://jmwechat.com.cn',
-    tcpHost: 'jmwechat.com.cn',
-    tcpPort: '9010',
-    webSoket: 'wss://jmwechat.com.cn/socket',
+	host: '',
+    tcpHost: '',
+    tcpPort: '',
+    webSoket: '',
     header:{
-      channelId: 11600,
+      channelId: 10000,
       appVe: 10000,
       status: 3
 		},
