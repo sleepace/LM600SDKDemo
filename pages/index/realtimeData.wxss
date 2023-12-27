@@ -11,7 +11,8 @@ page {
 .button-view{
   display: flex;
   flex-direction: row;
-  padding: 20rpx 32rpx 0;
+	padding: 20rpx 32rpx 0;
+	justify-content: space-between;
 }
 
 .button-view{
@@ -27,9 +28,21 @@ page {
   align-items: center;
   border-radius: 15rpx;
   height: 80rpx;
-  margin:0 auto 0;
   background-color: rgba(118,188, 254, 1);
-  color: white;
+	color: white;
+	margin: 0;
+	width: 45%;
+}
+
+.normal-btn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 15rpx;
+	height: 80rpx;
+	background-color: rgba(118,188, 254, 1);
+	color: white;
+	width: 100%;
 }
 
 .label-view{

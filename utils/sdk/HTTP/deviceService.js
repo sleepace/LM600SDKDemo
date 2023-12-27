@@ -288,7 +288,6 @@ function batteryClick(params)
 */
 function getBatterySwitch(params) {
   const _params = Object.assign({}, params);
-
   _params.url = baseService.urlList.device.getBatterySwitch;
   baseService.request(_params);
 }

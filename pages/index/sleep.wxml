@@ -2,40 +2,63 @@
 <view class='container'>
 	<view class="label-view">
 		<view>负电位开关</view>
-		<view class="normal-btn" bindtap="checkDeviceOnline">负电位开关</view>
+		<button class="normal-btn" bindtap="negativeElectric">负电位开关</button>
 	</view>
-	<view class="button-view">
-		<button class="btn">左侧</button>
-		<button class="btn">右侧</button>
-	</view>
+
+	<van-tabs type="card" active="{{ active }}" color="#76B6FE" bind:change="onChange">
+		<van-tab title="左侧"></van-tab>
+		<van-tab title="右侧"></van-tab>
+	</van-tabs>
+
 	<view class="button-view">
 		<view>睡眠干预</view>
 	</view>
 	<view>
 		<view class="switch-view">
 			<view>干预开关</view>
-		<switch></switch>	
+			<switch size="24px" bind:change="interfereOnchange"></switch>
 		</view>
-		<view class="switch-view">干预模式</view>
-		<view class="switch-view">干预等级</view>
+		<view class="switch-view">
+			<view class="item-label">
+				干预模式
+			</view>
+			<view class="item-right" bindtap="interfereMode">
+				<view id="deviceid" class="item-value">{{ columns1[interfereMode] }}</view>
+				<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
+			</view>
+		</view>
+		<view class="switch-view">
+			<view class="item-label">
+				干预等级
+			</view>
+			<view class="item-right" bindtap="interfereLevel">
+				<view id="deviceid" class="item-value">{{ columns2[interfereLevel] }}</view>
+				<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
+			</view>
+		</view>
 	</view>
 	<view class="button-view">
 		<view>异常报警</view>
 	</view>
 	<view class="switch-view">
 		<view>呼吸异常报警</view>
-		<switch></switch>
+		<switch bind:change="breathOnchange"></switch>
 	</view>
 	<view class="button-view">呼吸异常报警条件：当呼吸暂停10秒，或持续1分钟呼吸率大于24次/分或小于8次/分</view>
 	<view class="switch-view">
 		<view>心率异常报警</view>
-		<switch></switch>
+		<switch bind:change="heartOnchange"></switch>
 	</view>
 	<view class="button-view">心率异常报警条件：持续1分钟心率大于120次/分或小于40次/分</view>
 	<view class="switch-view">
 		<view>离床报警</view>
-		<switch></switch>	
+		<switch bind:change="leftbedOnchange"></switch>
 	</view>
 	<view class="button-view">离床报警条件：离床时间超过30分钟</view>
 
+	<van-popup show="{{ show }}">
+		<view class="picker-view">
+			<van-picker columns="{{ columns }}" show-toolbar bind:cancel="onCancel" bind:confirm="onConfirm" />
+		</view>
+	</van-popup>
 </view>

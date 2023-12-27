@@ -46,7 +46,7 @@
   }
   
   .right-arrow{
-    width: 20rpx;
+		width: 20rpx;
   }
   
   .ver{

@@ -8,6 +8,12 @@
     "pages/index/bleConfigWiFi",
     "pages/index/searchDevice"
   ],
+  "usingComponents": {
+    "van-tab": "@vant/weapp/tab/index",
+		"van-tabs": "@vant/weapp/tabs/index",
+		"van-popup": "@vant/weapp/popup/index",
+		"van-picker": "@vant/weapp/picker/index"
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -15,15 +21,13 @@
     "navigationBarTextStyle": "black",
     "disableScroll": false
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "tabBar": {
     "color": "#a9b7b7",
     "selectedColor": "#f5a94e",
     "borderStyle": "black",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/bleConfigWiFi",
         "text": "蓝牙配网",
         "iconPath": "img/a_tab_icon_home_nor.png",

@@ -3,12 +3,13 @@ const baseService = require('../../utils/sdk/HTTP/baseService');
 const deviceService = require('../../utils/sdk/HTTP/deviceService');
 
 Page({
-
+  
   /**
    * 页面的初始数据
    */
   data: {
-    serverIp: "http://120.24.68.136:8091",
+    // serverIp: "http://120.24.68.136:8091",
+    serverIp: "http://172.14.0.65:8092",
     token: "test",
     channelID: "10000",
     deviceID: "qsxy3nbxzpsx8",
@@ -38,10 +39,6 @@ Page({
   onShow() {
     let side = wx.getStorageSync('leftRight')
     console.log('lll---', side)
-
-
-    
-
 
     if (side) {
       this.setData({
@@ -145,14 +142,14 @@ Page({
       }
     })
   },
-
-  didSelectLeftRight(e) {
-    console.log('didSelectLeftRight--', e)
-    this.setData({
-      leftRight: e.currentTarget.dataset.side
-    });
-    wx.setStorageSync('leftRight', e.currentTarget.dataset.side)
-  },
+	onChange(event) {
+		this.setData({
+			leftRight: event.detail.index
+		});
+		wx.setStorageSync('leftRight', event.detail.index)
+		console.log('active-----',this.data.leftRight)
+	},
+	
   bindDevice(e) {
     deviceService.bind({
       data: {

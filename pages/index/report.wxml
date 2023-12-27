@@ -1,7 +1,7 @@
 <!--pages/index/report.wxml-->
 <view class='container'>
 	<div class="button-view">
-		<button class="btn" bindtap="getNewReport">最新睡眠报告</button>
+		<button class="normal-btn" bindtap="getNewReport">最新睡眠报告</button>
 	</div>
 	<div class="label-view">
 		<view>报告开始时间：<span>{{startTime}}</span></view>

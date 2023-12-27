@@ -1,35 +1,37 @@
 <!--pages/index/loginDevice.wxml-->
 <view class='container'>
-    <div class="button-view">
-        <input class="input" name="serverIp" value="{{serverIp}}" bindinput="inputServerIp" placeholder="输入服务器地址（http/https）"/>
-    </div>
-    <div class="button-view">
-        <input class="input" name="token" value="{{token}}" bindinput="inputToken" placeholder="输入token"/>
-    </div>
-    <div class="button-view">
-        <input class="input" name="channelID" value="{{channelID}}" bindinput="inputChannelID" placeholder="输入渠道号"/>
-    </div>
-    <div class="button-view">
-        <view class="normal-btn" bindtap="initHttp">连接服务器</view>
-    </div>
-    <div class="button-view">
-        <input class="input" name="deviceID" value="{{deviceID}}" bindinput="inputDeviceID" placeholder="输入密文ID"/>
-    </div>
-    <div class="button-view">
-        <input class="input" name="deviceCersion" value="{{deviceVersion}}" bindinput="inputDeviceVersion" placeholder="输入固件版本号"/>
-    </div>
-    <div class="button-view">
-        <view class="normal-btn">升级固件</view>
-    </div>
-    <view class="tip-view">
-        <label>选择绑定位置：{{leftRight == 1 ? "右侧": "左侧"}}</label>
-    </view>
-    <div class="button-view">
-        <button class="btn" bindtap="didSelectLeftRight"  data-side="0" >左侧</button>
-        <button class="btn" bindtap="didSelectLeftRight" data-side="1" >右侧</button>
-    </div>
-    <div class="button-view">
-        <button class="btn" bindtap="bindDevice">绑定设备</button>
-        <button class="btn" bindtap="unbindDevice">解绑设备</button>
-    </div>
+	<div class="button-view">
+		<input class="input" name="serverIp" value="{{serverIp}}" bindinput="inputServerIp" placeholder="输入服务器地址（http/https）" />
+	</div>
+	<div class="button-view">
+		<input class="input" name="token" value="{{token}}" bindinput="inputToken" placeholder="输入token" />
+	</div>
+	<div class="button-view">
+		<input class="input" name="channelID" value="{{channelID}}" bindinput="inputChannelID" placeholder="输入渠道号" />
+	</div>
+	<div class="button-view">
+		<button class="normal-btn" bindtap="initHttp">连接服务器</button>
+	</div>
+	<div class="button-view">
+		<input class="input" name="deviceID" value="{{deviceID}}" bindinput="inputDeviceID" placeholder="输入密文ID" />
+	</div>
+	<div class="button-view">
+		<input class="input" name="deviceCersion" value="{{deviceVersion}}" bindinput="inputDeviceVersion" placeholder="输入固件版本号" />
+	</div>
+	<div class="button-view">
+		<button class="normal-btn">升级固件</button>
+	</div>
+	<view class="tip-view">
+		<label>选择绑定位置：{{leftRight == 1 ? "右侧": "左侧"}}</label>
+	</view>
+	<view style="padding:32rpx 0;">
+		<van-tabs type="card" active="{{ leftRight }}" color="#76B6FE" bind:change="onChange">
+			<van-tab title="左侧"></van-tab>
+			<van-tab title="右侧"></van-tab>
+		</van-tabs>
+	</view>
+	<div class="button-view">
+		<button class="btn" bindtap="bindDevice">绑定设备</button>
+		<button class="btn" bindtap="unbindDevice">解绑设备</button>
+	</div>
 </view>

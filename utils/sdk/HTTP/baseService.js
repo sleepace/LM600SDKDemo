@@ -73,11 +73,11 @@ function request(params) {
     'S-appVer': appVe,
     'S-status': status,
     'Accept-Language': 'zh-cn',
-    'S-sid': sid
+    'Sid': sid
   }
   if(params.sid)
   {
-    header['S-sid']=params.sid;
+    header['Sid']=params.sid;
   }
 //   if(params.user)
 //   {

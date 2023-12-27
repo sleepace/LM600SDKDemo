@@ -31,6 +31,17 @@ page {
   color: white;
 }
 
+.normal-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15rpx;
+  height: 80rpx;
+  background-color: rgba(118,188, 254, 1);
+	color: white;
+	width: 100%;
+}
+
 .label-view{
   display: flex;
   flex-direction: column;
