@@ -10,54 +10,30 @@ let sid = ''
 
 const urlList = {
   user:{
-    login: '/pro/zhongmai/account/login',
-    sendCode: '/pro/account/user/bind/step1',
-    bindMobileEmail: '/pro/account/user/bind/step2',
-    shareCode:  '/pro/zhongmai/account/share/code',
-    shareAccount: '/pro/zhongmai/account/share/account',
-    shareAccountInfo: '/pro/zhongmai/account/share/account/info',
-    cancelShareAccountInfo: '/pro/partner/secondary/unShare',
     getAlert: '/pro/zhongmai/sleepAlertConf/get',
     updateAlert:'/pro/zhongmai/sleepAlertConf/update',
     getIntervene:  '/pro/zhongmai/sleepAidInterveneConf/get',
     updateIntervene: '/pro/zhongmai/sleepAidInterveneConf/update',
-    userInfoEdit: '/pro/account/user/edit',
-    getPhoneCode:  '/pro/account/user/sendMsg',
-    checkPhoneCode:  '/pro/account/user/code/check'
   },
   device:{
-    setConfigReston: host + '/pro/scene/config/reston',
-    getConfig: host + '/pro/scene/device/config',
-    infoUpdate: host + '/pro/account/device/update',
-    deviceStatus: host + '/pro/account/device/status',
-    deviceAidStatus: host + '/pro/zhongmai/sleepAidIntervene/getSleepAidStatus',
-    zhongmaiSleepAid: host + '/pro/zhongmai/sleepAidInterveneConf/sleepaid',
-    sleepAidPreview: host + '/pro/zhongmai/sleepAidIntervene/sleepAidPreview',
-    sleepIntervenePreview: host + '/pro/zhongmai/sleepAidIntervene/sleepIntervenePreview',
-    batterySwitchSet: host + '/pro/zhongmai/sleepAlertConf/saveNegativeCharge', //负电量开关
-    getBatterySwitch: host + '/pro/zhongmai/sleepAlertConf/getNegativeCharge' ,///获取负电量状态
-
     devicelist: '/app/bindInfo',
     bind:  '/app/bind',
     unbind: '/app/unbind',
+    batterySwitchSet: '/app/sleepAlertConf/saveNegativeCharge', //负电量开关
+    getBatterySwitch: '/app/sleepAlertConf/getNegativeCharge' ,///获取负电量状态
+    infoUpdate:  '/app/device/update',
+    deviceStatus:  '/app/device/status',
+    deviceAidStatus: '/app/commonConfig/get',
+    sleepAidPreview: '/app/device/sleepAidPreview',
+    sleepAid: '/app/device/sleepaid',
+    sleepIntervenePreview: '/app/device/sleepAidPreview',
+    infraredSwitch: '/app/sleepAlertConf/infraredSwitch',//红外温度通知
+    setInfraredConfig: '/app/sleepAlertConf/saveInfraredConfig',//红外温度配置
+    getInfraredConfig: '/app/sleepAlertConf/getInfraredConfig',//红外温度配置获取
   },
   data:{
-    dayWeekMonth: host + '/pro/data/dayweekmonth/get',
-    friendReport: host + '/pro/zhongmai/dayweekmonth/get',
-    sendDayReport: host + '/pro/zhongmai/alert/sendDayReport'
-  },
-  friends:{
-    friendsList: host + '/pro/zhongmai/friend/list',
-    friendsRequestList: host + '/pro/zhongmai/friend/request/list',
-    agreeFriendsRequest: host + '/pro/zhongmai/friend/agree',
-    ignoreFriendsRequest: host + '/pro/zhongmai/friend/ignore',
-    delFriends: host + '/pro/zhongmai/friend/del',
-    sendFriendsRequest: host + '/pro/zhongmai/friend/request/v2',
-    searchFriends: host + '/pro/account/user/search',
-    editFriends: host + '/pro/zhongmai/friend/remark',
-    addEmeContact: host + '/pro/partner/secondary/addContacts',
-    deleteEmeContact: host + '/pro/partner/secondary/deleteContacts',
-    getEmeContactList: host + '/pro/partner/secondary/getContactsList'
+    getDailyReport: '/app/analysis/data',
+    getReportScore: '/app/analysis/score'
   },
   token:{
     tokenCheck: '/app/tokenCheck',

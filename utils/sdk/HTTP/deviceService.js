@@ -48,7 +48,7 @@ function deviceListAll(params){
 名称： 设备绑定
 参数：
   {
-      sid: 可选（option）,
+    sid: 可选（option）,
     data: {
       deviceId:
       deviceName:
@@ -86,18 +86,17 @@ function unbind(params)
 
 /**
  * 设备解绑(左右)
- * 参数：{ user: app.globalData.users, devices: [] }
+ * 参数：{ devices: [] }
  */
 function unbindAll(params) {
-  var pros = params.users.map((val, idx) => {
+  var pros = params.devices.map((val, idx) => {
     return new Promise((resolve, reject) => {
       unbind({
-        user: val,
         data: {
           deviceId: params.devices[idx].deviceId,
           deviceName: params.devices[idx].deviceName,
           deviceType: params.devices[idx].deviceType,
-          leftRight: idx
+          leftRight: params.devices[idx].leftRight,
         },
         success(response) {
           resolve(response)
@@ -125,14 +124,15 @@ function unbindAll(params) {
 名称： 设备信息更新（昵称，性别）
 参数：
   {
-    user: app.globalData.users[0],
     data: {
+      leftRight:
       deviceId:
       deviceType:
+      wifiName:
+      custom:
       nickName:
       gender:
       macAddr:
-      wifiName:
     }
   }
 */
@@ -148,7 +148,6 @@ function infoUpdate(params)
 名称： 设备状态（是否在线，监测状态）
 参数：
   {
-    user: app.globalData.users[0],
     data: {
       deviceId:
       deviceType:
@@ -178,17 +177,16 @@ function deviceAidStatus(params){
 
 /**
  * 设备状态(左右)（是否在线，监测状态）
- * 参数：{ user: app.globalData.users }
+ * 参数：{ devices: []}
  */
 function deviceStatusAll(params) {
-  var pros = params.users.map((val, idx) => {
+  var pros = params.devices.map((val, idx) => {
     return new Promise((resolve, reject) => {
       deviceStatus({
-        user: val,
         data: {
           deviceId: params.devices[idx].deviceId,
           deviceType: params.devices[idx].deviceType,
-          leftRight: idx
+          leftRight: params.devices[idx].leftRight
         },
         success(response) {
           resolve(response)
@@ -213,15 +211,37 @@ function deviceStatusAll(params) {
 }
 
 /**
- * 预览助眠模式
+  预览助眠模式
+  参数：
+  {
+    data: {
+      deviceId:
+      deviceType:
+      leftRight:
+      aidMode: 
+      aidLevel:
+    }
+  }
  */
 function sleepAidPreview(params){
   const _params = Object.assign({}, params);
   _params.url = baseService.urlList.device.sleepAidPreview;
   baseService.request(_params);
 }
+
+
 /**
- * 预览干预模式
+ 预览干预模式
+   参数：
+  {
+    data: {
+      deviceId:
+      deviceType:
+      leftRight:
+      aidMode: 
+      aidLevel:
+    }
+  }
  */
 function sleepIntervenePreview(params){
   const _params = Object.assign({}, params);
@@ -233,7 +253,6 @@ function sleepIntervenePreview(params){
 名称： 开启乐眠助眠设备
 参数：
   {
-    user: app.globalData.users[0],
     data: {
       deviceId:
       deviceType:
@@ -246,10 +265,10 @@ function sleepIntervenePreview(params){
 {}查不到设备信息
 
 */
-function zhongmaiSleepAid(params)
+function sleepAid(params)
 {
   const _params = Object.assign({}, params);
-  _params.url = baseService.urlList.device.zhongmaiSleepAid;
+  _params.url = baseService.urlList.device.sleepAid;
   baseService.request(_params);
 }
 
@@ -257,7 +276,6 @@ function zhongmaiSleepAid(params)
 名称： 负电量开关设置
 参数：
   {
-    user: app.globalData.users[0],
     data: {
       deviceId:
       status : (0,关，1、开)
@@ -280,7 +298,6 @@ function batteryClick(params)
 名称： 获取负电量开关
 参数：
   {
-    user: app.globalData.users[0],
     data: {
       deviceId:
     }
@@ -292,6 +309,61 @@ function getBatterySwitch(params) {
   baseService.request(_params);
 }
 
+/*
+名称： 红外温度通知
+参数：
+  {
+    data: {
+      deviceId:
+      deviceType:
+      leftRight:
+      status: (0,关，1、开)
+    }
+  }
+*/
+function infraredSwitch(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.infraredSwitch;
+  baseService.request(_params);
+}
+
+/*
+名称： 红外温度配置
+参数：
+  {
+    data: {
+      deviceId:
+      deviceType:
+      leftRight:
+      valid: (/0:无效， 1:有效)
+      mode:干预模式 模式：1--5
+      level:干预等级 等级：1--5
+    }
+  }
+*/
+function setInfraredConfig(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.setInfraredConfig;
+  baseService.request(_params);
+}
+
+/*
+名称： 红外温度配置获取
+参数：
+  {
+    data: {
+      deviceId:
+      leftRight:
+    }
+  }
+*/
+function getInfraredConfig(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.getInfraredConfig;
+  baseService.request(_params);
+}
+
+
 module.exports = {
   deviceList: deviceList,
   deviceListAll: deviceListAll,
@@ -302,11 +374,14 @@ module.exports = {
   unbindAll: unbindAll,
   bind: bind,
   infoUpdate: infoUpdate,
-  zhongmaiSleepAid: zhongmaiSleepAid,
+  sleepAid: sleepAid,
   sleepAidPreview: sleepAidPreview,
   sleepIntervenePreview: sleepIntervenePreview,
   batteryClick: batteryClick,
-  getBatterySwitch: getBatterySwitch
+  getBatterySwitch: getBatterySwitch,
+  infraredSwitch: infraredSwitch,
+  setInfraredConfig: setInfraredConfig,
+  getInfraredConfig: getInfraredConfig
 }
 
 

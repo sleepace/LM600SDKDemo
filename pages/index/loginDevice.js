@@ -12,7 +12,7 @@ Page({
     serverIp: "http://172.14.0.65:8092",
     token: "test",
     channelID: "10000",
-    deviceID: "qsxy3nbxzpsx8",
+    deviceID: "teiug44lw85n9",
     deviceVersion: "",
     leftRight: 1, //左边left(0)，右边right(1)
   },
@@ -38,11 +38,13 @@ Page({
    */
   onShow() {
     let side = wx.getStorageSync('leftRight')
+    let deviceId = wx.getStorageSync('deviceId')
     console.log('lll---', side)
 
     if (side) {
       this.setData({
-        leftRight: side
+        leftRight: side,
+        deviceId: deviceId
       });
     }
   },
@@ -51,16 +53,18 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
+    console.log('onHide---', this.data.deviceID)
+    wx.setStorageSync('deviceId', this.data.deviceID)
+    wx.setStorageSync('leftRight', this.data.leftRight)
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
-
+    
   },
+
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -82,6 +86,7 @@ Page({
   onShareAppMessage() {
 
   },
+  
 
   inputServerIp(e) {
     this.setData({
@@ -147,7 +152,7 @@ Page({
 			leftRight: event.detail.index
 		});
 		wx.setStorageSync('leftRight', event.detail.index)
-		console.log('active-----',this.data.leftRight)
+		console.log('leftRight-----',this.data.leftRight)
 	},
 	
   bindDevice(e) {

@@ -1,4 +1,6 @@
-// pages/index/report.js
+const deviceService = require('../../utils/sdk/HTTP/deviceService');
+const dataService = require('../../utils/sdk/HTTP/dataService');
+
 Page({
 
   /**
@@ -6,8 +8,8 @@ Page({
    */
   data: {
     startTime: "",
-    score: ""
-
+    score: "",
+    startTimeString: ""
   },
 
   /**
@@ -65,13 +67,59 @@ Page({
   onShareAppMessage() {
 
   },
-  
-     /**
-   * 查询设备状态
-   */
-  getNewReport(){
 
-    
+  /**
+* 查询设备状态
+*/
+  getNewReport() {
+    dataService.getDailyReport({
+      data: {
+        startTime: 0,
+        num: 1,
+        order: 0,
+        deviceType: 0x800C
+      },
+      success: function (res) {
+        console.log('get report---', res)
+        let historyArr = res.history
+        if (historyArr && historyArr.length) {
+          let report = historyArr[0]
+          this.setData({
+            score: report.analysis.sleepScore,
+            startTime: report.summary.startTime,
+            startTimeString: this.format(report.summary.startTime)
+          });
+        }
+        else {
+          wx.showModal({
+            showCancel: false,
+            title: '',
+            content: "暂无报告"
+          })
+        }
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取报告失败"
+        })
+      }
+    })
+
+
   },
+  format(timestamp) {
+    //shijianchuo是整数，否则要parseInt转换
+    var time = new Date(timestamp);
+    var y = time.getFullYear();
+    var m = time.getMonth() + 1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    var s = time.getSeconds();
+    return y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
+  },
+  add0(m) { return m < 10 ? '0' + m : m }
 
 })

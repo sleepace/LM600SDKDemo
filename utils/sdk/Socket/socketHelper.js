@@ -2,7 +2,7 @@ let heartInterval = null
 
 /*
 打开连接socket
-params:{
+参数：{
 	data:{
 		leftRight: *,
 		deviceId: *,

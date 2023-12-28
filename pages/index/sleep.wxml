@@ -5,7 +5,7 @@
 		<button class="normal-btn" bindtap="negativeElectric">负电位开关</button>
 	</view>
 
-	<van-tabs type="card" active="{{ active }}" color="#76B6FE" bind:change="onChange">
+	<van-tabs type="card" active="{{ leftRight }}" color="#76B6FE" bind:change="onChange">
 		<van-tab title="左侧"></van-tab>
 		<van-tab title="右侧"></van-tab>
 	</van-tabs>

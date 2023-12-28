@@ -1,4 +1,6 @@
 // pages/index/realtimeData.js
+const deviceService = require('../../utils/sdk/HTTP/deviceService');
+
 Page({
 
   /**
@@ -7,7 +9,10 @@ Page({
   data: {
     status: "",
     breathRate: "",
-    heartRate: ""
+    heartRate: "",
+    deviceId: '',
+    leftRight: 0,
+    currentStatus: ""
 
   },
 
@@ -15,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    
   },
 
   /**
@@ -29,7 +34,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    let deviceId = wx.getStorageSync('deviceId')
+    let leftRight = wx.getStorageSync('leftRight')
+    if (deviceId) {
+      this.setData({
+        deviceId: deviceId,
+        leftRight: leftRight
+      })
+    }
   },
 
   /**
@@ -89,8 +101,26 @@ Page({
    * 查询设备状态
    */
   checkDeviceOnline(){
-
-    
+    let _this = this
+    deviceService.deviceStatus({
+      data: {
+        deviceId: this.data.deviceId,
+        leftRight: this.data.leftRight
+      },
+      success: function (res) {
+        console.log('----deviceStatus--',res)
+        _this.setData({
+          currentStatus: res.CONNECTION_STATUS
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "查询设备状态失败"
+        })
+      }
+    })
   },
 
 
