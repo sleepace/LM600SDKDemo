@@ -73,7 +73,7 @@ function startRealtimeData(params) {
  * stop real time data
  * @param {*leftRight,*deviceId,*deviceType}
  */
-function stopRealtimeData(data) {
+function stopRealtimeData(params) {
   if (lm600TcpApi) {
     lm600TcpApi.stopRealData({
       networkDeviceId: params.data.deviceId,
@@ -89,7 +89,7 @@ function stopRealtimeData(data) {
  * stop real time data
  * @param {*leftRight,*deviceId,*deviceType}
  */
-function stopCollect(data) {
+function stopCollect(params) {
   if (lm600TcpApi) {
     lm600TcpApi.stopCollect({
       networkDeviceId: params.data.deviceId,

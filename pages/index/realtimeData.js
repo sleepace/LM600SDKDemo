@@ -47,9 +47,7 @@ Page({
     let deviceId = wx.getStorageSync('deviceId')
     let leftRight = wx.getStorageSync('leftRight')
     let userId = wx.getStorageSync('userId')
-
     let sid = wx.getStorageSync('sid')
-
     if (deviceId) {
       this.setData({
         deviceId: deviceId,
@@ -58,6 +56,8 @@ Page({
         userId: userId
       })
     }
+
+    let _this = this
 
     medicaWebsocketHelper.connectWS({
       data: {
@@ -77,7 +77,7 @@ Page({
           console.log('res---', res,val)
           if(res && res.realDataList){
             let realdata = res.realDataList[0]
-            this.setData({
+            _this.setData({
               status: realdata.status,
               breathRate: realdata.breathRate,
               heartRate: realdata.heartRate
@@ -98,7 +98,6 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
     console.log('--onHide----')
     // socketHelper.closeWS()
   },
@@ -161,12 +160,6 @@ Page({
   * 停止获取数据
   */
   stopRealtimeData() {
-    // socketHelper.stopRealtimeData({
-    //   deviceId: this.data.deviceId,
-    //   deviceType: 0x800C,
-    //   leftRight: this.data.deviceId,
-    // })
-
     medicaWebsocketHelper.stopRealtimeData({
       data: {
         deviceId: this.data.deviceId,
