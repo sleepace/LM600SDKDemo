@@ -74,6 +74,7 @@ Page({
         //   console.log('real---', res, val)
         // })
         medicaWebsocketHelper.registerRealDataCallback((res, val) =>{
+          console.log('res---', res,val)
           if(res && res.realDataList){
             let realdata = res.realDataList[0]
             this.setData({
@@ -137,7 +138,7 @@ Page({
       data: {
         deviceId: this.data.deviceId,
         deviceType:this.data.deviceType,
-        leftRight: this.data.deviceId,
+        leftRight: this.data.leftRight,
       },
       handler: function (res) {
         console.log('---startRealtimeData--', res)
@@ -165,11 +166,12 @@ Page({
     //   deviceType: 0x800C,
     //   leftRight: this.data.deviceId,
     // })
+
     medicaWebsocketHelper.stopRealtimeData({
       data: {
         deviceId: this.data.deviceId,
         deviceType:this.data.deviceType,
-        leftRight: this.data.deviceId,
+        leftRight: this.data.leftRight,
       },
       handler: function (res) {
         console.log('---stopRealtimeData--', res)
@@ -185,7 +187,7 @@ Page({
       data: {
         deviceId: this.data.deviceId,
         deviceType:this.data.deviceType,
-        leftRight: this.data.deviceId,
+        leftRight: this.data.leftRight,
         userId: this.data.userId
       },
       handler: function (res) {
