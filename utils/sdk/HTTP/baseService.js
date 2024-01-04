@@ -26,7 +26,7 @@ const urlList = {
     deviceAidStatus: '/app/commonConfig/get',
     sleepAidPreview: '/app/device/sleepAidPreview',
     sleepAid: '/app/device/sleepaid',
-    sleepIntervenePreview: '/app/device/sleepAidPreview',
+    sleepIntervenePreview: '/app/device/sleepIntervenePreview',
     infraredSwitch: '/app/sleepAlertConf/infraredSwitch',//红外温度通知
     setInfraredConfig: '/app/sleepAlertConf/saveInfraredConfig',//红外温度配置
     getInfraredConfig: '/app/sleepAlertConf/getInfraredConfig',//红外温度配置获取

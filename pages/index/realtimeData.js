@@ -139,8 +139,14 @@ Page({
         deviceType:this.data.deviceType,
         leftRight: this.data.leftRight,
       },
-      handler: function (res) {
-        console.log('---startRealtimeData--', res)
+      handler: function (code) {
+        console.log('---startRealtimeData--', code)
+        if (code == 0){
+
+        }
+        else{
+
+        }
       }
     })
 
@@ -166,8 +172,14 @@ Page({
         deviceType:this.data.deviceType,
         leftRight: this.data.leftRight,
       },
-      handler: function (res) {
-        console.log('---stopRealtimeData--', res)
+      handler: function (code) {
+        console.log('---stopRealtimeData--', code)
+        if (code == 0){
+
+        }
+        else{
+          
+        }
       }
     })
   },
@@ -183,8 +195,14 @@ Page({
         leftRight: this.data.leftRight,
         userId: this.data.userId
       },
-      handler: function (res) {
-        console.log('---stopCollect--', res)
+      handler: function (code) {
+        console.log('---stopCollect--', code)
+        if (code == 0){
+
+        }
+        else{
+          
+        }
       }
     })
   },

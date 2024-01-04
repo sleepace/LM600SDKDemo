@@ -238,8 +238,9 @@ function sleepAidPreview(params){
       deviceId:
       deviceType:
       leftRight:
-      aidMode: 
-      aidLevel:
+      interveneFlag: //干预开关 0:关，1：开
+      interveneMode:  //干预模式
+      interveneLevel: //干预等级
     }
   }
  */
