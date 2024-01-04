@@ -1,6 +1,6 @@
 // pages/index/realtimeData.js
 const deviceService = require('../../utils/SDK/HTTP/deviceService');
-const socketHelper = require('../../utils/SDK/Socket/socketHelper');
+// const socketHelper = require('../../utils/SDK/Socket/socketHelper');
 const medicaWebsocketHelper = require('../../utils/SDK/Socket/medicaWebsocketHelper');
 
 const app = getApp();
@@ -91,79 +91,6 @@ Page({
         console.log('onSocketClose---', client)
       }
     })
-    return;
-
-    if (!app.globalData.webSoketOpen) {
-      socketHelper.connectWS({
-        data: {
-          wsUrl: 'app.globalData.webSoket',
-          deviceId: deviceId,
-          deviceType: 0x800C,
-          leftRight: leftRight
-        },
-        onSocketOpen: function (res) {
-          app.globalData.webSoketOpen = true
-          // 登录设备
-          socketHelper.login({
-            deviceId: deviceId,
-            leftRight: leftRight,
-            deviceType: 0x800C
-          })
-        },
-        onSocketError: function (res) {
-          app.globalData.webSoketOpen = false
-
-        },
-        onSocketClose: function (res) {
-          app.globalData.webSoketOpen = false
-        },
-        onSocketMessage: function (res) {
-          console.log('onSocketMessage---', res)
-          if (res.type == 5000) { // 连接socket 成功
-
-          }
-          else if (res.type == 5001) {//实时数据逻辑
-
-          }
-          else if (res.type == 5002) {
-            console.log(console.log('收到服务器长间歇通知：' + JSON.stringify(res)));
-          }
-          else if (res.type == 5003) {
-            console.log(console.log('收到服务器开始监测通知：' + JSON.stringify(res)));
-          }
-          else if (res.type == 5004) {
-            console.log('收到服务器结束监测通知：' + JSON.stringify(res));
-          }
-          else if (res.type == 5005) {
-            console.log('收到服务器设备上线通知：' + JSON.stringify(res));
-          }
-          else if (jsonData.type == 5006) {
-            console.log('收到服务器设备下线通知：' + JSON.stringify(res));
-          }
-          else if (jsonData.type == 5007) {
-            console.log('收到服务器报告生成通知：' + JSON.stringify(res));
-          }
-          else if (res.type == 5008) {//自动升级进度
-
-          }
-          else if (res.type == 5009) {//助眠状态更新
-
-          }
-          else if (jsonData.type == 5011) {
-            console.log('收到取消共享通知')
-          }
-          else if (jsonData.type == 5012) {
-            console.log('负电量状态通知', res)
-          }
-          else {
-
-          }
-        }
-      })
-    }
-    else {
-      console.log('请连接websocket')
-    }
   },
 
   /**
