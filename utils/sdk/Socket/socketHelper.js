@@ -4,9 +4,10 @@ let heartInterval = null
 打开连接socket
 参数：{
 	data:{
-		leftRight: *,
-		deviceId: *,
-		deviceType: *
+		leftRight: 
+		deviceId: 
+		deviceType: 
+		wsUrl: 
 	},
 	onSocketOpen(res){
 
@@ -23,17 +24,18 @@ let heartInterval = null
 }
 */
 function connectWS(params) {
+	console.log('connectWS------',params)
 	var that = this
 	wx.connectSocket({
 		url: params.data.wsUrl,
 	})
-
-	wx.onSocketOpen((result) => {
+	wx.onSocketOpen((res) => {
 		console.log('WebSocket连接已打开！', res)
 		that.heartInterval && clearInterval(that.heartInterval)
 		that.heartInterval = setInterval(() => {
+			console.log('sendHeartbeatData111------',params.data)
 			that.sendHeartbeatData(params.data)
-		}, 20 * 1000)
+		}, 5 * 1000)
 		if (params && params.onSocketOpen) {
 			params.onSocketOpen(res)
 		}
@@ -48,7 +50,7 @@ function connectWS(params) {
 	})
 
 	wx.onSocketClose(function (res) {
-		console.log('###WebSocket 已关闭！')
+		console.log('###WebSocket 已关闭！',res)
 		that.heartInterval && clearInterval(that.heartInterval)
 		if (params && params.onSocketClose) {
 			params.onSocketClose(res)
@@ -56,7 +58,7 @@ function connectWS(params) {
 	})
 
 	wx.onSocketMessage(function (res) {
-		console.log('onSocketMessage---', res)
+		// console.log('onSocketMessage---', res)
 		var jsonData = JSON.parse(res.data)
 		if (params && params.onSocketMessage) {
 			params.onSocketMessage(jsonData)
@@ -68,6 +70,7 @@ function connectWS(params) {
  * 关闭websocket
  */
 function closeWS() {
+	console.log('closeSocket---')
 	wx.closeSocket()
 }
 
@@ -100,6 +103,17 @@ function stopRealtimeData(data) {
 	_data.msgType = 1004
 	this.sendMessage(_data)
 }
+
+/**停止采集
+ * stop real time data
+ * @param {*leftRight,*deviceId,*deviceType}
+ */
+function stopCollect(data) {
+	const _data = Object.assign({}, data);
+	_data.msgType = 1002
+	this.sendMessage(_data)
+}
+
 
 
 /**心跳包
@@ -144,7 +158,7 @@ module.exports = {
 	login: login,
 	startRealtimeData: startRealtimeData,
 	stopRealtimeData: stopRealtimeData,
+	stopCollect: stopCollect,
 	sendHeartbeatData: sendHeartbeatData
-
 }
 

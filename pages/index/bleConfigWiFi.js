@@ -1,9 +1,9 @@
 // pages/index/bleConfigWiFi.js
-import DeviceType from "../../utils/sdk/DeviceType";
+import DeviceType from "../../utils/SDK/DeviceType";
 
 const app = getApp()
 const language = require('../../utils/language.js');
-import bleWifiConfigHelper from "../../utils/sdk/BleWifiConfigHelper.js";
+import bleWifiConfigHelper from "../../utils/SDK/BleWifiConfigHelper.js";
 import util from "../../utils/util.js";
 
 Page({

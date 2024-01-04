@@ -15,12 +15,12 @@
 	<div class="button-view">
 		<input class="input" name="deviceID" value="{{deviceID}}" bindinput="inputDeviceID" placeholder="输入密文ID" />
 	</div>
-	<div class="button-view">
+	<!-- <div class="button-view">
 		<input class="input" name="deviceCersion" value="{{deviceVersion}}" bindinput="inputDeviceVersion" placeholder="输入固件版本号" />
 	</div>
 	<div class="button-view">
 		<button class="normal-btn">升级固件</button>
-	</div>
+	</div> -->
 	<view class="tip-view">
 		<label>选择绑定位置：{{leftRight == 1 ? "右侧": "左侧"}}</label>
 	</view>

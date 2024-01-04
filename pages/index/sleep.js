@@ -1,5 +1,6 @@
 // pages/index/sleep.js
-const deviceService = require('../../utils/sdk/HTTP/deviceService');
+const deviceService = require('../../utils/SDK/HTTP/deviceService');
+const userExtService = require('../../utils/SDK/HTTP/userExtService');
 
 Page({
 
@@ -9,6 +10,7 @@ Page({
   data: {
     show: false,
     columns: [],
+    interfereFlag: 0,
     interfereIndex: 0,
     interfereMode: 0,
     interfereModeName: '',
@@ -19,13 +21,17 @@ Page({
     deviceId: '',
     leftRight: 0,
     electricSwitch: 0,//负电位开关状态
+    /**异常报警 */
+    breathAlert: 0,
+    heartAlert: 0,
+    leaveBedAlert: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+
   },
 
   /**
@@ -41,7 +47,7 @@ Page({
   onShow() {
     let deviceId = wx.getStorageSync('deviceId')
     let leftRight = wx.getStorageSync('leftRight')
-    console.log('sleep---',deviceId,leftRight)
+    console.log('sleep---', deviceId, leftRight)
     if (deviceId) {
       this.setData({
         deviceId: deviceId,
@@ -98,10 +104,10 @@ Page({
         wx.showModal({
           showCancel: false,
           title: '',
-          content: _this.data.electricSwitch == 1 ? "开启" : "关闭" + "负电位成功"
+          content: (_this.data.electricSwitch == 1 ? "开启" : "关闭") + "负电位成功"
         })
         _this.setData({
-          electricSwitch: !_this.data.electricSwitch
+          electricSwitch: _this.data.electricSwitch == 1 ? 0 : 1 
         })
       },
       fail(err) {
@@ -129,12 +135,17 @@ Page({
   interfereOnchange(event) {
     console.log('---interfereOnchange-', event)
     let on = event.detail.value
-    deviceService.infraredSwitch({
+    this.setData({
+      interfereFlag: on
+    })
+    userExtService.updateIntervene({
       data: {
         deviceId: this.data.deviceId,
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
-        status: on ? 1 : 0,
+        interveneFlag: on ? 1 : 0,
+        interveneMode: this.data.interfereMode,
+        interveneLevel: this.data.interfereLevel
       },
       success: function (res) {
         wx.showModal({
@@ -174,16 +185,17 @@ Page({
   onCancel() {
     this.setData({ show: false })
   },
-  // 干预配置
+  // 干预
   operateSleepInterfere() {
-    deviceService.setInfraredConfig({
+    userExtService.updateIntervene({
       data: {
         deviceId: this.data.deviceId,
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
-        valid: 1,
-        mode: this.data.interfereMode,
-        level: this.data.interfereLevel
+        interveneFlag: this.data.interveneFlag,
+        interveneMode: this.data.interfereMode,
+        interveneLevel: this.data.interfereLevel
+
       },
       success: function (res) {
         wx.showModal({
@@ -206,14 +218,22 @@ Page({
   * 呼吸异常报警
   */
   breathOnchange(event) {
-
+    let on = event.detail.value
+    this.setData({
+      breathAlert: on ? 1 : 0
+    })
+    this.updateAlert()
   },
 
   /**
 * 心率异常报警
 */
   heartOnchange(event) {
-
+    let on = event.detail.value
+    this.setData({
+      heartAlert: on ? 1 : 0
+    })
+    this.updateAlert()
   },
 
 
@@ -221,8 +241,65 @@ Page({
 *离床报警
 */
   leftbedOnchange(event) {
-
-
+    let on = event.detail.value
+    this.setData({
+      leaveBedAlert: on ? 1 : 0
+    })
+    this.updateAlert()
   },
+
+
+  // 更新预警配置
+  updateAlert() {
+    userExtService.updateAlert({
+      data: {
+        deviceId: this.data.deviceId,
+        deviceType: 0x800C,
+        leftRight: this.data.leftRight,
+        breathAlert: this.data.breathAlert,
+        heartAlert: this.data.heartAlert,
+        leaveBedAlert: this.data.leaveBedAlert
+      },
+      success: function (res) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "更新预警配置成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "更新预警配置失败"
+        })
+      }
+    })
+  },
+  getAlert() {
+    userExtService.getAlert({
+      data: {},
+      success: function (res) {
+        this.setData({
+          leaveBedAlert: res.leaveBedAlert,
+          heartAlert: res.heartAlert,
+          breathAlert: res.breathAlert
+        })
+
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取预警配置成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取预警配置失败"
+        })
+      }
+    })
+  }
 
 })

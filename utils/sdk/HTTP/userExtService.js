@@ -5,7 +5,8 @@ const baseService = require('./baseService.js')
 名称： 获取预警配置
 参数：
 {
-
+  deviceId:
+  leftRight:
 }
 
 SUCCESS返回结果
@@ -33,13 +34,12 @@ function getAlert(params) {
   参数：
   {
     data: {
-      deviceAlert::'是否打开设备异常预警'
+      deviceId:
+      deviceType:
+      leftRight:
       breathAlert:'是否打开呼吸异常预警'
       heartAlert：:'是否打开心跳异常预警'
       leaveBedAlert:'是否打开离床预警'
-      // mobileWay:'是否打开短信通知'
-      // mobile:'手机'
-      // wechatWay:'是否打开微信通知'
     }
   }
 
@@ -47,7 +47,6 @@ function getAlert(params) {
   {
       "breathAlert": 1,
       "createTime": "2018-03-20 00:00:00",
-      "deviceAlert": 0,
       "heartAlert": 0,
       "leaveBedAlert": 1,
       "mobile": "1",
@@ -59,17 +58,18 @@ function getAlert(params) {
 */
 function updateAlert(params) {
   const _params = Object.assign({}, params);
-
-  if (_params.data.mobile && _params.data.mobile.indexOf("****") != -1) {
-    delete _params.data.mobile;
-  }
-
   _params.url = baseService.urlList.user.updateAlert;
   baseService.request(_params);
 }
 
-/**
+/*
  * 获取助眠设置
+ 参数：
+{
+  deviceId:
+  leftRight:
+}
+ * 
  */
 function getIntervene(params) {
   const _params = Object.assign({}, params);
@@ -77,8 +77,17 @@ function getIntervene(params) {
   baseService.request(_params);
 }
 
-/**
+/*
  * 更新助眠设置
+  参数：
+{
+  deviceId:
+  deviceType:
+  leftRight:
+  "interveneFlag"://干预开关 0:关，1：开
+  "interveneMode":
+  "interveneLevel":
+}
  */
 function updateIntervene(params) {
   const _params = Object.assign({}, params);

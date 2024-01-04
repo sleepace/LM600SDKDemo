@@ -1,5 +1,5 @@
-const deviceService = require('../../utils/sdk/HTTP/deviceService');
-const dataService = require('../../utils/sdk/HTTP/dataService');
+const deviceService = require('../../utils/SDK/HTTP/deviceService');
+const dataService = require('../../utils/SDK/HTTP/dataService');
 
 Page({
 

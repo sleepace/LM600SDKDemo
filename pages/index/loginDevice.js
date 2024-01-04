@@ -1,6 +1,7 @@
 // pages/index/loginDevice.js
-const baseService = require('../../utils/sdk/HTTP/baseService');
-const deviceService = require('../../utils/sdk/HTTP/deviceService');
+const baseService = require('../../utils/SDK/HTTP/baseService');
+const deviceService = require('../../utils/SDK/HTTP/deviceService');
+const app = getApp();
 
 Page({
   
@@ -13,7 +14,7 @@ Page({
     token: "test",
     channelID: "10000",
     deviceID: "teiug44lw85n9",
-    deviceVersion: "",
+    // deviceVersion: "",
     leftRight: 1, //左边left(0)，右边right(1)
   },
 
@@ -39,7 +40,7 @@ Page({
   onShow() {
     let side = wx.getStorageSync('leftRight')
     let deviceId = wx.getStorageSync('deviceId')
-    console.log('lll---', side)
+    console.log('leftRight---', side)
 
     if (side) {
       this.setData({
@@ -112,11 +113,11 @@ Page({
     });
   },
 
-  inputDeviceVersion(e) {
-    this.setData({
-      deviceVersion: e.detail.value
-    });
-  },
+  // inputDeviceVersion(e) {
+  //   this.setData({
+  //     deviceVersion: e.detail.value
+  //   });
+  // },
 
   initHttp(e) {
     baseService.initHttpAuthorize({
@@ -127,10 +128,10 @@ Page({
       },
       success: function (res) {
         // open websocket
-
-
-
-
+        let tcpServer = res.tcpServer
+        app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
+        console.log('---ws--',app.globalData.webSoket)
+        wx.setStorageSync('sid', res.sid)
         wx.showModal({
           showCancel: false,
           title: '',

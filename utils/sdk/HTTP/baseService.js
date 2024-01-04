@@ -2,27 +2,27 @@
 const app = getApp();
 
 let host = app.globalData.host || '';
-let channelId = app.globalData.header.channelId ||'';
+let channelId = app.globalData.header.channelId || '';
 let appVe = app.globalData.header.appVe;
 let status = app.globalData.header.status;
 const timezone = - (new Date().getTimezoneOffset() * 60);
 let sid = ''
 
 const urlList = {
-  user:{
-    getAlert: '/pro/zhongmai/sleepAlertConf/get',
-    updateAlert:'/pro/zhongmai/sleepAlertConf/update',
-    getIntervene:  '/pro/zhongmai/sleepAidInterveneConf/get',
-    updateIntervene: '/pro/zhongmai/sleepAidInterveneConf/update',
+  user: {
+    getAlert: '/app/sleepAlertConf/get',
+    updateAlert: '/app/sleepAlertConf/save',
+    getIntervene: '/app/sleepAlertConf/getInfraredConfig',
+    updateIntervene: '/app/sleepAlertConf/saveInterveneConf',
   },
-  device:{
+  device: {
     devicelist: '/app/bindInfo',
-    bind:  '/app/bind',
+    bind: '/app/bind',
     unbind: '/app/unbind',
     batterySwitchSet: '/app/sleepAlertConf/saveNegativeCharge', //负电量开关
-    getBatterySwitch: '/app/sleepAlertConf/getNegativeCharge' ,///获取负电量状态
-    infoUpdate:  '/app/device/update',
-    deviceStatus:  '/app/device/status',
+    getBatterySwitch: '/app/sleepAlertConf/getNegativeCharge',///获取负电量状态
+    infoUpdate: '/app/device/update',
+    deviceStatus: '/app/device/status',
     deviceAidStatus: '/app/commonConfig/get',
     sleepAidPreview: '/app/device/sleepAidPreview',
     sleepAid: '/app/device/sleepaid',
@@ -31,11 +31,11 @@ const urlList = {
     setInfraredConfig: '/app/sleepAlertConf/saveInfraredConfig',//红外温度配置
     getInfraredConfig: '/app/sleepAlertConf/getInfraredConfig',//红外温度配置获取
   },
-  data:{
+  data: {
     getDailyReport: '/app/analysis/data',
     getReportScore: '/app/analysis/score'
   },
-  token:{
+  token: {
     tokenCheck: '/app/tokenCheck',
   }
 }
@@ -51,20 +51,19 @@ function request(params) {
     'Accept-Language': 'zh-cn',
     'Sid': sid
   }
-  if(params.sid)
-  {
-    header['Sid']=params.sid;
+  if (params.sid) {
+    header['Sid'] = params.sid;
   }
-//   if(params.user)
-//   {
-//     header['S-sid']=params.user.sid;
-//   }
+  //   if(params.user)
+  //   {
+  //     header['S-sid']=params.user.sid;
+  //   }
   wx.request({
-    method:'POST',
+    method: 'POST',
     url: host + params.url,
     header: header,
     data: {
-        data: params.data
+      data: params.data
     },
     success: function (res) {
       console.group(params.url)
@@ -87,23 +86,22 @@ function request(params) {
         }
         // Sleepace逻辑错误
         else if (params.fail) {
-            console.log('-----Sleepace逻辑错误',res)
-          params.fail({code: res.data.status,message: res.data.msg});
+          console.log('-----Sleepace逻辑错误', res)
+          params.fail({ code: res.data.status, message: res.data.msg });
         }
         // Sleepace逻辑错误且没有sleepaceFail的callback，使用默认事件
-        else
-        {
+        else {
           // wx.showToast({
           //   title: res.data.msg,
           //   icon: 'none',
           //   duration: 2000
           // })
         }
-      } 
+      }
       // 网络失败
       else if (params.fail) {
-        params.fail({code: res.statusCode,message: ''});
-      }else{
+        params.fail({ code: res.statusCode, message: '' });
+      } else {
         wx.showToast({
           title: '网络错误，请稍后尝试',
           icon: 'none',
@@ -112,55 +110,51 @@ function request(params) {
       }
     },
     fail: function (error) {
-      params.fail({code: -1, message: error});
+      params.fail({ code: -1, message: error });
     }
   })
 }
 
- /*
+/*
 名称： http初始化授权
 参数：
-  {
-    data: {
-      url:
-      channelId:
-      token: 
-    }
-  }
+ {
+   data: {
+     url:
+     channelId:
+     token: 
+   }
+ }
 */
-function initHttpAuthorize(params){
-    if(params.data){
-        host = params.data.url
-        channelId = params.data.channelId
-        // const _params = Object.assign({}, params);
-        // _params.url =  
-        // baseService.request(_params);
-        console.log('----initHttpAuthorize2-',params.data,host,channelId)
-        this.request({
-            data: {
-                    token: params.data.token,
-                    channelId: params.data.channelId
-            }, 
-            url:  urlList.token.tokenCheck,
-            success: function (res){
-                console.log('----initHttpAuthorize-',res)
-                sid = res.sid
-                if(params.success){
-                    params.success(res)
-                }
-            },
-            fail: function (err) {
-                if(params.fail){
-                    params.fail(err)
-                }
-            }
-        })
-    }
+function initHttpAuthorize(params) {
+  if (params.data) {
+    host = params.data.url
+    channelId = params.data.channelId
+    this.request({
+      data: {
+        token: params.data.token,
+        channelId: params.data.channelId
+      },
+      url: urlList.token.tokenCheck,
+      success: function (res) {
+        console.log('----initHttpAuthorize-', res)
+        sid = res.sid
+        if (params.success) {
+          params.success(res)
+        }
+      },
+      fail: function (err) {
+        if (params.fail) {
+          params.fail(err)
+        }
+      }
+    })
+  }
 }
 
 
 module.exports = {
-  urlList:urlList,
+  urlList: urlList,
   request: request,
   initHttpAuthorize: initHttpAuthorize
 }

@@ -1,5 +1,5 @@
 // app.js
-let medicaBase = require('./utils/sdk/index.common.js')
+let medicaBase = require('./utils/SDK/index.common.js')
 var language = require('./utils/language.js');
 
 App({
@@ -38,6 +38,6 @@ App({
     medicaBase: medicaBase,
     loginCode: '',
     appVersion: "1.0.0",
-    
+    webSoketOpen:false,
   }
 })
