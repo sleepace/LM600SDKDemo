@@ -21,6 +21,7 @@ Page({
     deviceType: 0x800C,
     currentStatus: "",
     sid: "",
+    userId: ""
 
   },
 
@@ -45,13 +46,16 @@ Page({
   onShow() {
     let deviceId = wx.getStorageSync('deviceId')
     let leftRight = wx.getStorageSync('leftRight')
+    let userId = wx.getStorageSync('userId')
+
     let sid = wx.getStorageSync('sid')
 
     if (deviceId) {
       this.setData({
         deviceId: deviceId,
         leftRight: leftRight,
-        sid: sid
+        sid: sid,
+        userId: userId
       })
     }
 
@@ -69,7 +73,16 @@ Page({
         // lm600TcpApi.registerRealDataCallback((res, val) => {
         //   console.log('real---', res, val)
         // })
-        console.log('lm600TcpApi---', lm600TcpApi)
+        medicaWebsocketHelper.registerRealDataCallback((res, val) =>{
+          if(res && res.realDataList){
+            let realdata = res.realDataList[0]
+            this.setData({
+              status: realdata.status,
+              breathRate: realdata.breathRate,
+              heartRate: realdata.heartRate
+            })
+          }
+        })
       },
       onSocketError: function (res) {
         console.log('onSocketError---', client)
@@ -196,11 +209,10 @@ Page({
     medicaWebsocketHelper.startRealtimeData({
       data: {
         deviceId: this.data.deviceId,
-        deviceType: 0x800C,
+        deviceType:this.data.deviceType,
         leftRight: this.data.deviceId,
       },
       handler: function (res) {
-
         console.log('---startRealtimeData--', res)
       }
     })
@@ -216,7 +228,6 @@ Page({
     //     }
     //   })
     // }
-
   },
   /**
   * 停止获取数据
@@ -227,20 +238,32 @@ Page({
     //   deviceType: 0x800C,
     //   leftRight: this.data.deviceId,
     // })
-    
-
-
-
+    medicaWebsocketHelper.stopRealtimeData({
+      data: {
+        deviceId: this.data.deviceId,
+        deviceType:this.data.deviceType,
+        leftRight: this.data.deviceId,
+      },
+      handler: function (res) {
+        console.log('---stopRealtimeData--', res)
+      }
+    })
   },
 
   /**
  * 手动结束监测
  */
   handStopMonitoring() {
-    socketHelper.stopCollect({
-      deviceId: this.data.deviceId,
-      deviceType: 0x800C,
-      leftRight: this.data.deviceId,
+    medicaWebsocketHelper.stopCollect({
+      data: {
+        deviceId: this.data.deviceId,
+        deviceType:this.data.deviceType,
+        leftRight: this.data.deviceId,
+        userId: this.data.userId
+      },
+      handler: function (res) {
+        console.log('---stopCollect--', res)
+      }
     })
   },
   /**
@@ -268,6 +291,4 @@ Page({
       }
     })
   },
-
-
 })

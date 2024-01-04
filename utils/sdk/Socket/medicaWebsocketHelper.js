@@ -19,11 +19,9 @@ function connectWS(params) {
         console.log("loginByToken:" + code + ",o:" + JSON.stringify(o));
         if (code == 0) {
           lm600TcpApi = new medicaBase.LM600TcpApi(client)
-          lm600TcpApi.registerRealDataCallback((res, val) => {
-            console.log('real---', res, val)
-          })
-          console.log('lm600TcpApi---', lm600TcpApi)
-
+          // lm600TcpApi.registerRealDataCallback((res, val) => {
+          //   console.log('real---', res, val)
+          // })
           if (params && params.onSocketOpen) {
             params.onSocketOpen()
           }
@@ -94,6 +92,7 @@ function stopRealtimeData(data) {
 function stopCollect(data) {
   if (lm600TcpApi) {
     lm600TcpApi.stopCollect({
+      networkDeviceId: params.data.deviceId,
       deviceId: params.data.deviceId,
       deviceType: params.data.deviceType,
       serialNumber: params.data.leftRight,
@@ -136,12 +135,9 @@ function closeWS() {
 module.exports = {
   connectWS: connectWS,
   closeWS: closeWS,
-  // sendMessage: sendMessage,
-  // login: login,
   startRealtimeData: startRealtimeData,
   stopRealtimeData: stopRealtimeData,
   stopCollect: stopCollect,
-  // sendHeartbeatData: sendHeartbeatData
   registerRealDataCallback: registerRealDataCallback,
 
 }

@@ -132,6 +132,7 @@ Page({
         app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
         console.log('---ws--',app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
+        wx.setStorageSync('userId', res.user.userId)
         wx.showModal({
           showCancel: false,
           title: '',
