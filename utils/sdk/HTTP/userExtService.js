@@ -63,7 +63,7 @@ function updateAlert(params) {
 }
 
 /*
- * 获取助眠设置
+ * 获取睡眠干预
  参数：
 {
   deviceId:
@@ -78,15 +78,15 @@ function getIntervene(params) {
 }
 
 /*
- * 更新助眠设置
+ * 更新睡眠干预配置
   参数：
 {
   deviceId:
   deviceType:
   leftRight:
   "interveneFlag"://干预开关 0:关，1：开
-  "interveneMode":
-  "interveneLevel":
+  "interveneMode":干预模式0~4
+  "interveneLevel":干预等级0~4
 }
  */
 function updateIntervene(params) {
