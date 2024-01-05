@@ -10,12 +10,12 @@ Page({
    */
   data: {
     serverIp: "http://120.77.233.171:8093",
-    serverIp: "http://172.14.0.65:8092",
+    // serverIp: "http://172.14.0.65:8092",
     token: "test",
     channelID: "10000",
     deviceID: "teiug44lw85n9",
     // deviceVersion: "",
-    leftRight: 1, //左边left(0)，右边right(1)
+    leftRight: 0, //左边left(0)，右边right(1)
   },
 
   /**

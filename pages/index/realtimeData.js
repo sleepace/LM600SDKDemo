@@ -57,7 +57,6 @@ Page({
     }
 
     let _this = this
-
     medicaWebsocketHelper.connectWS({
       data: {
         wsUrl: app.globalData.webSoket,
@@ -68,13 +67,12 @@ Page({
       },
       onSocketOpen: function (client) {
         console.log('onSocketOpen---', client)
-        // lm600TcpApi = new medicaBase.LM600TcpApi(client)
-        // lm600TcpApi.registerRealDataCallback((res, val) => {
-        //   console.log('real---', res, val)
-        // })
-        medicaWebsocketHelper.registerRealDataCallback((res, val) =>{
-          console.log('res---', res,val)
-          if(res && res.realDataList){
+        //通过返回client，创建lm600tcpAPI ，websocket操作api
+        lm600TcpApi = new medicaBase.LM600TcpApi(client)
+        // 注册实时数据监听
+        lm600TcpApi.registerRealDataCallback((res, val) => {
+          console.log('real---', res, val)
+          if (res && res.realDataList) {
             let realdata = res.realDataList[0]
             _this.setData({
               status: realdata.status,
@@ -132,78 +130,71 @@ Page({
  * 开始获取数据
  */
   startRealtimeData() {
-    medicaWebsocketHelper.startRealtimeData({
-      data: {
+    if (lm600TcpApi) {
+      lm600TcpApi.startRealData({
+        networkDeviceId: this.data.deviceId,
         deviceId: this.data.deviceId,
-        deviceType:this.data.deviceType,
-        leftRight: this.data.leftRight,
-      },
-      handler: function (code) {
-        console.log('---startRealtimeData--', code)
-        if (code == 0){
+        deviceType: this.data.deviceType,
+        serialNumber: this.data.leftRight,
+        handler: function (code) {
+          console.log('---startRealtimeData--', code)
+          if (code == 0) {
+
+          }
+          else {
+
+          }
 
         }
-        else{
-
-        }
-      }
-    })
-
-    // if(lm600TcpApi){
-    //   lm600TcpApi.startRealData({
-    //     deviceId: this.data.deviceId,
-    //     deviceType: 0x800C,
-    //     serialNumber:  this.data.leftRight,
-    //     handler: function (res) {
-
-    //       console.log('---startRealtimeData--', res)
-    //     }
-    //   })
-    // }
+      })
+    }
   },
   /**
   * 停止获取数据
   */
   stopRealtimeData() {
-    medicaWebsocketHelper.stopRealtimeData({
-      data: {
+    if (lm600TcpApi) {
+      lm600TcpApi.stopRealData({
+        networkDeviceId: this.data.deviceId,
         deviceId: this.data.deviceId,
-        deviceType:this.data.deviceType,
-        leftRight: this.data.leftRight,
-      },
-      handler: function (code) {
-        console.log('---stopRealtimeData--', code)
-        if (code == 0){
+        deviceType: this.data.deviceType,
+        serialNumber: this.data.leftRight,
+        handler: function (code) {
+          console.log('---stopRealtimeData--', code)
+          if (code == 0) {
 
+          }
+          else {
+
+          }
         }
-        else{
-          
-        }
-      }
-    })
+      })
+    }
   },
 
   /**
  * 手动结束监测
  */
   handStopMonitoring() {
-    medicaWebsocketHelper.stopCollect({
-      data: {
+    if (lm600TcpApi) {
+      lm600TcpApi.stopCollect({
+        networkDeviceId: this.data.deviceId,
         deviceId: this.data.deviceId,
-        deviceType:this.data.deviceType,
-        leftRight: this.data.leftRight,
-        userId: this.data.userId
-      },
-      handler: function (code) {
-        console.log('---stopCollect--', code)
-        if (code == 0){
+        deviceType: this.data.deviceType,
+        serialNumber: this.data.leftRight,
+        userId: this.data.userId,
+        timestamp: new Date().getTime() / 1000,
+        handler: function (code) {
+          console.log('---stopCollect--', code)
+          if (code == 0) {
 
+          }
+          else {
+
+          }
         }
-        else{
-          
-        }
-      }
-    })
+      })
+    }
   },
   /**
   * 查询设备状态
