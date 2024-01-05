@@ -1,6 +1,5 @@
 // pages/index/realtimeData.js
 const deviceService = require('../../utils/SDK/HTTP/deviceService');
-// const socketHelper = require('../../utils/SDK/Socket/socketHelper');
 const medicaWebsocketHelper = require('../../utils/SDK/Socket/medicaWebsocketHelper');
 
 const app = getApp();

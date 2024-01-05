@@ -123,8 +123,7 @@ function unregisterRealDataCallback(id){
   }
 }
 
-
-/**
+/*
  * 关闭websocket
  */
 function closeWS() {
