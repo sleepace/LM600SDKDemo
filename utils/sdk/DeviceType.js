@@ -34,6 +34,7 @@ function isSleepaceDevice(deviceName){
   }
   let rule = /^[0-9a-zA-Z]{13}$/;
   if (rule.test(deviceName)) {
+    
     return true;
   }
   return false;
@@ -355,6 +356,7 @@ function isBM8701_2(deviceType) {
   }
   return false
 }
+
 
 /**
  * 通过ble方式绑定的设备

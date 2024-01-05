@@ -1,6 +1,22 @@
 const app = getApp();
 let medicaBase = app.globalData.medicaBase;
 
+/*
+ * 连接打开websocket
+ 参数：
+ {
+   data:{
+    wsUrl: 
+    deviceId: 
+    deviceType: 
+    leftRight: 
+    sid: 
+   }
+   onSocketOpen:
+   onSocketError:
+   onSocketClose:
+ }
+ */
 function connectWS(params) {
   console.log('--connectWS--', params)
   let client = new medicaBase.WXWebSocketClient(params.data.wsUrl);

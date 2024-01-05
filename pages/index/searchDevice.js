@@ -2,7 +2,7 @@
 
 const app = getApp();
 var language = require('../../utils/language.js');
-const { default: DeviceType } = require('../../utils/DeviceType.js');
+const { default: DeviceType } = require('../../utils/SDK/DeviceType');
 
 let medicaBase = app.globalData.medicaBase;
 let commonBleApi = medicaBase.pillowBleApi;
@@ -55,7 +55,7 @@ Page({
         let list = [];
         commonBleApi.scanBleDevices(scanDuration, true, (device)=> { // 扫描设备
           let sn = medicaBase.bufUtil.ab2str(device.advertisData);
-          //console.log("searchBleDevice sn:" + sn)
+          // console.log("searchBleDevice sn:" + sn)
           if (DeviceType.isSleepaceDevice(sn)) { // 扫到Sleepace设备就添加到数组
             let exist = false
             for (let i = 0; i < list.length; i++){
@@ -65,7 +65,7 @@ Page({
                 break;
               }
             }
-
+            console.log("se ddd---" + sn)
             if (!exist){
               let deviceType = DeviceType.getDeviceType(sn);
               list.push({ deviceId: device.deviceId, sn: sn, deviceType: deviceType})
@@ -111,7 +111,7 @@ Page({
     let deviceType = parseInt(deviceInfo[2]);
     console.log("selectDevice----------deviceType:" + deviceType)
     if(DeviceType.isM800(deviceType) || DeviceType.isZ400TWP3(deviceType) || DeviceType.isM8701W(deviceType) || DeviceType.isSN913E(deviceType) ||
-      DeviceType.isNoxSAW(deviceType) || DeviceType.isEW202W(deviceType) || DeviceType.isBM8701_2(deviceType) || DeviceType.isM901L(deviceType)){
+      DeviceType.isNoxSAW(deviceType) || DeviceType.isEW202W(deviceType) || DeviceType.isBM8701_2(deviceType) || DeviceType.isM901L(deviceType)|| DeviceType.isLM600(deviceType)){
       // wx.showLoading({
       //   title: '正在连接',
       // })
