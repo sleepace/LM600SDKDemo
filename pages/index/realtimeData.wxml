@@ -5,7 +5,7 @@
         <button class="btn" bindtap="stopRealtimeData">停止获取数据</button>
     </div>
     <div class="label-view">
-        <view>睡眠状态：<span>{{leftRight == 1? '右侧': '左侧'}} {{statusStr}}</span></view>
+        <view>睡眠状态：<span>{{realNumber == 1? '右侧': '左侧'}} {{statusStr}}</span></view>
         <view>实时呼吸率：<span>{{breathRate}}</span></view>
         <view>实时心率：<span>{{heartRate}}</span></view>
     </div>

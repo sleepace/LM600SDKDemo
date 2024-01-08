@@ -21,7 +21,8 @@ Page({
     currentStatus: "",
     sid: "",
     userId: "",
-    statusStr: ''
+    statusStr: '',
+    realNumber: 0,
 
 
   },
@@ -49,10 +50,12 @@ Page({
     let leftRight = wx.getStorageSync('leftRight')
     let userId = wx.getStorageSync('userId')
     let sid = wx.getStorageSync('sid')
+
     if (deviceId) {
       this.setData({
         deviceId: deviceId,
         leftRight: leftRight,
+        realNumber: leftRight,
         sid: sid,
         userId: userId
       })
@@ -78,9 +81,10 @@ Page({
             let realdata = res.realDataList[0]
             _this.setData({
               status: realdata.status,
-              statusStr: statusString(realdata.status), 
+              statusStr: _this.statusString(realdata.status), 
               breathRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.breathRate,
-              heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate
+              heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate,
+              realNumber: realdata.serialNumber
             })
           }
         })
