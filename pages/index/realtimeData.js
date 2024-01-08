@@ -20,7 +20,9 @@ Page({
     deviceType: 0x800C,
     currentStatus: "",
     sid: "",
-    userId: ""
+    userId: "",
+    statusStr: ''
+
 
   },
 
@@ -76,8 +78,9 @@ Page({
             let realdata = res.realDataList[0]
             _this.setData({
               status: realdata.status,
-              breathRate: realdata.breathRate,
-              heartRate: realdata.heartRate
+              statusStr: statusString(realdata.status), 
+              breathRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.breathRate,
+              heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate
             })
           }
         })
@@ -89,6 +92,17 @@ Page({
         console.log('onSocketClose---', client)
       }
     })
+  },
+
+  statusString(status){
+    switch (status) {
+      case 5:
+      return "离床"
+        break;
+      default:
+        return "在床"
+        break;
+    }
   },
 
   /**
@@ -139,12 +153,19 @@ Page({
         handler: function (code) {
           console.log('---startRealtimeData--', code)
           if (code == 0) {
-
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "开始获取数据成功"
+            })
           }
           else {
-
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "开始获取数据失败"
+            })
           }
-
         }
       })
     }
@@ -162,10 +183,18 @@ Page({
         handler: function (code) {
           console.log('---stopRealtimeData--', code)
           if (code == 0) {
-
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "停止获取数据成功"
+            })
           }
           else {
-
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "停止获取数据失败"
+            })
           }
         }
       })
@@ -187,10 +216,18 @@ Page({
         handler: function (code) {
           console.log('---stopCollect--', code)
           if (code == 0) {
-
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "手动结束监测成功"
+            })
           }
           else {
-
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "手动结束监测失败"
+            })
           }
         }
       })
@@ -210,6 +247,11 @@ Page({
         console.log('----deviceStatus--', res)
         _this.setData({
           currentStatus: res.CONNECTION_STATUS
+        })
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "查询设备状态成功"
         })
       },
       fail(err) {

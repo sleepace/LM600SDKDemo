@@ -10,15 +10,14 @@ Page({
    */
   data: {
     // serverIp: "http://120.77.233.171:8093",
-    // serverIp: "http://172.14.0.65:8092",
-    serverIp: "",
-    // token: "test",
-    // channelID: "10000",
-    token: "",
-    channelID: "",
-    // deviceID: "teiug44lw85n9",
-    deviceID: "",
-
+    serverIp: 'https://s171.sleepace.com/lekang',
+    token: "test",
+    channelID: "10000",
+    // deviceID: "fklqm1m88rkpa",
+    // serverIp: "",
+    // token: "",
+    // channelID: "",
+    deviceID: "teiug44lw85n9",
     // deviceVersion: "",
     leftRight: 0, //左边left(0)，右边right(1)
   },
@@ -134,7 +133,8 @@ Page({
       success: function (res) {
         // open websocket
         let tcpServer = res.tcpServer
-        app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
+        // app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
+        app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
         console.log('---ws--',app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
         wx.setStorageSync('userId', res.user.userId)

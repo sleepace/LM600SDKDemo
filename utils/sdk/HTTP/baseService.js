@@ -110,6 +110,7 @@ function request(params) {
       }
     },
     fail: function (error) {
+      console.log('-----ee-',error)
       params.fail({ code: -1, message: error });
     }
   })
