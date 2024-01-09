@@ -144,8 +144,8 @@ Page({
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
         interveneFlag: on ? 1 : 0,
-        interveneMode: this.data.interfereMode,
-        interveneLevel: this.data.interfereLevel
+        interveneMode: this.data.interfereMode + 1,
+        interveneLevel: this.data.interfereLevel + 1
       },
       success: function (res) {
         wx.showModal({
@@ -193,8 +193,8 @@ Page({
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
         interveneFlag: this.data.interveneFlag,
-        interveneMode: this.data.interfereMode,
-        interveneLevel: this.data.interfereLevel
+        interveneMode: this.data.interfereMode + 1,
+        interveneLevel: this.data.interfereLevel + 1
 
       },
       success: function (res) {

@@ -4,21 +4,20 @@ const deviceService = require('../../utils/SDK/HTTP/deviceService');
 const app = getApp();
 
 Page({
-  
+
   /**
    * 页面的初始数据
    */
   data: {
     // serverIp: "http://120.77.233.171:8093",
-    serverIp: 'https://s171.sleepace.com/lekang',
-    token: "test",
-    channelID: "10000",
-    // deviceID: "fklqm1m88rkpa",
-    // serverIp: "",
-    // token: "",
-    // channelID: "",
-    deviceID: "teiug44lw85n9",
-    // deviceVersion: "",
+    // serverIp: 'https://s171.sleepace.com/lekang',
+    // token: "test",
+    // channelID: "10000",
+    // deviceId: "fklqm1m88rkpa",
+    serverIp: "",
+    token: "",
+    channelID: "",
+    deviceId: "",
     leftRight: 0, //左边left(0)，右边right(1)
   },
 
@@ -44,12 +43,33 @@ Page({
   onShow() {
     let side = wx.getStorageSync('leftRight')
     let deviceId = wx.getStorageSync('deviceId')
-    console.log('leftRight---', side)
-
-    if (side) {
+    let serverIp = wx.getStorageSync('serverIp')
+    let token = wx.getStorageSync('token')
+    let channelID = wx.getStorageSync('channelID')
+    console.log('leftRight---', side, deviceId, serverIp, token, channelID)
+    if(deviceId){
       this.setData({
-        leftRight: side,
-        deviceId: deviceId
+        deviceId: deviceId,
+      });
+    }
+    if(side){
+      this.setData({
+        leftRight: side ? side : 0,
+      });
+    }
+    if(serverIp){
+      this.setData({
+        serverIp: serverIp,
+      });
+    }
+    if(token){
+      this.setData({
+        token: token,
+      });
+    }
+    if(channelID){
+      this.setData({
+        channelID: channelID,
       });
     }
   },
@@ -58,16 +78,19 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-    console.log('onHide---', this.data.deviceID)
-    wx.setStorageSync('deviceId', this.data.deviceID)
+    console.log('onHide---', this.data.deviceId)
+    wx.setStorageSync('deviceId', this.data.deviceId)
     wx.setStorageSync('leftRight', this.data.leftRight)
+    wx.setStorageSync('serverIp', this.data.serverIp)
+    wx.setStorageSync('token', this.data.token)
+    wx.setStorageSync('channelID', this.data.channelID)
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    
+
   },
 
 
@@ -91,7 +114,7 @@ Page({
   onShareAppMessage() {
 
   },
-  
+
 
   inputServerIp(e) {
     this.setData({
@@ -113,7 +136,7 @@ Page({
 
   inputDeviceID(e) {
     this.setData({
-      deviceID: e.detail.value
+      deviceId: e.detail.value
     });
   },
 
@@ -135,7 +158,7 @@ Page({
         let tcpServer = res.tcpServer
         // app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
         app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
-        console.log('---ws--',app.globalData.webSoket)
+        console.log('---ws--', app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
         wx.setStorageSync('userId', res.user.userId)
         wx.showModal({
@@ -154,18 +177,18 @@ Page({
       }
     })
   },
-	onChange(event) {
-		this.setData({
-			leftRight: event.detail.index
-		});
-		wx.setStorageSync('leftRight', event.detail.index)
-		console.log('leftRight-----',this.data.leftRight)
-	},
-	
+  onChange(event) {
+    this.setData({
+      leftRight: event.detail.index
+    });
+    wx.setStorageSync('leftRight', event.detail.index)
+    console.log('leftRight-----', this.data.leftRight)
+  },
+
   bindDevice(e) {
     deviceService.bind({
       data: {
-        deviceId: this.data.deviceID,
+        deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
       },
       success: function (res) {
@@ -189,7 +212,7 @@ Page({
   unbindDevice(e) {
     deviceService.unbind({
       data: {
-        deviceId: this.data.deviceID,
+        deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
       },
       success: function (res) {

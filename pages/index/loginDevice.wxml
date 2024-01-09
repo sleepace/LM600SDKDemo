@@ -13,7 +13,7 @@
 		<button class="normal-btn" bindtap="initHttp">连接服务器</button>
 	</div>
 	<div class="button-view">
-		<input class="input" name="deviceID" value="{{deviceID}}" bindinput="inputDeviceID" placeholder="输入密文ID" />
+		<input class="input" name="deviceID" value="{{deviceId}}" bindinput="inputDeviceID" placeholder="输入密文ID" />
 	</div>
 	<!-- <div class="button-view">
 		<input class="input" name="deviceCersion" value="{{deviceVersion}}" bindinput="inputDeviceVersion" placeholder="输入固件版本号" />
