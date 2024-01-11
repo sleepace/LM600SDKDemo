@@ -76,15 +76,15 @@ Page({
         lm600TcpApi = new medicaBase.LM600TcpApi(client)
         // 注册实时数据监听
         lm600TcpApi.registerRealDataCallback((res, val) => {
-          console.log('real---', res, val)
-          if (res && res.realDataList) {
+          console.log('real---', res, val,res.serialNumber)
+          if (res && res.realDataList && res.serialNumber == leftRight) {
             let realdata = res.realDataList[0]
             _this.setData({
               status: realdata.status,
               statusStr: _this.statusString(realdata.status), 
               breathRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.breathRate,
               heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate,
-              realNumber: realdata.serialNumber
+              realNumber: res.serialNumber
             })
           }
         })
