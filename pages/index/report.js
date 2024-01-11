@@ -72,9 +72,10 @@ Page({
 * 查询设备状态
 */
   getNewReport() {
+    let _this = this
     dataService.getDailyReport({
       data: {
-        startTime: 0,
+        startTime: parseInt((new Date().getTime())/1000),
         num: 1,
         order: 0,
         deviceType: 0x800C
@@ -84,10 +85,10 @@ Page({
         let historyArr = res.history
         if (historyArr && historyArr.length) {
           let report = historyArr[0]
-          this.setData({
+          _this.setData({
             score: report.analysis.sleepScore,
             startTime: report.summary.startTime,
-            startTimeString: this.format(report.summary.startTime)
+            startTimeString: _this.format(report.summary.startTime)
           });
         }
         else {
@@ -111,13 +112,13 @@ Page({
   },
   format(timestamp) {
     //shijianchuo是整数，否则要parseInt转换
-    var time = new Date(timestamp);
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var mm = time.getMinutes();
-    var s = time.getSeconds();
+    var date = new Date(parseInt(timestamp)*1000);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var h = date.getHours();
+    var mm = date.getMinutes();
+    var s = date.getSeconds();
     return y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
   },
   add0(m) { return m < 10 ? '0' + m : m }

@@ -13,8 +13,8 @@ Page({
     interfereFlag: 0,
     interfereIndex: 0,
     interfereMode: 0,
-    interfereModeName: '',
     interfereLevel: 0,
+    interfereModeName: '',
     interfereLevelName: '',
     columns1: ['慢震', '快震', '声音', '声音+慢震', '声音+快震'],
     columns2: ['舒缓', '轻柔', '渐强', '较强', '强'],
@@ -54,6 +54,9 @@ Page({
         leftRight: leftRight
       })
     }
+    this.getAlert()
+    this.getIntervene()
+    this.getBatterySwitch()
   },
 
   /**
@@ -98,13 +101,13 @@ Page({
     deviceService.batteryClick({
       data: {
         deviceId: this.data.deviceId,
-        status: this.data.electricSwitch,
+        status: this.data.electricSwitch == 1 ? 0 : 1 ,
       },
       success: function (res) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: (_this.data.electricSwitch == 1 ? "开启" : "关闭") + "负电位成功"
+          content: (_this.data.electricSwitch == 1 ? "关闭" : "开启" ) + "负电位成功"
         })
         _this.setData({
           electricSwitch: _this.data.electricSwitch == 1 ? 0 : 1 
@@ -114,19 +117,45 @@ Page({
         wx.showModal({
           showCancel: false,
           title: '',
-          content: (_this.data.electricSwitch == 1 ? "开启" : "关闭") + "负电位失败"
+          content: (_this.data.electricSwitch == 1 ?  "关闭" : "开启") + "负电位失败"
         })
       }
     })
   },
-
-
+  getBatterySwitch(){
+    let _this = this
+    deviceService.getBatterySwitch({
+      data: {
+        deviceId: this.data.deviceId,
+      },
+      success: function (res) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取负电位成功"
+        })
+        if(res){
+          _this.setData({
+            electricSwitch: res.status == 1 ? 1 : 0 
+          })
+        }
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content:  "获取负电位失败"
+        })
+      }
+    })
+  },
   onChange(event) {
     this.setData({
       leftRight: event.detail.index
     });
     console.log('leftRight-----', this.data.leftRight)
-
+    this.getAlert()
+    this.getIntervene()
   },
 
   /**
@@ -277,29 +306,77 @@ Page({
     })
   },
   getAlert() {
+    let _this = this
     userExtService.getAlert({
-      data: {},
+      data: {
+        deviceId:this.data.deviceId,
+        leftRight:this.data.leftRight,
+      },
       success: function (res) {
-        this.setData({
-          leaveBedAlert: res.leaveBedAlert,
-          heartAlert: res.heartAlert,
-          breathAlert: res.breathAlert
-        })
-
+        if(res){
+          _this.setData({
+            leaveBedAlert: res.leaveBedAlert,
+            heartAlert: res.heartAlert,
+            breathAlert: res.breathAlert,
+          })
+        }
+        else{
+          _this.setData({
+            leaveBedAlert: 0,
+            heartAlert: 0,
+            breathAlert: 0,
+          })
+        }
+        // wx.showModal({
+        //   showCancel: false,
+        //   title: '',
+        //   content: "获取预警配置成功"
+        // })
+      },
+      fail(err) {
+        // wx.showModal({
+        //   showCancel: false,
+        //   title: '',
+        //   content: "获取预警配置失败"
+        // })
+      }
+    })
+  },
+  getIntervene() {
+    let _this = this
+    userExtService.getIntervene({
+      data: {
+        deviceId:this.data.deviceId,
+        leftRight:this.data.leftRight,
+      },
+      success: function (res) {
+        console.log('getIntervene----',res)
+        if(res){
+          _this.setData({
+            interfereFlag: res.interveneFlag,
+            interveneMode: res.interveneMode > 0 ? res.interveneMode-1: 0 ,
+            interveneLevel: res.interveneLevel > 0 ? res.interveneLevel-1: 0,
+          })
+        }else{
+          _this.setData({
+            interfereFlag: 0,
+            interveneMode:  0 ,
+            interveneLevel: 0,
+          })
+        }
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "获取预警配置成功"
+          content: "获取干预配置成功"
         })
       },
       fail(err) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "获取预警配置失败"
+          content: "获取干预配置失败"
         })
       }
     })
   }
-
 })

@@ -85,8 +85,8 @@ function getIntervene(params) {
   deviceType:
   leftRight:
   "interveneFlag"://干预开关 0:关，1：开
-  "interveneMode":干预模式0~4
-  "interveneLevel":干预等级0~4
+  "interveneMode":干预模式1~5
+  "interveneLevel":干预等级1~5
 }
  */
 function updateIntervene(params) {

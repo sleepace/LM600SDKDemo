@@ -13,11 +13,11 @@ Page({
     // serverIp: 'https://s171.sleepace.com/lekang',
     // token: "test",
     // channelID: "10000",
-    // deviceId: "fklqm1m88rkpa",
-    serverIp: "",
-    token: "",
-    channelID: "",
-    deviceId: "",
+    // deviceId: "teiug44lw85n9",
+    serverIp: "https://s171.sleepace.com/lekang",
+    token: "test",
+    channelID: "10000",
+    deviceId: "teiug44lw85n9",
     leftRight: 0, //左边left(0)，右边right(1)
   },
 

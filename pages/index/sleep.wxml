@@ -1,7 +1,7 @@
 <!--pages/index/sleep.wxml-->
 <view class='container'>
 	<view class="label-view">
-		<view>负电位开关</view>
+		<view>负电位开关:{{electricSwitch == 1 ? "开启" : "关闭"}}</view>
 		<button class="normal-btn" bindtap="negativeElectric">负电位开关</button>
 	</view>
 
@@ -16,7 +16,7 @@
 	<view>
 		<view class="switch-view">
 			<view>干预开关</view>
-			<switch size="24px" bind:change="interfereOnchange"></switch>
+			<switch size="24px" checked="{{interfereFlag}}" bind:change="interfereOnchange"></switch>
 		</view>
 		<view class="switch-view">
 			<view class="item-label">
@@ -42,17 +42,17 @@
 	</view>
 	<view class="switch-view">
 		<view>呼吸异常报警</view>
-		<switch bind:change="breathOnchange"></switch>
+		<switch bind:change="breathOnchange" checked="{{breathAlert}}" ></switch>
 	</view>
 	<view class="button-view">呼吸异常报警条件：当呼吸暂停10秒，或持续1分钟呼吸率大于24次/分或小于8次/分</view>
 	<view class="switch-view">
 		<view>心率异常报警</view>
-		<switch bind:change="heartOnchange"></switch>
+		<switch bind:change="heartOnchange" checked="{{heartAlert}}" ></switch>
 	</view>
 	<view class="button-view">心率异常报警条件：持续1分钟心率大于120次/分或小于40次/分</view>
 	<view class="switch-view">
 		<view>离床报警</view>
-		<switch bind:change="leftbedOnchange"></switch>
+		<switch bind:change="leftbedOnchange" checked="{{leaveBedAlert}}" ></switch>
 	</view>
 	<view class="button-view">离床报警条件：离床时间超过30分钟</view>
 

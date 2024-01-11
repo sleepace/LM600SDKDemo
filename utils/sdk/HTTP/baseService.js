@@ -12,7 +12,7 @@ const urlList = {
   user: {
     getAlert: '/app/sleepAlertConf/get',
     updateAlert: '/app/sleepAlertConf/save',
-    getIntervene: '/app/sleepAlertConf/getInfraredConfig',
+    getIntervene: '/app/sleepAlertConf/getInterveneConf',
     updateIntervene: '/app/sleepAlertConf/saveInterveneConf',
   },
   device: {
