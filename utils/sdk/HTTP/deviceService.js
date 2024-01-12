@@ -166,8 +166,13 @@ function deviceStatus(params)
   baseService.request(_params);
 }
 
-/**
+/*
  * 设备助眠状态
+ data: {
+      deviceId:
+      deviceType:
+      leftRight:
+    }
  */
 function deviceAidStatus(params){
   const _params = Object.assign({}, params);

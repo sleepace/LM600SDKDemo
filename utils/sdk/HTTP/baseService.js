@@ -23,7 +23,7 @@ const urlList = {
     getBatterySwitch: '/app/sleepAlertConf/getNegativeCharge',///获取负电量状态
     infoUpdate: '/app/device/update',
     deviceStatus: '/app/device/status',
-    deviceAidStatus: '/app/commonConfig/get',
+    deviceAidStatus: '/app/commonConfig/getSleepAidStatus',
     sleepAidPreview: '/app/device/sleepAidPreview',
     sleepAid: '/app/device/sleepaid',
     sleepIntervenePreview: '/app/device/sleepIntervenePreview',
