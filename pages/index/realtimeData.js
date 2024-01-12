@@ -241,6 +241,19 @@ Page({
   * 查询设备状态
   */
   checkDeviceOnline() {
+    // deviceService.deviceAidStatus({
+    //   data: {
+    //     deviceId: this.data.deviceId,
+    //     deviceType: this.data.deviceType,
+    //     leftRight: this.data.leftRight
+    //   },
+    //   success: function (res) {
+    //     console.log('----deviceAidStatus--', res)
+    //   },
+    //   fail(err) {
+    //   }
+    // })
+    // return;
     let _this = this
     deviceService.deviceStatus({
       data: {
