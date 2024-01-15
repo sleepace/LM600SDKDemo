@@ -343,7 +343,7 @@ function infraredSwitch(params) {
       leftRight:
       valid: (/0:无效， 1:有效)
       mode:干预模式 模式：1--5
-      level:干预等级 等级：1--5
+      level:干预等级 等级：0--50
     }
   }
 */

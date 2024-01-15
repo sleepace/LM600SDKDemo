@@ -86,3 +86,8 @@ page {
 .picker-view{
 	width: 500rpx;
 }
+
+.input-level{
+  display: flex;
+  text-align: end;
+}

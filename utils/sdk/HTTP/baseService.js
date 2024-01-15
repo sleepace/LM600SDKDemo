@@ -37,7 +37,7 @@ const urlList = {
   },
   token: {
     tokenCheck: '/app/tokenCheck',
-  }
+  }                               
 }
 
 function request(params) {

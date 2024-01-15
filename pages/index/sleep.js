@@ -25,6 +25,11 @@ Page({
     breathAlert: 0,
     heartAlert: 0,
     leaveBedAlert: 0,
+    // 红外
+    infraredFlag: 0, //红外开关
+    infraredMode: 0,  //红外模式
+    infraredLevel: 0, //红外等级0~50
+    columns3: ['模式1', '模式2', '模式3', '模式4', '模式5'],
   },
 
   /**
@@ -57,6 +62,7 @@ Page({
     this.getAlert()
     this.getIntervene()
     this.getBatterySwitch()
+    this.getInfrared()
   },
 
   /**
@@ -101,28 +107,28 @@ Page({
     deviceService.batteryClick({
       data: {
         deviceId: this.data.deviceId,
-        status: this.data.electricSwitch == 1 ? 0 : 1 ,
+        status: this.data.electricSwitch == 1 ? 0 : 1,
       },
       success: function (res) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: (_this.data.electricSwitch == 1 ? "关闭" : "开启" ) + "负电位成功"
+          content: (_this.data.electricSwitch == 1 ? "关闭" : "开启") + "负电位成功"
         })
         _this.setData({
-          electricSwitch: _this.data.electricSwitch == 1 ? 0 : 1 
+          electricSwitch: _this.data.electricSwitch == 1 ? 0 : 1
         })
       },
       fail(err) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: (_this.data.electricSwitch == 1 ?  "关闭" : "开启") + "负电位失败"
+          content: (_this.data.electricSwitch == 1 ? "关闭" : "开启") + "负电位失败"
         })
       }
     })
   },
-  getBatterySwitch(){
+  getBatterySwitch() {
     let _this = this
     deviceService.getBatterySwitch({
       data: {
@@ -134,9 +140,9 @@ Page({
           title: '',
           content: "获取负电位成功"
         })
-        if(res){
+        if (res) {
           _this.setData({
-            electricSwitch: res.status == 1 ? 1 : 0 
+            electricSwitch: res.status == 1 ? 1 : 0
           })
         }
       },
@@ -144,7 +150,7 @@ Page({
         wx.showModal({
           showCancel: false,
           title: '',
-          content:  "获取负电位失败"
+          content: "获取负电位失败"
         })
       }
     })
@@ -156,6 +162,7 @@ Page({
     console.log('leftRight-----', this.data.leftRight)
     this.getAlert()
     this.getIntervene()
+    this.getInfrared()
   },
 
   /**
@@ -201,14 +208,28 @@ Page({
   },
 
   onConfirm(event) {
-    if (this.data.interfereIndex == 0) {
-      this.setData({ interfereMode: event.detail.index })
-    }
-    else {
-      this.setData({ interfereLevel: event.detail.index })
-    }
     this.setData({ show: false })
-    this.operateSleepInterfere()
+    switch (this.data.interfereIndex) {
+      case 0:
+        {
+          this.setData({ interfereMode: event.detail.index })
+          this.operateSleepInterfere()
+        }
+        break;
+      case 1:
+        {
+          this.setData({ interfereLevel: event.detail.index })
+          this.operateSleepInterfere()
+        }
+        break;
+      case 2: {
+        this.setData({ infraredMode: event.detail.index })
+        this.setInfrared()
+      }
+        break;
+      default:
+        break;
+    }
   },
 
   onCancel() {
@@ -225,6 +246,80 @@ Page({
         interveneMode: this.data.interfereMode + 1,
         interveneLevel: this.data.interfereLevel + 1
 
+      },
+      success: function (res) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "干预配置成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "干预配置失败"
+        })
+      }
+    })
+  },
+
+  /**
+   * 红外干预开关
+   */
+  infraredOnchange(e) {
+    let on = e.detail.value
+    this.setData({
+      infraredFlag: on
+    });
+    deviceService.setInfraredConfig({
+      data: {
+        deviceId: this.data.deviceId,
+        deviceType: 0x800C,
+        leftRight: this.data.leftRight,
+        valid: on ? 1 : 0,
+        mode: this.data.infraredMode + 1,
+        level: this.data.infraredLevel
+      },
+      success: function (res) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: (on ? "开启" : "关闭") + "红外干预成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: (on ? "开启" : "关闭") + "红外干预失败"
+        })
+      }
+    })
+  },
+
+  infraredMode() {
+    this.setData({ show: true, columns: this.data.columns3, interfereIndex: 2 })
+  },
+  inputinfraredLevel(e) {
+    console.log('e.detail.value----',e.detail.value)
+    if(e.detail.value && e.detail.value != this.data.infraredLevel){
+      this.setData({
+        infraredLevel: e.detail.value
+      });
+      this.setInfrared()
+    }
+  },
+  // 红外干预设置
+  setInfrared() {
+    deviceService.setInfraredConfig({
+      data: {
+        deviceId: this.data.deviceId,
+        deviceType: 0x800C,
+        leftRight: this.data.leftRight,
+        valid: this.data.infraredFlag,
+        mode: this.data.infraredMode + 1,
+        level: this.data.infraredLevel
       },
       success: function (res) {
         wx.showModal({
@@ -309,18 +404,18 @@ Page({
     let _this = this
     userExtService.getAlert({
       data: {
-        deviceId:this.data.deviceId,
-        leftRight:this.data.leftRight,
+        deviceId: this.data.deviceId,
+        leftRight: this.data.leftRight,
       },
       success: function (res) {
-        if(res){
+        if (res) {
           _this.setData({
             leaveBedAlert: res.leaveBedAlert,
             heartAlert: res.heartAlert,
             breathAlert: res.breathAlert,
           })
         }
-        else{
+        else {
           _this.setData({
             leaveBedAlert: 0,
             heartAlert: 0,
@@ -346,21 +441,21 @@ Page({
     let _this = this
     userExtService.getIntervene({
       data: {
-        deviceId:this.data.deviceId,
-        leftRight:this.data.leftRight,
+        deviceId: this.data.deviceId,
+        leftRight: this.data.leftRight,
       },
       success: function (res) {
-        console.log('getIntervene----',res)
-        if(res){
+        console.log('getIntervene----', res)
+        if (res) {
           _this.setData({
             interfereFlag: res.interveneFlag,
-            interveneMode: res.interveneMode > 0 ? res.interveneMode-1: 0 ,
-            interveneLevel: res.interveneLevel > 0 ? res.interveneLevel-1: 0,
+            interveneMode: res.interveneMode > 0 ? res.interveneMode - 1 : 0,
+            interveneLevel: res.interveneLevel > 0 ? res.interveneLevel - 1 : 0,
           })
-        }else{
+        } else {
           _this.setData({
             interfereFlag: 0,
-            interveneMode:  0 ,
+            interveneMode: 0,
             interveneLevel: 0,
           })
         }
@@ -375,6 +470,43 @@ Page({
           showCancel: false,
           title: '',
           content: "获取干预配置失败"
+        })
+      }
+    })
+  },
+  getInfrared(){
+    let _this = this
+    deviceService.getInfraredConfig({
+      data: {
+        deviceId: this.data.deviceId,
+        leftRight: this.data.leftRight,
+      },
+      success: function (res) {
+        console.log('getInfrared----', res)
+        if (res) {
+          _this.setData({
+            infraredFlag: res.valid,
+            infraredMode: res.mode > 0 ? res.mode - 1 : 0,
+            infraredLevel: res.level ,
+          })
+        } else {
+          _this.setData({
+            infraredFlag: 0,
+            infraredMode: 0,
+            infraredLevel: 0,
+          })
+        }
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取红外干预配置成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取红外干预配置失败"
         })
       }
     })
