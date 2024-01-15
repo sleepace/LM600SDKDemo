@@ -317,7 +317,7 @@ Page({
         deviceId: this.data.deviceId,
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
-        valid: this.data.infraredFlag,
+        valid: this.data.infraredFlag ? 1 : 0,
         mode: this.data.infraredMode + 1,
         level: this.data.infraredLevel
       },
