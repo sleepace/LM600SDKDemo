@@ -15,8 +15,8 @@ Page({
     // channelID: "10000",
     // deviceId: "teiug44lw85n9",
     serverIp: "https://s171.sleepace.com/lekang",
-    token: "test",
-    channelID: "10000",
+    token: "ollO567f7dxhTdg8YuI0krNs75nY",
+    channelID: "57082",
     deviceId: "teiug44lw85n9",
     leftRight: 0, //左边left(0)，右边right(1)
   },
