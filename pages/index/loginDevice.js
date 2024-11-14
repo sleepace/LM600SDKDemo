@@ -9,16 +9,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // serverIp: "http://120.77.233.171:8093",
+    serverIp: "http://172.16.0.65:8092",
     // serverIp: 'https://s171.sleepace.com/lekang',
-    // token: "test",
-    // channelID: "10000",
-    // deviceId: "teiug44lw85n9",
-    serverIp: "https://s171.sleepace.com/lekang",
-    token: "ollO567f7dxhTdg8YuI0krNs75nY",
-    channelID: "57082",
+    token: "test",
+    channelID: "10000",
     deviceId: "teiug44lw85n9",
+    // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
+    // token: "ollO567f7dxhTdg8YuI0krNs75nY",
+    // channelID: "57082",
+    // deviceId: "wajtq9jobwoi0",
     leftRight: 0, //左边left(0)，右边right(1)
+    single: 0, //单人(0)，双人(1)
   },
 
   /**
@@ -46,7 +47,9 @@ Page({
     let serverIp = wx.getStorageSync('serverIp')
     let token = wx.getStorageSync('token')
     let channelID = wx.getStorageSync('channelID')
-    console.log('leftRight---', side, deviceId, serverIp, token, channelID)
+    let single = wx.getStorageSync('single')
+
+    console.log('leftRight---', side, deviceId, serverIp, token, channelID,single)
     if(deviceId){
       this.setData({
         deviceId: deviceId,
@@ -72,6 +75,12 @@ Page({
         channelID: channelID,
       });
     }
+    if(single){
+      this.setData({
+        single: single,
+      });
+    }
+
   },
 
   /**
@@ -92,7 +101,6 @@ Page({
   onUnload() {
 
   },
-
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -156,8 +164,8 @@ Page({
       success: function (res) {
         // open websocket
         let tcpServer = res.tcpServer
-        // app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
-        app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
+        app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
+        // app.globalData.webSoket = "wss://sleepace.zhijiashiguang.com/ws" //暂时写死测试通过校验
         console.log('---ws--', app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
         wx.setStorageSync('userId', res.user.userId)
@@ -183,6 +191,14 @@ Page({
     });
     wx.setStorageSync('leftRight', event.detail.index)
     console.log('leftRight-----', this.data.leftRight)
+  },
+
+  onSelect(event) {
+    this.setData({
+      single: event.detail.index
+    });
+    wx.setStorageSync('single', event.detail.index)
+    console.log('single-----', this.data.single)
   },
 
   bindDevice(e) {

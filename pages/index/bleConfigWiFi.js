@@ -12,8 +12,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // serverIp: "120.24.68.136",
-    // serverPort: 29012,
+    // serverIp: "172.16.0.65",
+    // serverPort: 8092,
     serverIp: "120.77.233.171",
     serverPort: "29011",
     ssid: "SAN",
