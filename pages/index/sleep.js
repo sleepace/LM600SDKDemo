@@ -30,6 +30,13 @@ Page({
     infraredMode: 0,  //红外模式
     infraredLevel: 0, //红外等级0~50
     columns3: ['模式1', '模式2', '模式3', '模式4', '模式5'],
+    inbedTime: 30, //在床时间
+    playMode: '1',
+    volume: 5,
+    countTime: 30, // 倒计时
+    columns4: ['曲目1', '曲目2', '曲目3', '曲目4', '曲目5'],
+    musicIndex: 0
+
   },
 
   /**
@@ -164,7 +171,6 @@ Page({
     this.getIntervene()
     this.getInfrared()
   },
-
   /**
     * 干预开关
     */
@@ -225,6 +231,10 @@ Page({
       case 2: {
         this.setData({ infraredMode: event.detail.index })
         this.setInfrared()
+      }
+        break;
+      case 3: {
+        this.setData({ musicIndex: event.detail.index })
       }
         break;
       default:
@@ -302,8 +312,8 @@ Page({
     this.setData({ show: true, columns: this.data.columns3, interfereIndex: 2 })
   },
   inputinfraredLevel(e) {
-    console.log('e.detail.value----',e.detail.value)
-    if(e.detail.value && e.detail.value != this.data.infraredLevel){
+    console.log('e.detail.value----', e.detail.value)
+    if (e.detail.value && e.detail.value != this.data.infraredLevel) {
       this.setData({
         infraredLevel: e.detail.value
       });
@@ -474,7 +484,7 @@ Page({
       }
     })
   },
-  getInfrared(){
+  getInfrared() {
     let _this = this
     deviceService.getInfraredConfig({
       data: {
@@ -487,7 +497,7 @@ Page({
           _this.setData({
             infraredFlag: res.valid,
             infraredMode: res.mode > 0 ? res.mode - 1 : 0,
-            infraredLevel: res.level ,
+            infraredLevel: res.level,
           })
         } else {
           _this.setData({
@@ -510,5 +520,42 @@ Page({
         })
       }
     })
-  }
+  },
+
+  inbedOnChange(val) {
+    this.setData({
+      inbedTime: val.detail
+    });
+  },
+
+  selectMusic(val) {
+    this.setData({ show: true, columns: this.data.columns4, interfereIndex: 3 })
+  },
+
+  clickPlayMode(val) {
+    this.setData({
+      playMode: val.detail,
+    });
+  },
+
+  volumeOnchange(val) {
+    this.setData({
+      volume: val.detail,
+    });
+  },
+
+  countTimeOnchange(val) {
+    this.setData({
+      countTime: val.detail
+    });
+  },
+
+  sendVolume(){
+
+  },
+
+  playMusic(){
+    
+  },
+  
 })

@@ -42,11 +42,25 @@ page {
 }
 
 
+.small-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 15rpx;
+  height: 80rpx;
+  background-color: rgba(118,188, 254, 1);
+	color: white;
+  width: 200rpx;
+}
+
+
 .label-view{
   display: flex;
   flex-direction: column;
-  padding: 20rpx 32rpx;
+  margin: 20rpx 32rpx;
   justify-content: flex-start;
+  border-bottom:1rpx solid rgba(195,203, 214, 1);
 }
 
 .switch-view{
@@ -56,8 +70,19 @@ page {
   justify-content: space-between;
   align-items: center;
   border-bottom:1rpx solid rgba(195,203, 214, 1);
-  padding: 5rpx 0;
+  padding: 15rpx 0;
 }
+
+
+.normal-view{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+}
+
+
 
 .item-label{
 	color: rgba(0, 0, 0, .8);
@@ -70,7 +95,6 @@ page {
 	justify-content: flex-end;
 	height: 60rpx;
 	width: 50%;
-
 }
 
 .item-value{
@@ -90,4 +114,6 @@ page {
 .input-level{
   display: flex;
   text-align: end;
+  height: 60rpx;
+  border: 1px solid rgba(195,203, 214, 1);
 }
