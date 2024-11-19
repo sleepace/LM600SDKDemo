@@ -96,9 +96,25 @@ function updateIntervene(params) {
   baseService.request(_params);
 }
 
+
+function setAlarmTimeRange(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.setAlarmTimeRange;
+  baseService.request(_params);
+}
+
+
+function getAlarmTimeRange(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.getAlarmTimeRange;
+  baseService.request(_params);
+}
+
 module.exports = {
   getAlert: getAlert,
   updateAlert: updateAlert,
   getIntervene: getIntervene,
-  updateIntervene: updateIntervene
+  updateIntervene: updateIntervene,
+  setAlarmTimeRange: setAlarmTimeRange,
+  getAlarmTimeRange: getAlarmTimeRange,
 }

@@ -19,7 +19,7 @@ Page({
     // channelID: "57082",
     // deviceId: "wajtq9jobwoi0",
     leftRight: 0, //左边left(0)，右边right(1)
-    single: 0, //单人(0)，双人(1)
+    useType: 1, //单双人模式 1：单人，2：双人
   },
 
   /**
@@ -47,9 +47,9 @@ Page({
     let serverIp = wx.getStorageSync('serverIp')
     let token = wx.getStorageSync('token')
     let channelID = wx.getStorageSync('channelID')
-    let single = wx.getStorageSync('single')
+    let useType = wx.getStorageSync('useType')
 
-    console.log('leftRight---', side, deviceId, serverIp, token, channelID,single)
+    console.log('leftRight---', side, deviceId, serverIp, token, channelID,useType)
     if(deviceId){
       this.setData({
         deviceId: deviceId,
@@ -75,9 +75,9 @@ Page({
         channelID: channelID,
       });
     }
-    if(single){
+    if(useType){
       this.setData({
-        single: single,
+        useType: useType,
       });
     }
 
@@ -195,10 +195,10 @@ Page({
 
   onSelect(event) {
     this.setData({
-      single: event.detail.index
+      useType: event.detail.index + 1
     });
-    wx.setStorageSync('single', event.detail.index)
-    console.log('single-----', this.data.single)
+    wx.setStorageSync('useType', event.detail.index + 1)
+    console.log('useType-----', this.data.useType)
   },
 
   bindDevice(e) {
@@ -206,6 +206,7 @@ Page({
       data: {
         deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
+        useType: this.data.useType
       },
       success: function (res) {
         wx.showModal({

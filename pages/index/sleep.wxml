@@ -7,7 +7,7 @@
 
 	<van-tabs type="card" active="{{ leftRight }}" color="#76B6FE" bind:change="onChange">
 		<van-tab title="左侧"></van-tab>
-		<van-tab title="右侧"></van-tab>
+		<van-tab title="右侧" disabled="{{ useType == 1 ? true : false }}"></van-tab>
 	</van-tabs>
 
 	<view class="button-view">
@@ -91,7 +91,7 @@
 	</view>
 	<view class="switch-view">
 		<view class="item-label">
-			曲目
+			{{ '曲目' + (musicIndex+1) }}
 		</view>
 		<view class="item-right" bindtap="selectMusic">
 			<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
@@ -101,9 +101,9 @@
 		<view>循环模式</view>
 		<view class="normal-view">
 			<van-radio-group value="{{ playMode }}" direction="horizontal" bind:change="clickPlayMode">
+				<van-radio name="0">单曲循环</van-radio>
 				<van-radio name="1">列表循环</van-radio>
-				<van-radio name="2">单曲循环</van-radio>
-				<van-radio name="3">随机循环</van-radio>
+				<van-radio name="2">随机循环</van-radio>
 			</van-radio-group>
 		</view>
 	</view>
@@ -119,9 +119,12 @@
 		<view>音量</view>
 		<view class="normal-view">
 			<input class="input input-level" name="volume" value="{{volume}}" bindinput="volumeOnchange" placeholder="音量1~5" />
-			<button class="small-btn" bindtap="sendVolume">发送</button>
+			<!-- <button class="/small-btn" bindtap="sendVolume">发送</button> -->
 		</view>
-		<button class="normal-btn" bindtap="playMusic">播放</button>
+		<view class="button-view">
+			<button class="small-btn" bindtap="playMusic">播放</button>
+		<button class="small-btn" bindtap="stopMusic">停止</button>
+		</view>
 	</view>
 	<view class="button-view"></view>
 	<van-popup show="{{ show }}">

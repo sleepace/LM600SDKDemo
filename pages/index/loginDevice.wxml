@@ -25,7 +25,7 @@
 		<label>设置单/双人</label>
 	</view>
 	<view style="padding:32rpx 0;">
-		<van-tabs type="card" active="{{ single }}" color="#76B6FE" bind:change="onSelect">
+		<van-tabs type="card" active="{{ useType -1 }}" color="#76B6FE" bind:change="onSelect">
 			<van-tab title="单人（默认左侧）"></van-tab>
 			<van-tab title="双人"></van-tab>
 		</van-tabs>
@@ -36,7 +36,7 @@
 	<view style="padding:32rpx 0;">
 		<van-tabs type="card" active="{{ leftRight }}" color="#76B6FE" bind:change="onChange">
 			<van-tab title="左侧"></van-tab>
-			<van-tab title="右侧" disabled="{{ single == 0 ? true : false }}"></van-tab>
+			<van-tab title="右侧" disabled="{{ useType == 1 ? true : false }}"></van-tab>
 		</van-tabs>
 	</view>
 	<div class="button-view">

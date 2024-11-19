@@ -54,6 +54,7 @@ function deviceListAll(params){
       deviceName:
       deviceType:
       leftRight:
+      useType：单双人模式 1：单人，2：双人
     }
   }
 */
@@ -370,6 +371,20 @@ function getInfraredConfig(params) {
 }
 
 
+function setMusicConfig(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.setMusicConfig;
+  baseService.request(_params);
+}
+
+
+function getMusicConfig(params) {
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.getMusicConfig;
+  baseService.request(_params);
+}
+
+
 module.exports = {
   deviceList: deviceList,
   deviceListAll: deviceListAll,
@@ -387,7 +402,10 @@ module.exports = {
   getBatterySwitch: getBatterySwitch,
   infraredSwitch: infraredSwitch,
   setInfraredConfig: setInfraredConfig,
-  getInfraredConfig: getInfraredConfig
+  getInfraredConfig: getInfraredConfig,
+  setMusicConfig: setMusicConfig,
+  getMusicConfig: getMusicConfig,
+
 }
 
 
