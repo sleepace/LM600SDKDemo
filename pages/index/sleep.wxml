@@ -116,7 +116,7 @@
 		<view class="normal-view">助眠音乐将会在播放后xx分钟后自动关闭</view>
 	</view>
 	<view class="label-view">
-		<view>音量</view>
+		<view>音量（范围1~5）</view>
 		<view class="normal-view">
 			<input class="input input-level" name="volume" value="{{volume}}" bindinput="volumeOnchange" placeholder="音量1~5" />
 			<!-- <button class="/small-btn" bindtap="sendVolume">发送</button> -->

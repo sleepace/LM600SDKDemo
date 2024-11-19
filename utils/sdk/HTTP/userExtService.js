@@ -40,6 +40,7 @@ function getAlert(params) {
       breathAlert:'是否打开呼吸异常预警'
       heartAlert：:'是否打开心跳异常预警'
       leaveBedAlert:'是否打开离床预警'
+      inBedTime: 30 ,//离床报警前需要在床的时长，默认30分钟
     }
   }
 
@@ -53,7 +54,8 @@ function getAlert(params) {
       "mobileWay": 0,
       "updateTime": "2018-03-20 10:13:20",
       "userId": 25556,
-      "wechatWay": 1
+      "wechatWay": 1,
+      
   }
 */
 function updateAlert(params) {
@@ -65,7 +67,7 @@ function updateAlert(params) {
 /*
  * 获取睡眠干预
  参数：
-{
+ data:{
   deviceId:
   leftRight:
 }
@@ -80,7 +82,7 @@ function getIntervene(params) {
 /*
  * 更新睡眠干预配置
   参数：
-{
+ data:{
   deviceId:
   deviceType:
   leftRight:
@@ -97,13 +99,37 @@ function updateIntervene(params) {
 }
 
 
+/*
+ * 设置睡眠时间段
+  参数：
+ data:{
+  deviceId:
+  deviceType:
+  leftRight:
+  ranges:[ //最多设置5个时间段
+    {
+          "start":495,	//8:15
+          "end":626		//10:26
+    }
+  ]
+}
+ */
 function setAlarmTimeRange(params) {
   const _params = Object.assign({}, params);
   _params.url = baseService.urlList.device.setAlarmTimeRange;
   baseService.request(_params);
 }
 
-
+/*
+ * 获取睡眠时间段
+  参数：
+ data:{
+  deviceId:
+  deviceType:
+  leftRight:
+}
+response返回数据和设置一样
+ */
 function getAlarmTimeRange(params) {
   const _params = Object.assign({}, params);
   _params.url = baseService.urlList.device.getAlarmTimeRange;

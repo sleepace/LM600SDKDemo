@@ -370,14 +370,40 @@ function getInfraredConfig(params) {
   baseService.request(_params);
 }
 
-
+/*
+名称： 助眠音乐配置设置
+参数：
+  {
+    data: {
+      deviceId:
+      leftRight:
+      deviceType:
+      status: 1 //播放/停止:0:停止， 1:播放
+      musicId: 1 //播放指定曲目:曲目：1--x
+      recycle: 0 //循环模式:0:单曲循环， 1:列表循环 2: 随机循环
+      time: 30  //定时停止:(1--120)分钟
+      volume: 5 //音量1-5
+    }
+  }
+*/
 function setMusicConfig(params) {
   const _params = Object.assign({}, params);
   _params.url = baseService.urlList.device.setMusicConfig;
   baseService.request(_params);
 }
 
-
+/*
+名称： 助眠音乐配置获取
+参数：
+  {
+    data: {
+      deviceId:
+      leftRight:
+      deviceType:
+    }
+  }
+  respnse 返回参数和设置参数一致
+*/
 function getMusicConfig(params) {
   const _params = Object.assign({}, params);
   _params.url = baseService.urlList.device.getMusicConfig;

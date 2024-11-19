@@ -14,7 +14,6 @@ Page({
     indexRow: 0,
     startTime: "22:00",
     endTime: "08:00",
-
     timeList: [],
     deviceId: '',
     leftRight: 0,
