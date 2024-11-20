@@ -1,9 +1,14 @@
 <!--pages/index/sleepTime.wxml-->
 <view>
-	<view class="switch-view" wx:for="{{ timeList }}"wx:for-item="item" >
-		<view>{{item.startTime}}~{{item.endTime}}</view>
+	<view wx:for="{{ timeList }}" wx:for-item="item" wx:for-index ="index">
+		<van-swipe-cell id="{{index}}" right-width="{{ 65 }}" async-close bind:close="onClose">
+			<van-cell-group>
+				<van-cell title="{{item.startTime}}~{{item.endTime}}" />
+			</van-cell-group>
+			<view slot="right">删除</view>
+		</van-swipe-cell>
 	</view>
-<view class="footer-veiw">
-	<button class="small-btn" bindtap="addTime">添加</button>
-</view>
+	<view class="footer-veiw">
+		<button class="small-btn" bindtap="addTime">添加</button>
+	</view>
 </view>

@@ -111,14 +111,14 @@ Page({
       success: function (res) {
         if (res) {
           res.ranges.forEach(item => {
-            let hour_start = item.start/60 
-            let min_start = item.start%60
-            hour_start = hour_start < 10 ? '0'+hour_start : hour_start
-            min_start = min_start < 10 ? '0'+min_start : min_start
-            let hour_end= item.end/60 
-            let min_end = item.end%60
-            hour_end = hour_end < 10 ? '0'+hour_end : hour_end
-            min_end = min_end < 10 ? '0'+min_end : min_end
+            let hour_start = item.start / 60
+            let min_start = item.start % 60
+            hour_start = hour_start < 10 ? '0' + hour_start : hour_start
+            min_start = min_start < 10 ? '0' + min_start : min_start
+            let hour_end = item.end / 60
+            let min_end = item.end % 60
+            hour_end = hour_end < 10 ? '0' + hour_end : hour_end
+            min_end = min_end < 10 ? '0' + min_end : min_end
             list.push({
               startTime: hour_start + ':' + min_start,
               endTime: hour_end + ':' + min_end
@@ -138,5 +138,54 @@ Page({
         })
       }
     })
+  },
+  onClose(event) {
+    const { position, instance } = event.detail;
+    let _this = this
+    switch (position) {
+      case 'cell':
+        instance.close();
+        break;
+      case 'right':
+          instance.close();
+          let index = parseInt(event.target.id)
+          let timeArr = this.timeList(this.data.timeList)
+           timeArr.splice(index, 1)
+          userExtService.setAlarmTimeRange({
+            data: {
+              deviceId: this.data.deviceId,
+              leftRight: this.data.leftRight,
+              deviceType: 0x800C,
+              ranges: timeArr
+            },
+            success: function (res) {
+              _this.getTimeRange()
+              wx.showModal({
+                showCancel: false,
+                title: '',
+                content: "删除时间段成功"
+              })
+            },
+            fail(err) {
+              wx.showModal({
+                showCancel: false,
+                title: '',
+                content: "删除时间段失败"
+              })
+            }
+          })
+  
+        break;
+    }
+  },
+  timeList(list) {
+    let arr = []
+    list.forEach(item => {
+      arr.push({
+        start: parseInt(item.startTime.split(':')[0]) * 60 + parseInt(item.startTime.split(':')[1]),
+        end: parseInt(item.endTime.split(':')[0]) * 60 + parseInt(item.endTime.split(':')[1])
+      })
+    });
+    return arr
   }
 })
