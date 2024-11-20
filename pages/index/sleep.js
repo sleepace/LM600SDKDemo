@@ -627,19 +627,19 @@ Page({
       success: function (res) {
         console.log('getMusicConfig----', res)
         if (res) {
-          this.setData({
+          _this.setData({
             status: res.status,
             musicIndex: res.musicId - 1,
-            playMode: res.recycle,
+            playMode: JSON.stringify(res.recycle),
             countTime: res.time,
             volume: res.volume
           })
+          wx.showModal({
+            showCancel: false,
+            title: '',
+            content: "获取助眠音乐配置设置成功"
+          })
         }
-        wx.showModal({
-          showCancel: false,
-          title: '',
-          content: "获取助眠音乐配置设置成功"
-        })
       },
       fail(err) {
         wx.showModal({
