@@ -17,7 +17,7 @@ Page({
     // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
     // token: "ollO567f7dxhTdg8YuI0krNs75nY",
     channelID: "57082",
-    deviceId: "mvb051uy30eyj",
+    deviceId: "ea2qj5ytxplt3",
     leftRight: 0, //左边left(0)，右边right(1)
     useType: 1, //单双人模式 1：单人，2：双人
   },
@@ -164,8 +164,9 @@ Page({
       success: function (res) {
         // open websocket
         let tcpServer = res.tcpServer
-        app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
+        // app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
         // app.globalData.webSoket = "wss://sleepace.zhijiashiguang.com/ws" //暂时写死测试通过校验
+        app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
         console.log('---ws--', app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
         wx.setStorageSync('userId', res.user.userId)
