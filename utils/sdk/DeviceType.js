@@ -67,6 +67,7 @@ function getDeviceType(deviceName) {
     {rule: /^EW22W[0-9a-zA-Z]{8}/, type: DEVICE_TYPE_EW202W},
     {rule: /^SA14[0-9a-zA-Z]{9}/, type: DEVICE_TYPE_NOX_SAB_4},
     {rule: /^LM60[0-9a-zA-Z]{9}/, type: DEVICE_TYPE_LM600},
+    {rule: /^ZJ60[0-9a-zA-Z]{9}/, type: DEVICE_TYPE_LM600},
   ];
 
   if (!deviceName) {

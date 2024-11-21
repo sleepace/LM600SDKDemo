@@ -9,15 +9,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    serverIp: "http://172.16.0.65:8092",
-    // serverIp: 'https://s171.sleepace.com/lekang',
+    // serverIp: "http://172.16.0.65:8092",
+    serverIp: 'https://s171.sleepace.com/lekang',
     token: "test",
-    channelID: "10000",
-    deviceId: "teiug44lw85n9",
+    // channelID: "10000",
+    // deviceId: "teiug44lw85n9",
     // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
     // token: "ollO567f7dxhTdg8YuI0krNs75nY",
-    // channelID: "57082",
-    // deviceId: "wajtq9jobwoi0",
+    channelID: "57082",
+    deviceId: "mvb051uy30eyj",
     leftRight: 0, //左边left(0)，右边right(1)
     useType: 1, //单双人模式 1：单人，2：双人
   },
@@ -219,7 +219,7 @@ Page({
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "绑定设备失败"
+          content: "绑定设备失败" +  err.message
         })
         console.log('bindDevice fail', err)
       }
