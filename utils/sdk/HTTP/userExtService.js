@@ -99,48 +99,9 @@ function updateIntervene(params) {
 }
 
 
-/*
- * 设置睡眠时间段
-  参数：
- data:{
-  deviceId:
-  deviceType:
-  leftRight:
-  ranges:[ //最多设置5个时间段
-    {
-          "start":495,	//8:15
-          "end":626		//10:26
-    }
-  ]
-}
- */
-function setAlarmTimeRange(params) {
-  const _params = Object.assign({}, params);
-  _params.url = baseService.urlList.device.setAlarmTimeRange;
-  baseService.request(_params);
-}
-
-/*
- * 获取睡眠时间段
-  参数：
- data:{
-  deviceId:
-  deviceType:
-  leftRight:
-}
-response返回数据和设置一样
- */
-function getAlarmTimeRange(params) {
-  const _params = Object.assign({}, params);
-  _params.url = baseService.urlList.device.getAlarmTimeRange;
-  baseService.request(_params);
-}
-
 module.exports = {
   getAlert: getAlert,
   updateAlert: updateAlert,
   getIntervene: getIntervene,
-  updateIntervene: updateIntervene,
-  setAlarmTimeRange: setAlarmTimeRange,
-  getAlarmTimeRange: getAlarmTimeRange,
+  updateIntervene: updateIntervene
 }

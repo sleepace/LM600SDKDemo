@@ -1,6 +1,5 @@
 // pages/index/sleepDuration.js
 const deviceService = require('../../utils/SDK/HTTP/deviceService');
-const userExtService = require('../../utils/SDK/HTTP/userExtService');
 
 Page({
 
@@ -139,7 +138,7 @@ Page({
       this.data.timeList.push(time)
       // wx.setStorageSync('timeList', JSON.stringify(this.data.timeList))
       let rangeArray = this.timeList(this.data.timeList)
-      userExtService.setAlarmTimeRange({
+      deviceService.setAlarmTimeRange({
         data: {
           deviceId: this.data.deviceId,
           leftRight: this.data.leftRight,

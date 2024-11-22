@@ -1,6 +1,5 @@
 // pages/index/sleepTime.js
 const deviceService = require('../../utils/SDK/HTTP/deviceService');
-const userExtService = require('../../utils/SDK/HTTP/userExtService');
 
 Page({
 
@@ -102,7 +101,7 @@ Page({
   getTimeRange() {
     let _this = this
     let list = []
-    userExtService.getAlarmTimeRange({
+    deviceService.getAlarmTimeRange({
       data: {
         deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
@@ -151,7 +150,7 @@ Page({
           let index = parseInt(event.target.id)
           let timeArr = this.timeList(this.data.timeList)
            timeArr.splice(index, 1)
-          userExtService.setAlarmTimeRange({
+           deviceService.setAlarmTimeRange({
             data: {
               deviceId: this.data.deviceId,
               leftRight: this.data.leftRight,

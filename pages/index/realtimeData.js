@@ -248,14 +248,6 @@ Page({
       })
     }
   },
-  /*
-  睡眠时间段设置
-  */
-  jumpToSleepSet() {
-    wx.navigateTo({
-      url: './sleepTime',
-    })
-  },
 
   /**
   * 查询设备状态

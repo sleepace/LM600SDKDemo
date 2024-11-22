@@ -246,7 +246,8 @@ Page({
       }
         break;
       case 3: {
-        this.setData({ musicIndex: event.detail.index })
+        this.setData({ musicIndex: event.detail.index, status: 1 })
+        this.setMusicConfig()
       }
         break;
       default:
@@ -649,5 +650,13 @@ Page({
         })
       }
     })
-  }
+  },
+    /*
+  报警时间段设置
+  */
+ jumpToSleepSet() {
+  wx.navigateTo({
+    url: './sleepTime',
+  })
+},
 })
