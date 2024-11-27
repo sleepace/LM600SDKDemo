@@ -9,9 +9,6 @@
         <view>实时呼吸率：<span>{{breathRate}}</span></view>
         <view>实时心率：<span>{{heartRate}}</span></view>
     </div>
-    <div class="button-view">
-        <button class="normal-btn" bindtap="handStopMonitoring">手动结束监测</button>
-    </div>
     <div class="label-view">
         <view>当前设备状态：<span>{{currentStatus}}</span></view>
     </div>

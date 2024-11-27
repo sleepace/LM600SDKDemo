@@ -22,12 +22,21 @@
 		<button class="normal-btn">升级固件</button>
 	</div> -->
 	<view class="tip-view">
+		<label>设置单/双人</label>
+	</view>
+	<view style="padding:32rpx 0;">
+		<van-tabs type="card" active="{{ useType -1 }}" color="#76B6FE" bind:change="onSelect">
+			<van-tab title="单人（默认左侧）"></van-tab>
+			<van-tab title="双人"></van-tab>
+		</van-tabs>
+	</view>
+	<view class="tip-view">
 		<label>选择绑定位置：{{leftRight == 1 ? "右侧": "左侧"}}</label>
 	</view>
 	<view style="padding:32rpx 0;">
 		<van-tabs type="card" active="{{ leftRight }}" color="#76B6FE" bind:change="onChange">
 			<van-tab title="左侧"></van-tab>
-			<van-tab title="右侧"></van-tab>
+			<van-tab title="右侧" disabled="{{ useType == 1 ? true : false }}"></van-tab>
 		</van-tabs>
 	</view>
 	<div class="button-view">

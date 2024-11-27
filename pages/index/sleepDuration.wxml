@@ -1,0 +1,13 @@
+<!--pages/index/sleepDuration.wxml-->
+<view>
+	<van-cell-group>
+		<van-cell title="开始时间" value="{{startTime}}" clickable = 'ture' use-label-slot='true' bind:click='changeStartTime' />
+		<van-cell title="结束时间" value="{{endTime}}" clickable = 'ture' use-label-slot='true' bind:click="changeEndTime" />
+	</van-cell-group>
+	<van-datetime-picker confirm-button-text='' cancel-button-text='' type="time" value="{{ currentDate }}" min-hour="{{ minHour }}" max-hour="{{ maxHour }}" bind:input="onInput" />
+
+	<view class="footer-veiw">
+	<button class="small-btn" bindtap="saveTime">保存</button>
+</view>
+
+</view>

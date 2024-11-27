@@ -30,6 +30,11 @@ const urlList = {
     infraredSwitch: '/app/sleepAlertConf/infraredSwitch',//红外温度通知
     setInfraredConfig: '/app/sleepAlertConf/saveInfraredConfig',//红外温度配置
     getInfraredConfig: '/app/sleepAlertConf/getInfraredConfig',//红外温度配置获取
+    setAlarmTimeRange: '/app/alarmTimeRange/set',//设置报警时间段
+    getAlarmTimeRange: '/app/alarmTimeRange/get',//获取报警时间段,
+    setMusicConfig: '/app/musicConfig/set',//助眠音乐配置设置
+    getMusicConfig: '/app/musicConfig/get',//助眠音乐配置获取
+    
   },
   data: {
     getDailyReport: '/app/analysis/data',

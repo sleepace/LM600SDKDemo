@@ -23,6 +23,7 @@ Page({
     userId: "",
     statusStr: '',
     realNumber: 0,
+    taskId: null
 
 
   },
@@ -75,18 +76,26 @@ Page({
         //通过返回client，创建lm600tcpAPI ，websocket操作api
         lm600TcpApi = new medicaBase.LM600TcpApi(client)
         // 注册实时数据监听
-        lm600TcpApi.registerRealDataCallback((res, val) => {
-          console.log('real---', res, val,res.serialNumber)
-          if (res && res.realDataList && res.serialNumber == leftRight) {
-            let realdata = res.realDataList[0]
-            _this.setData({
-              status: realdata.status,
-              statusStr: _this.statusString(realdata.status), 
-              breathRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.breathRate,
-              heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate,
-              realNumber: res.serialNumber
-            })
-          }
+         let realId = lm600TcpApi.registerRealDataCallback((res, val) => {
+            console.log('real1---', res, val,res.serialNumber)
+            if (res && res.realDataList && res.serialNumber == leftRight) {
+              let realdata = res.realDataList[0]
+              _this.setData({
+                status: realdata.status,
+                statusStr: _this.statusString(realdata.status), 
+                breathRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.breathRate,
+                heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate,
+                realNumber: res.serialNumber
+              })
+            }
+          })
+
+        // lm600TcpApi.registerOnlineStatusCallback((res, val) => {
+        //   console.log('device online---', res)
+        // })
+
+        _this.setData({
+          taskId: realId
         })
       },
       onSocketError: function (res) {
@@ -98,10 +107,10 @@ Page({
     })
   },
 
-  statusString(status){
+  statusString(status) {
     switch (status) {
       case 5:
-      return "离床"
+        return "离床"
         break;
       default:
         return "在床"
@@ -115,6 +124,7 @@ Page({
   onHide() {
     console.log('--onHide----')
     // socketHelper.closeWS()
+    // lm600TcpApi.unregisterRealDataCallback(this.data.taskId)
   },
 
   /**
@@ -179,6 +189,7 @@ Page({
   */
   stopRealtimeData() {
     if (lm600TcpApi) {
+      console.log('restopRealtimeData222---', this.data.deviceId)
       lm600TcpApi.stopRealData({
         networkDeviceId: this.data.deviceId,
         deviceId: this.data.deviceId,
@@ -237,6 +248,7 @@ Page({
       })
     }
   },
+
   /**
   * 查询设备状态
   */
@@ -254,6 +266,18 @@ Page({
     //   }
     // })
     // return;
+
+    // let realId =lm600TcpApi.registerRealDataCallback((res, val) => {
+    //   console.log('real2---', res, val)
+
+    // })
+
+    // this.setData({
+    //   taskId: realId
+    // })
+    // console.log('checkDeviceOnline---',this.data.taskId)
+    // return;
+
     let _this = this
     deviceService.deviceStatus({
       data: {

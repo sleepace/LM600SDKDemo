@@ -40,6 +40,7 @@ function getAlert(params) {
       breathAlert:'是否打开呼吸异常预警'
       heartAlert：:'是否打开心跳异常预警'
       leaveBedAlert:'是否打开离床预警'
+      inBedTime: 30 ,//离床报警前需要在床的时长，默认30分钟
     }
   }
 
@@ -53,7 +54,8 @@ function getAlert(params) {
       "mobileWay": 0,
       "updateTime": "2018-03-20 10:13:20",
       "userId": 25556,
-      "wechatWay": 1
+      "wechatWay": 1,
+      
   }
 */
 function updateAlert(params) {
@@ -65,7 +67,7 @@ function updateAlert(params) {
 /*
  * 获取睡眠干预
  参数：
-{
+ data:{
   deviceId:
   leftRight:
 }
@@ -80,7 +82,7 @@ function getIntervene(params) {
 /*
  * 更新睡眠干预配置
   参数：
-{
+ data:{
   deviceId:
   deviceType:
   leftRight:
@@ -95,6 +97,7 @@ function updateIntervene(params) {
   _params.url = baseService.urlList.user.updateIntervene;
   baseService.request(_params);
 }
+
 
 module.exports = {
   getAlert: getAlert,

@@ -9,16 +9,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // serverIp: "http://120.77.233.171:8093",
-    // serverIp: 'https://s171.sleepace.com/lekang',
-    // token: "test",
+    // serverIp: "http://172.16.0.65:8092",
+    serverIp: 'https://s171.sleepace.com/lekang',
+    token: "test",
     // channelID: "10000",
     // deviceId: "teiug44lw85n9",
-    serverIp: "https://s171.sleepace.com/lekang",
-    token: "ollO567f7dxhTdg8YuI0krNs75nY",
+    // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
+    // token: "ollO567f7dxhTdg8YuI0krNs75nY",
     channelID: "57082",
-    deviceId: "teiug44lw85n9",
+    deviceId: "ea2qj5ytxplt3",
     leftRight: 0, //左边left(0)，右边right(1)
+    useType: 1, //单双人模式 1：单人，2：双人
   },
 
   /**
@@ -46,7 +47,9 @@ Page({
     let serverIp = wx.getStorageSync('serverIp')
     let token = wx.getStorageSync('token')
     let channelID = wx.getStorageSync('channelID')
-    console.log('leftRight---', side, deviceId, serverIp, token, channelID)
+    let useType = wx.getStorageSync('useType')
+
+    console.log('leftRight---', side, deviceId, serverIp, token, channelID,useType)
     if(deviceId){
       this.setData({
         deviceId: deviceId,
@@ -72,6 +75,12 @@ Page({
         channelID: channelID,
       });
     }
+    if(useType){
+      this.setData({
+        useType: useType,
+      });
+    }
+
   },
 
   /**
@@ -92,7 +101,6 @@ Page({
   onUnload() {
 
   },
-
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -157,6 +165,7 @@ Page({
         // open websocket
         let tcpServer = res.tcpServer
         // app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
+        // app.globalData.webSoket = "wss://sleepace.zhijiashiguang.com/ws" //暂时写死测试通过校验
         app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
         console.log('---ws--', app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
@@ -185,11 +194,20 @@ Page({
     console.log('leftRight-----', this.data.leftRight)
   },
 
+  onSelect(event) {
+    this.setData({
+      useType: event.detail.index + 1
+    });
+    wx.setStorageSync('useType', event.detail.index + 1)
+    console.log('useType-----', this.data.useType)
+  },
+
   bindDevice(e) {
     deviceService.bind({
       data: {
         deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
+        useType: this.data.useType
       },
       success: function (res) {
         wx.showModal({
@@ -202,7 +220,7 @@ Page({
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "绑定设备失败"
+          content: "绑定设备失败" +  err.message
         })
         console.log('bindDevice fail', err)
       }

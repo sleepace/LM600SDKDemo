@@ -30,6 +30,14 @@ Page({
     infraredMode: 0,  //红外模式
     infraredLevel: 0, //红外等级0~50
     columns3: ['模式1', '模式2', '模式3', '模式4', '模式5'],
+    inbedTime: 30, //在床时间
+    playMode: '0',
+    volume: 5,
+    countTime: 30, // 倒计时
+    columns4: ['曲目1', '曲目2', '曲目3', '曲目4', '曲目5'],
+    musicIndex: 0,
+    status: 0 , //1播放，0停止
+    useType: 1, 
   },
 
   /**
@@ -52,6 +60,8 @@ Page({
   onShow() {
     let deviceId = wx.getStorageSync('deviceId')
     let leftRight = wx.getStorageSync('leftRight')
+    let useType = wx.getStorageSync('useType')
+
     console.log('sleep---', deviceId, leftRight)
     if (deviceId) {
       this.setData({
@@ -59,10 +69,18 @@ Page({
         leftRight: leftRight
       })
     }
+
+    if(useType){
+      this.setData({
+        useType: useType,
+      });
+    }
+
     this.getAlert()
     this.getIntervene()
     this.getBatterySwitch()
     this.getInfrared()
+    this.getMusicConfig()
   },
 
   /**
@@ -163,8 +181,8 @@ Page({
     this.getAlert()
     this.getIntervene()
     this.getInfrared()
+    this.getMusicConfig()
   },
-
   /**
     * 干预开关
     */
@@ -225,6 +243,11 @@ Page({
       case 2: {
         this.setData({ infraredMode: event.detail.index })
         this.setInfrared()
+      }
+        break;
+      case 3: {
+        this.setData({ musicIndex: event.detail.index, status: 1 })
+        this.setMusicConfig()
       }
         break;
       default:
@@ -302,8 +325,8 @@ Page({
     this.setData({ show: true, columns: this.data.columns3, interfereIndex: 2 })
   },
   inputinfraredLevel(e) {
-    console.log('e.detail.value----',e.detail.value)
-    if(e.detail.value && e.detail.value != this.data.infraredLevel){
+    console.log('e.detail.value----', e.detail.value)
+    if (e.detail.value && e.detail.value != this.data.infraredLevel) {
       this.setData({
         infraredLevel: e.detail.value
       });
@@ -382,7 +405,8 @@ Page({
         leftRight: this.data.leftRight,
         breathAlert: this.data.breathAlert,
         heartAlert: this.data.heartAlert,
-        leaveBedAlert: this.data.leaveBedAlert
+        leaveBedAlert: this.data.leaveBedAlert,
+        inBedTime: this.data.inbedTime
       },
       success: function (res) {
         wx.showModal({
@@ -413,6 +437,7 @@ Page({
             leaveBedAlert: res.leaveBedAlert,
             heartAlert: res.heartAlert,
             breathAlert: res.breathAlert,
+            inbedTime: res.inBedTime
           })
         }
         else {
@@ -420,6 +445,7 @@ Page({
             leaveBedAlert: 0,
             heartAlert: 0,
             breathAlert: 0,
+            inbedTime: 0
           })
         }
         // wx.showModal({
@@ -474,7 +500,7 @@ Page({
       }
     })
   },
-  getInfrared(){
+  getInfrared() {
     let _this = this
     deviceService.getInfraredConfig({
       data: {
@@ -487,7 +513,7 @@ Page({
           _this.setData({
             infraredFlag: res.valid,
             infraredMode: res.mode > 0 ? res.mode - 1 : 0,
-            infraredLevel: res.level ,
+            infraredLevel: res.level,
           })
         } else {
           _this.setData({
@@ -510,5 +536,127 @@ Page({
         })
       }
     })
-  }
+  },
+
+  inbedOnChange(val) {
+    this.setData({
+      inbedTime: parseInt(val.detail.value)
+    });
+    this.updateAlert()
+  },
+
+  selectMusic(val) {
+    this.setData({ show: true, columns: this.data.columns4, interfereIndex: 3 })
+  },
+
+  clickPlayMode(val) {
+    console.log('val---',val.detail)
+    this.setData({
+      playMode: val.detail,
+    });
+  },
+
+  volumeOnchange(val) {
+    this.setData({
+      volume: val.detail.value,
+    });
+  },
+
+  countTimeOnchange(val) {
+    console.log('val---',val.detail)
+    this.setData({
+      countTime: parseInt(val.detail.value)
+    });
+  },
+
+  // sendVolume(){
+
+  // },
+
+  playMusic(){
+    this.setData({
+      status: 1
+    })
+    this.setMusicConfig()
+  },
+
+  stopMusic(){
+    this.setData({
+      status: 0
+    })
+    this.setMusicConfig()
+  },
+  setMusicConfig(){
+    deviceService.setMusicConfig({
+      data: {
+        deviceId: this.data.deviceId,
+        leftRight: this.data.leftRight,
+        deviceType: 0x800C,
+        status: this.data.status,
+        musicId: this.data.musicIndex + 1,
+        recycle: parseInt(this.data.playMode),
+        time: this.data.countTime,
+        volume: this.data.volume
+      },
+      success: function (res) {
+        console.log('setMusicConfig----', res)
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "助眠音乐配置设置成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "助眠音乐配置设置失败"
+        })
+      }
+    })
+  },
+
+  /**助眠音乐配置获取*/
+  getMusicConfig(){
+    let _this = this
+    deviceService.getMusicConfig({
+      data: {
+        deviceId: this.data.deviceId,
+        leftRight: this.data.leftRight,
+        deviceType: 0x800C,
+      },
+      success: function (res) {
+        console.log('getMusicConfig----', res)
+        if (res) {
+          _this.setData({
+            status: res.status,
+            musicIndex: res.musicId - 1,
+            playMode: JSON.stringify(res.recycle),
+            countTime: res.time,
+            volume: res.volume
+          })
+          wx.showModal({
+            showCancel: false,
+            title: '',
+            content: "获取助眠音乐配置设置成功"
+          })
+        }
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "获取助眠音乐配置设置失败"
+        })
+      }
+    })
+  },
+    /*
+  报警时间段设置
+  */
+ jumpToSleepSet() {
+  wx.navigateTo({
+    url: './sleepTime',
+  })
+},
 })
