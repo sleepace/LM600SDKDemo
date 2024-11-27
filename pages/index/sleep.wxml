@@ -88,7 +88,7 @@
 	</view>
 	<view class="switch-view">
         <view class="item-label">
-            睡眠时间段设置
+            报警时间段设置
         </view>
         <view class="item-right" bindtap="jumpToSleepSet">
             <image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
