@@ -110,12 +110,12 @@ Page({
       success: function (res) {
         if (res) {
           res.ranges.forEach(item => {
-            let hour_start = item.start / 60
-            let min_start = item.start % 60
+            let hour_start = parseInt( item.start / 60)
+            let min_start = parseInt( item.start % 60)
             hour_start = hour_start < 10 ? '0' + hour_start : hour_start
             min_start = min_start < 10 ? '0' + min_start : min_start
-            let hour_end = item.end / 60
-            let min_end = item.end % 60
+            let hour_end = parseInt(item.end / 60)
+            let min_end = parseInt(item.end % 60)
             hour_end = hour_end < 10 ? '0' + hour_end : hour_end
             min_end = min_end < 10 ? '0' + min_end : min_end
             list.push({
@@ -186,5 +186,12 @@ Page({
       })
     });
     return arr
+  },
+  editTime(){
+    console.log('index----',this.data.index)
+    wx.navigateTo({
+      url: './sleepDuration?edit=1&index=' + this.data.index,
+    })
+
   }
 })

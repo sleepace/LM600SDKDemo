@@ -34,6 +34,8 @@ const urlList = {
     getAlarmTimeRange: '/app/alarmTimeRange/get',//获取报警时间段,
     setMusicConfig: '/app/musicConfig/set',//助眠音乐配置设置
     getMusicConfig: '/app/musicConfig/get',//助眠音乐配置获取
+    setUseType: '/app/useType/set',//设置单双人配置
+    getUseType: '/app/useType/get',//查询单双人配置
     
   },
   data: {

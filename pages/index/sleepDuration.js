@@ -16,13 +16,21 @@ Page({
     timeList: [],
     deviceId: '',
     leftRight: 0,
+
+    editTime: false,
+    editIndex: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    if(options.edit){
+      this.setData({
+        editTime: options.edit,
+        editIndex: options.index
+      })
+    }
   },
 
   /**
@@ -52,6 +60,10 @@ Page({
     }  
 
     console.log('timeList----', this.data.timeList)
+
+
+
+
   },
 
   /**
@@ -122,7 +134,12 @@ Page({
       endTime: this.data.endTime,
     }
     let flag = false
-    this.data.timeList.forEach(item => {
+
+
+    this.data.timeList.forEach((item,index) => {
+      if(this.data.editTime && this.data.editIndex == index){
+        return;
+      }
       let contain = this.isOverlap(item, time)
       if (!contain) {
         wx.showModal({
@@ -135,7 +152,12 @@ Page({
       }
     });
     if (!flag) {
-      this.data.timeList.push(time)
+      if(this.data.editTime){
+        this.data.timeList.splice(this.data.editIndex,1,time)
+      }
+      else{
+        this.data.timeList.push(time)
+      }
       // wx.setStorageSync('timeList', JSON.stringify(this.data.timeList))
       let rangeArray = this.timeList(this.data.timeList)
       deviceService.setAlarmTimeRange({

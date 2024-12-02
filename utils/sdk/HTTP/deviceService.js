@@ -45,6 +45,43 @@ function deviceListAll(params){
 }
 
 /*
+名称： 设置单双人配置
+参数：
+  {
+    sid: 可选（option）,
+    data: {
+      deviceId:
+      useType：单双人模式 1：单人，2：双人
+    }
+  }
+*/
+function setUseType(params)
+{
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.setUseType;
+  baseService.request(_params);
+}
+
+
+/*
+名称： 查询单双人配置
+参数：
+  {
+    sid: 可选（option）,
+    data: {
+      deviceId:
+    }
+  }
+*/
+function getUseType(params)
+{
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.getUseType;
+  baseService.request(_params);
+}
+
+
+/*
 名称： 设备绑定
 参数：
   {
@@ -54,7 +91,6 @@ function deviceListAll(params){
       deviceName:
       deviceType:
       leftRight:
-      useType：单双人模式 1：单人，2：双人
     }
   }
 */
@@ -469,6 +505,8 @@ module.exports = {
   getMusicConfig: getMusicConfig,
   setAlarmTimeRange: setAlarmTimeRange,
   getAlarmTimeRange: getAlarmTimeRange,
+  setUseType: setUseType,
+  getUseType: getUseType
 }
 
 

@@ -17,7 +17,8 @@ Page({
     // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
     // token: "ollO567f7dxhTdg8YuI0krNs75nY",
     channelID: "57082",
-    deviceId: "ea2qj5ytxplt3",
+    // deviceId: "ea2qj5ytxplt3",
+    deviceId: "",
     leftRight: 0, //左边left(0)，右边right(1)
     useType: 1, //单双人模式 1：单人，2：双人
   },
@@ -49,33 +50,33 @@ Page({
     let channelID = wx.getStorageSync('channelID')
     let useType = wx.getStorageSync('useType')
 
-    console.log('leftRight---', side, deviceId, serverIp, token, channelID,useType)
-    if(deviceId){
+    console.log('leftRight---', side, deviceId, serverIp, token, channelID, useType)
+    if (deviceId) {
       this.setData({
         deviceId: deviceId,
       });
     }
-    if(side){
+    if (side) {
       this.setData({
         leftRight: side ? side : 0,
       });
     }
-    if(serverIp){
+    if (serverIp) {
       this.setData({
         serverIp: serverIp,
       });
     }
-    if(token){
+    if (token) {
       this.setData({
         token: token,
       });
     }
-    if(channelID){
+    if (channelID) {
       this.setData({
         channelID: channelID,
       });
     }
-    if(useType){
+    if (useType) {
       this.setData({
         useType: useType,
       });
@@ -155,6 +156,7 @@ Page({
   // },
 
   initHttp(e) {
+    let that = this
     baseService.initHttpAuthorize({
       data: {
         channelId: this.data.channelID,
@@ -175,6 +177,7 @@ Page({
           title: '',
           content: "连接服务器成功"
         })
+        that.getUseType()
       },
       fail(err) {
         wx.showModal({
@@ -200,6 +203,47 @@ Page({
     });
     wx.setStorageSync('useType', event.detail.index + 1)
     console.log('useType-----', this.data.useType)
+
+    deviceService.setUseType({
+      data: {
+        deviceId: this.data.deviceId,
+        useType: this.data.useType
+      },
+      success: function (res) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "设置单双人成功"
+        })
+      },
+      fail(err) {
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "设置单双人失败" + err.message
+        })
+        console.log('设置单双人失败', err)
+      }
+    })
+  },
+
+  getUseType() {
+    let that = this
+    deviceService.getUseType({
+      data: {
+        deviceId: this.data.deviceId
+      },
+      success: function (res) {
+        console.log('get user---', res)
+        that.setData({
+          useType: res.useType
+        });
+        wx.setStorageSync('useType', res.useType)
+      },
+      fail(err) {
+        console.log('getUseType fail', err)
+      }
+    })
   },
 
   bindDevice(e) {
@@ -207,7 +251,6 @@ Page({
       data: {
         deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
-        useType: this.data.useType
       },
       success: function (res) {
         wx.showModal({
@@ -220,7 +263,7 @@ Page({
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "绑定设备失败" +  err.message
+          content: "绑定设备失败" + err.message
         })
         console.log('bindDevice fail', err)
       }
