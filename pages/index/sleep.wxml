@@ -53,7 +53,7 @@
 		</view>
 		<view class="switch-view">
 			<view class="item-label">
-				等级选择（0~50）
+				等级选择（1~5）
 			</view>
 			<view class="item-right">
 				<input class="input input-level" name="level" value="{{infraredLevel}}" bindinput="inputinfraredLevel" placeholder="等级0~50" />

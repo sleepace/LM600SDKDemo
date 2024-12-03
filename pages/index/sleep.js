@@ -28,7 +28,7 @@ Page({
     // 红外
     infraredFlag: 0, //红外开关
     infraredMode: 0,  //红外模式
-    infraredLevel: 0, //红外等级0~50
+    infraredLevel: 1, //红外等级1~5
     columns3: ['模式1', '模式2', '模式3', '模式4', '模式5'],
     inbedTime: 30, //在床时间
     playMode: '0',
