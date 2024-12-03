@@ -18,9 +18,10 @@ Page({
     // token: "ollO567f7dxhTdg8YuI0krNs75nY",
     channelID: "57082",
     // deviceId: "ea2qj5ytxplt3",
-    deviceId: "",
+    deviceId: "ea2qj5ytxplt3",
     leftRight: 0, //左边left(0)，右边right(1)
-    useType: 1, //单双人模式 1：单人，2：双人
+    useType: 1, //单双人模式 1：单人，2：双人; 
+
   },
 
   /**
@@ -177,7 +178,6 @@ Page({
           title: '',
           content: "连接服务器成功"
         })
-        that.getUseType()
       },
       fail(err) {
         wx.showModal({
@@ -198,12 +198,18 @@ Page({
   },
 
   onSelect(event) {
+    if(this.data.useType == event.detail.index + 1){
+      console.log('无需重复设置相同值-----')
+      return
+    }
     this.setData({
       useType: event.detail.index + 1
     });
     wx.setStorageSync('useType', event.detail.index + 1)
     console.log('useType-----', this.data.useType)
-
+    this.setUseType()
+  },
+  setUseType() {
     deviceService.setUseType({
       data: {
         deviceId: this.data.deviceId,
@@ -226,8 +232,15 @@ Page({
       }
     })
   },
-
   getUseType() {
+    if(!this.data.deviceId){
+      wx.showModal({
+        showCancel: false,
+        title: '',
+        content: "请输入设备id"
+      })
+      return
+    }
     let that = this
     deviceService.getUseType({
       data: {
@@ -235,10 +248,20 @@ Page({
       },
       success: function (res) {
         console.log('get user---', res)
-        that.setData({
-          useType: res.useType
-        });
-        wx.setStorageSync('useType', res.useType)
+        wx.showModal({
+          showCancel: false,
+          title: '',
+          content: "查询单双人模式成功"
+        })
+        //未设置过单双人；
+        if (res && res.useType == 0) {
+          that.setUseType()
+        }else{
+          that.setData({
+            useType: res.useType
+          });
+          wx.setStorageSync('useType', res.useType)
+        }
       },
       fail(err) {
         console.log('getUseType fail', err)
