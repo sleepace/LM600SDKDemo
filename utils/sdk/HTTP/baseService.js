@@ -36,7 +36,7 @@ const urlList = {
     getMusicConfig: '/app/musicConfig/get',//助眠音乐配置获取
     setUseType: '/app/useType/set',//设置单双人配置
     getUseType: '/app/useType/get',//查询单双人配置
-    
+    bindInfo: '/app/bindInfoByDevice',//根据设备查询绑定状态，同时返回单双人配置
   },
   data: {
     getDailyReport: '/app/analysis/data',

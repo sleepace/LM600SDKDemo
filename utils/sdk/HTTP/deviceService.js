@@ -80,6 +80,34 @@ function getUseType(params)
   baseService.request(_params);
 }
 
+/*
+名称： 根据设备查询绑定状态，同时返回单双人配置
+参数：
+  {
+    sid: 可选（option）,
+    data: {
+      deviceId:
+    },
+    response:{
+		"status":0,	//0成功：5找不到设备 2服务器错误
+		"msg":"",
+		"data":{
+			"deviceId":"xxxx",
+			"deviceName":"XXXX",
+			"deviceType":56,
+			"leftRight":0,
+			"userId":"xxxxxx",
+			"useType":1
+		}
+	}
+  }
+*/
+function bindInfo(params)
+{
+  const _params = Object.assign({}, params);
+  _params.url = baseService.urlList.device.bindInfo;
+  baseService.request(_params);
+}
 
 /*
 名称： 设备绑定
