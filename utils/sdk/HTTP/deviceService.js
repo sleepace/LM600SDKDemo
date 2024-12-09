@@ -128,6 +128,7 @@ function bindInfo(params)
       deviceName:
       deviceType:
       leftRight:
+      useType：单双人模式 1：单人，2：双人
     }
   }
 */

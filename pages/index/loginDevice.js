@@ -314,6 +314,7 @@ Page({
       data: {
         deviceId: this.data.deviceId,
         leftRight: this.data.leftRight,
+        useType: this.data.useType
       },
       success: function (res) {
         wx.showModal({
