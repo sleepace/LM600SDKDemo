@@ -99,7 +99,7 @@ function getUseType(params)
 			"userId":"xxxxxx",
 			"useType":1
 		}
-	}
+	 }
   }
 */
 function bindInfo(params)
@@ -534,7 +534,9 @@ module.exports = {
   setAlarmTimeRange: setAlarmTimeRange,
   getAlarmTimeRange: getAlarmTimeRange,
   setUseType: setUseType,
-  getUseType: getUseType
+  getUseType: getUseType,
+  bindInfo: bindInfo
+
 }
 
 

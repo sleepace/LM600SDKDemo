@@ -29,6 +29,13 @@
 		<button class="btn" bindtap="getUseType">查询</button>
 	</div>
 	<view class="tip-view">
+		<label>根据设备查询绑定状态</label>
+	</view>
+	<div class="button-view">
+		<view class="text-view">{{bindInfoStr}}</view>
+		<button class="btn" bindtap="getDeviceBindInfo">查询</button>
+	</div>
+	<view class="tip-view">
 		<label>单/双人设置</label>
 	</view>
 	<view style="padding:32rpx 0;">

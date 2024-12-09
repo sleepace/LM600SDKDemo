@@ -21,7 +21,7 @@ Page({
     deviceId: "ea2qj5ytxplt3",
     leftRight: 0, //左边left(0)，右边right(1)
     useType: 1, //单双人模式 1：单人，2：双人; 
-
+    bindInfoStr: ''
   },
 
   /**
@@ -198,7 +198,7 @@ Page({
   },
 
   onSelect(event) {
-    if(this.data.useType == event.detail.index + 1){
+    if (this.data.useType == event.detail.index + 1) {
       console.log('无需重复设置相同值-----')
       return
     }
@@ -233,7 +233,7 @@ Page({
     })
   },
   getUseType() {
-    if(!this.data.deviceId){
+    if (!this.data.deviceId) {
       wx.showModal({
         showCancel: false,
         title: '',
@@ -256,7 +256,7 @@ Page({
         //未设置过单双人；
         if (res && res.useType == 0) {
           that.setUseType()
-        }else{
+        } else {
           that.setData({
             useType: res.useType
           });
@@ -265,6 +265,46 @@ Page({
       },
       fail(err) {
         console.log('getUseType fail', err)
+      }
+    })
+  },
+
+  getDeviceBindInfo() {
+    if (!this.data.deviceId) {
+      wx.showModal({
+        showCancel: false,
+        title: '',
+        content: "请输入设备id"
+      })
+      return
+    }
+    let that = this
+    deviceService.bindInfo({
+      data: {
+        deviceId: this.data.deviceId
+      },
+      success: function (res) {
+        console.log('get bindInfo---', res)
+        if (res && res.length) {
+          let bindstr = '单/双人:' + res[0].useType + ";左/右侧:" + res[0].leftRight
+          that.setData({
+            bindInfoStr: bindstr,
+            useType: res[0].useType
+          });
+        }
+        else {
+          that.setData({
+            bindInfoStr: ''
+          });
+          wx.showModal({
+            showCancel: false,
+            title: '',
+            content: "未绑定设备"
+          })
+        }
+      },
+      fail(err) {
+        console.log('bindInfo fail', err)
       }
     })
   },
@@ -291,8 +331,8 @@ Page({
         console.log('bindDevice fail', err)
       }
     })
-
   },
+
   unbindDevice(e) {
     deviceService.unbind({
       data: {
