@@ -104,7 +104,8 @@ function getUseType(params)
 					"deviceName":"XXXX",
 					"deviceType":56,
 					"leftRight":0,
-					"userId":"xxxxxx",
+          "userId":"xxxxxx",
+          "useType":1 
 				}
 			]
 		}
