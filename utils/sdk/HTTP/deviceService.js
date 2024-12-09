@@ -91,7 +91,8 @@ function getUseType(params)
     response:{
 		"status":0,	//0成功：5找不到设备 2服务器错误
 		"msg":"",
-		"data":{
+		"data":[
+      {
 			"deviceId":"xxxx",
 			"deviceName":"XXXX",
 			"deviceType":56,
@@ -99,6 +100,7 @@ function getUseType(params)
 			"userId":"xxxxxx",
 			"useType":1
 		}
+    ]
 	 }
   }
 */
