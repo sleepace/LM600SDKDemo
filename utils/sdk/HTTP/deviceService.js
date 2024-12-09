@@ -91,17 +91,23 @@ function getUseType(params)
     response:{
 		"status":0,	//0成功：5找不到设备 2服务器错误
 		"msg":"",
-		"data":[
-      {
-			"deviceId":"xxxx",
-			"deviceName":"XXXX",
-			"deviceType":56,
-			"leftRight":0,
-			"userId":"xxxxxx",
-			"useType":1
+		"data":{
+			"device":{ //本设备信息
+				"deviceId":"xxxx",
+				"deviceName":"XXXX",
+				"deviceType":56,
+				"useType":1 
+			},
+			"userDevices":[ //本设备绑定信息，如未绑定设备，返回为空数组
+				{
+					"deviceId":"xxxx",
+					"deviceName":"XXXX",
+					"deviceType":56,
+					"leftRight":0,
+					"userId":"xxxxxx",
+				}
+			]
 		}
-    ]
-	 }
   }
 */
 function bindInfo(params)

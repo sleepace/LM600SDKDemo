@@ -285,14 +285,14 @@ Page({
       },
       success: function (res) {
         console.log('get bindInfo---', res)
-        if (res && res.length) {
-          let bindstr = '单/双人:' + res[0].useType + ";左/右侧:" + res[0].leftRight
+        if (res && res.userDevices && res.userDevices.length) {
+          let bindstr = '单/双人:' + res.userDevices[0].useType + ";左/右侧:" + res.userDevices[0].leftRight
           that.setData({
             bindInfoStr: bindstr,
-            useType: res[0].useType
+            useType: res.userDevices[0].useType
           });
         }
-        else {
+        else  {
           that.setData({
             bindInfoStr: ''
           });
