@@ -23,9 +23,8 @@ Page({
     userId: "",
     statusStr: '',
     realNumber: 0,
-    taskId: null
-
-
+    taskId: null,
+    infrerdId: null
   },
 
   /**
@@ -76,33 +75,36 @@ Page({
         //通过返回client，创建lm600tcpAPI ，websocket操作api
         lm600TcpApi = new medicaBase.LM600TcpApi(client)
         // 注册实时数据监听
-         let realId = lm600TcpApi.registerRealDataCallback((res, val) => {
-            console.log('real1---', res, val,res.serialNumber)
-            if (res && res.realDataList && res.serialNumber == leftRight) {
-              let realdata = res.realDataList[0]
-              _this.setData({
-                status: realdata.status,
-                statusStr: _this.statusString(realdata.status), 
-                breathRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.breathRate,
-                heartRate: (realdata.status == 5 || realdata.status == 1) ? "--": realdata.heartRate,
-                realNumber: res.serialNumber
-              })
-            }
-          })
-
+        let realId = lm600TcpApi.registerRealDataCallback((res, val) => {
+          console.log('real1---', res, val, res.serialNumber)
+          if (res && res.realDataList && res.serialNumber == leftRight) {
+            let realdata = res.realDataList[0]
+            _this.setData({
+              status: realdata.status,
+              statusStr: _this.statusString(realdata.status),
+              breathRate: (realdata.status == 5 || realdata.status == 1) ? "--" : realdata.breathRate,
+              heartRate: (realdata.status == 5 || realdata.status == 1) ? "--" : realdata.heartRate,
+              realNumber: res.serialNumber
+            })
+          }
+        })
+        // 注册红外状态监听
+        let infrerdId = lm600TcpApi.registeInfraredStateCallback((res, val) => {
+          console.log('Infrared---', res, val)
+        })
         // lm600TcpApi.registerOnlineStatusCallback((res, val) => {
         //   console.log('device online---', res)
         // })
-
         _this.setData({
-          taskId: realId
+          taskId: realId,
+          infrerdId: infrerdId
         })
       },
-      onSocketError: function (res) {
-        console.log('onSocketError---', client)
-      },
+      // onSocketError: function (res) {
+      //   console.log('onSocketError---', client)
+      // },
       onSocketClose: function (res) {
-        console.log('onSocketClose---', client)
+        console.log('onSocketClose---', res)
       }
     })
   },
@@ -124,7 +126,14 @@ Page({
   onHide() {
     console.log('--onHide----')
     // socketHelper.closeWS()
-    // lm600TcpApi.unregisterRealDataCallback(this.data.taskId)
+    if (this.data.taskId) {
+      lm600TcpApi.unregisterRealDataCallback(this.data.taskId)
+    }
+    if (this.data.infrerdId) {
+      lm600TcpApi.unregisteInfraredStateCallback(this.data.infrerdId)
+    }
+
+
   },
 
   /**

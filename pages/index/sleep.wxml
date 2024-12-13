@@ -42,7 +42,7 @@
 			<view>红外干预</view>
 			<switch size="24px" checked="{{infraredFlag}}" bind:change="infraredOnchange"></switch>
 		</view>
-		<view class="switch-view">
+		<!-- <view class="switch-view">
 			<view class="item-label">
 				模式选择
 			</view>
@@ -50,13 +50,13 @@
 				<view id="deviceid" class="item-value">{{ '模式' + (infraredMode+1) }}</view>
 				<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
 			</view>
-		</view>
+		</view> -->
 		<view class="switch-view">
 			<view class="item-label">
 				等级选择（1~5）
 			</view>
 			<view class="item-right">
-				<input class="input input-level" name="level" value="{{infraredLevel}}" bindinput="inputinfraredLevel" placeholder="等级0~50" />
+				<input class="input input-level" name="level" value="{{infraredLevel}}" bindinput="inputinfraredLevel" placeholder="等级1~5" />
 			</view>
 		</view>
 	</view>

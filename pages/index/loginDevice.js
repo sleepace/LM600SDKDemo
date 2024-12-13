@@ -308,7 +308,6 @@ Page({
       }
     })
   },
-
   bindDevice(e) {
     deviceService.bind({
       data: {

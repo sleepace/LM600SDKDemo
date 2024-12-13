@@ -1,6 +1,10 @@
 // pages/index/sleep.js
 const deviceService = require('../../utils/SDK/HTTP/deviceService');
 const userExtService = require('../../utils/SDK/HTTP/userExtService');
+const medicaWebsocketHelper = require('../../utils/SDK/Socket/medicaWebsocketHelper');
+const app = getApp();
+let medicaBase = app.globalData.medicaBase;
+let lm600TcpApi = null
 
 Page({
 
@@ -36,8 +40,12 @@ Page({
     countTime: 30, // 倒计时
     columns4: ['曲目1', '曲目2', '曲目3', '曲目4', '曲目5'],
     musicIndex: 0,
-    status: 0 , //1播放，0停止
-    useType: 1, 
+    status: 0, //1播放，0停止
+    useType: 1,
+
+    realNumber: 0,
+    infrerdId: null,
+    sid: ""
   },
 
   /**
@@ -61,16 +69,18 @@ Page({
     let deviceId = wx.getStorageSync('deviceId')
     let leftRight = wx.getStorageSync('leftRight')
     let useType = wx.getStorageSync('useType')
+    let sid = wx.getStorageSync('sid')
 
-    console.log('sleep---', deviceId, leftRight)
+    console.log('sleep---', deviceId, leftRight, useType)
     if (deviceId) {
       this.setData({
         deviceId: deviceId,
-        leftRight: leftRight
+        leftRight: leftRight,
+        sid: sid,
       })
     }
 
-    if(useType){
+    if (useType) {
       this.setData({
         useType: useType,
       });
@@ -81,13 +91,69 @@ Page({
     this.getBatterySwitch()
     this.getInfrared()
     this.getMusicConfig()
+
+    let _this = this
+    medicaWebsocketHelper.connectWS({
+      data: {
+        wsUrl: app.globalData.webSoket,
+        deviceId: deviceId,
+        deviceType: 0x800C,
+        leftRight: leftRight,
+        sid: sid,
+      },
+      onSocketOpen: function (client) {
+        console.log('onSocketOpen---', client)
+        //通过返回client，创建lm600tcpAPI ，websocket操作api
+        lm600TcpApi = new medicaBase.LM600TcpApi(client)
+        // 注册红外状态监听
+        let infrerdId = lm600TcpApi.registeInfraredStateCallback((res, val) => {
+          console.log('Infrared---', res, val)
+          if (res && res.serialNumber == _this.data.leftRight) {
+            _this.setData({
+              infraredFlag: res.valid,
+            })
+            if (res.valid) {
+              _this.setData({
+                infraredLevel: res.level
+              })
+            }
+          }
+        })
+        _this.setData({
+          infrerdId: infrerdId
+        })
+        lm600TcpApi.queryInfraredState({
+          networkDeviceId: deviceId,
+          deviceId: deviceId,
+          deviceType: 0x800C,
+          serialNumber: leftRight,
+          handler: function (code, data) {
+            console.log('queryInfraredState----', code, data)
+            if (code == 0) {
+              _this.setData({
+                infraredFlag: data.valid,
+                infraredLevel: data.level
+              })
+            }
+          }
+        })
+      },
+      onSocketClose: function (res) {
+        console.log('onSocketClose---', client)
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() {
 
+
+  onHide() {
+    console.log('--onHide----')
+    if (this.data.infrerdId) {
+      lm600TcpApi.unregisteInfraredStateCallback(this.data.infrerdId)
+    }
   },
 
   /**
@@ -550,7 +616,7 @@ Page({
   },
 
   clickPlayMode(val) {
-    console.log('val---',val.detail)
+    console.log('val---', val.detail)
     this.setData({
       playMode: val.detail,
     });
@@ -563,7 +629,7 @@ Page({
   },
 
   countTimeOnchange(val) {
-    console.log('val---',val.detail)
+    console.log('val---', val.detail)
     this.setData({
       countTime: parseInt(val.detail.value)
     });
@@ -573,20 +639,20 @@ Page({
 
   // },
 
-  playMusic(){
+  playMusic() {
     this.setData({
       status: 1
     })
     this.setMusicConfig()
   },
 
-  stopMusic(){
+  stopMusic() {
     this.setData({
       status: 0
     })
     this.setMusicConfig()
   },
-  setMusicConfig(){
+  setMusicConfig() {
     deviceService.setMusicConfig({
       data: {
         deviceId: this.data.deviceId,
@@ -617,7 +683,7 @@ Page({
   },
 
   /**助眠音乐配置获取*/
-  getMusicConfig(){
+  getMusicConfig() {
     let _this = this
     deviceService.getMusicConfig({
       data: {
@@ -651,12 +717,12 @@ Page({
       }
     })
   },
-    /*
-  报警时间段设置
-  */
- jumpToSleepSet() {
-  wx.navigateTo({
-    url: './sleepTime',
-  })
-},
+  /*
+报警时间段设置
+*/
+  jumpToSleepSet() {
+    wx.navigateTo({
+      url: './sleepTime',
+    })
+  },
 })
