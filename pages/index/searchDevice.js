@@ -5,7 +5,7 @@ var language = require('../../utils/language.js');
 const { default: DeviceType } = require('../../utils/SDK/DeviceType');
 
 let medicaBase = app.globalData.medicaBase;
-let commonBleApi = medicaBase.pillowBleApi;
+let commonBleApi = medicaBase.lm600BleApi;
 let bleApi = null;
 
 Page({
