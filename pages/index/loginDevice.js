@@ -11,11 +11,11 @@ Page({
   data: {
     // serverIp: "http://172.16.0.65:8092",
     serverIp: 'https://s171.sleepace.com/lekang',
-    token: "test",
+    // token: "test",
     // channelID: "10000",
     // deviceId: "teiug44lw85n9",
     // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
-    // token: "ollO567f7dxhTdg8YuI0krNs75nY",
+    token: "ollO567f7dxhTdg8YuI0krNs75nY",
     channelID: "57082",
     // deviceId: "ea2qj5ytxplt3",
     deviceId: "ea2qj5ytxplt3",
