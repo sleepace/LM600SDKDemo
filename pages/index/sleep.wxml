@@ -1,8 +1,18 @@
 <!--pages/index/sleep.wxml-->
 <view class='container'>
 	<view class="label-view">
-		<view>负电位开关:{{electricSwitch == 1 ? "开启" : "关闭"}}</view>
-		<button class="normal-btn" bindtap="negativeElectric">负电位开关</button>
+		<view>负电位开关</view>
+		<view class="text-view">
+			<van-radio-group value="{{ negativeChargeMode }}" direction="horizontal" bind:change="negativeChargeModeChange">
+				<van-radio name="0">自动开关模式</van-radio>
+				<van-radio name="1">手动开关模式</van-radio>
+			</van-radio-group>
+		</view>
+		<view class="text-view">
+			<button class="small-btn" bindtap="openNegativeCharge" data-id="{{1}}" disabled="{{ negativeChargeMode == '0' ? true : false }}">开启负电位</button>
+			<button class="small-btn" bindtap="openNegativeCharge"data-id="{{0}}" disabled="{{ negativeChargeMode == '0' ? true : false }}">关闭负电位</button>
+		</view>
+		<view class="text-view">当前负电位:{{negativeChargeValue == 1 ? "开" : "关"}}</view>
 	</view>
 
 	<van-tabs type="card" active="{{ leftRight }}" color="#76B6FE" bind:change="onChange">
@@ -87,13 +97,13 @@
 		<view class="normal-view">离床时间超过30/45/60分钟，则上报离床报警</view>
 	</view>
 	<view class="switch-view">
-        <view class="item-label">
-            报警时间段设置
-        </view>
-        <view class="item-right" bindtap="jumpToSleepSet">
-            <image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
-        </view>
-    </view>
+		<view class="item-label">
+			报警时间段设置
+		</view>
+		<view class="item-right" bindtap="jumpToSleepSet">
+			<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
+		</view>
+	</view>
 	<view class="switch-view">
 		<view>助眠音乐</view>
 	</view>
@@ -121,6 +131,7 @@
 			<input class="input input-level" name="countTime" value="{{countTime}}" bindinput="countTimeOnchange" placeholder="倒计时0~60分钟" />
 			<view>分钟</view>
 		</view>
+		<view class="normal-view">剩余时长:{{duration}}秒</view>
 		<view class="normal-view">助眠音乐将会在播放后xx分钟后自动关闭</view>
 	</view>
 	<view class="label-view">
@@ -129,9 +140,9 @@
 			<input class="input input-level" name="volume" value="{{volume}}" bindinput="volumeOnchange" placeholder="音量1~5" />
 			<!-- <button class="/small-btn" bindtap="sendVolume">发送</button> -->
 		</view>
-		<view class="button-view">
+		<view class="text-view">
 			<button class="small-btn" bindtap="playMusic">播放</button>
-		<button class="small-btn" bindtap="stopMusic">停止</button>
+			<button class="small-btn" bindtap="stopMusic">停止</button>
 		</view>
 	</view>
 	<view class="button-view"></view>

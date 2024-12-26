@@ -9,13 +9,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // serverIp: "http://172.16.0.65:8092",
-    serverIp: 'https://s171.sleepace.com/lekang',
+    serverIp: "http://172.16.0.65:8092",
+    // serverIp: 'https://s171.sleepace.com/lekang',
     // token: "test",
     // channelID: "10000",
     // deviceId: "teiug44lw85n9",
     // serverIp: "https://sleepace.zhijiashiguang.com/lekang",
-    token: "ollO567f7dxhTdg8YuI0krNs75nY",
+    token: "ollO5654JnzzpwFMYNAj4_v5_fQU",
     channelID: "57082",
     // deviceId: "ea2qj5ytxplt3",
     deviceId: "ea2qj5ytxplt3",
@@ -169,7 +169,8 @@ Page({
         let tcpServer = res.tcpServer
         // app.globalData.webSoket = "ws://" + tcpServer.ip + ":" + tcpServer.wsPort
         // app.globalData.webSoket = "wss://sleepace.zhijiashiguang.com/ws" //暂时写死测试通过校验
-        app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
+        // app.globalData.webSoket = "wss://s171.sleepace.com/ws" //暂时写死测试通过校验
+        app.globalData.webSoket = "ws://172.16.0.65:38072/ws" 
         console.log('---ws--', app.globalData.webSoket)
         wx.setStorageSync('sid', res.sid)
         wx.setStorageSync('userId', res.user.userId)

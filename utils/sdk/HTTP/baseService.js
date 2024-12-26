@@ -19,8 +19,8 @@ const urlList = {
     devicelist: '/app/bindInfo',
     bind: '/app/bind',
     unbind: '/app/unbind',
-    batterySwitchSet: '/app/sleepAlertConf/saveNegativeCharge', //负电量开关
-    getBatterySwitch: '/app/sleepAlertConf/getNegativeCharge',///获取负电量状态
+    saveNegativeChargeMode: '/app/sleepAlertConf/saveNegativeChargeMode', //保存负电量模式
+    getNegativeChargeMode: '/app/sleepAlertConf/getNegativeChargeMode',///获取负电量模式
     infoUpdate: '/app/device/update',
     deviceStatus: '/app/device/status',
     deviceAidStatus: '/app/device/getSleepAidStatus',

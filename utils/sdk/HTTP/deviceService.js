@@ -354,12 +354,14 @@ function sleepAid(params)
 }
 
 /*
-名称： 负电量开关设置
+名称： 负电量模式设置
 参数：
   {
     data: {
       deviceId:
-      status : (0,关，1、开)
+      deviceType:
+      leftRight:
+      mode://0 自动（默认） 1 手动
     }
   }
 
@@ -367,26 +369,28 @@ function sleepAid(params)
 {}查不到设备信息
 
 */
-function batteryClick(params)
+function saveNegativeChargeMode(params)
 {
   const _params = Object.assign({}, params);
-  _params.url = baseService.urlList.device.batterySwitchSet;
+  _params.url = baseService.urlList.device.saveNegativeChargeMode;
   baseService.request(_params);
 }
 
 
 /*
-名称： 获取负电量开关
+名称： 获取负电量模式
 参数：
   {
     data: {
       deviceId:
+      deviceType:
+      leftRight:
     }
   }
 */
-function getBatterySwitch(params) {
+function getNegativeChargeMode(params) {
   const _params = Object.assign({}, params);
-  _params.url = baseService.urlList.device.getBatterySwitch;
+  _params.url = baseService.urlList.device.getNegativeChargeMode;
   baseService.request(_params);
 }
 
@@ -534,8 +538,8 @@ module.exports = {
   sleepAid: sleepAid,
   sleepAidPreview: sleepAidPreview,
   sleepIntervenePreview: sleepIntervenePreview,
-  batteryClick: batteryClick,
-  getBatterySwitch: getBatterySwitch,
+  saveNegativeChargeMode: saveNegativeChargeMode,
+  getNegativeChargeMode: getNegativeChargeMode,
   infraredSwitch: infraredSwitch,
   setInfraredConfig: setInfraredConfig,
   getInfraredConfig: getInfraredConfig,

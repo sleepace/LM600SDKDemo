@@ -51,7 +51,7 @@ page {
   height: 80rpx;
   background-color: rgba(118,188, 254, 1);
 	color: white;
-  width: 200rpx;
+  width: 250rpx;
 }
 
 
@@ -62,6 +62,15 @@ page {
   justify-content: flex-start;
   border-bottom:1rpx solid rgba(195,203, 214, 1);
 }
+
+.text-view{
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx ;
+}
+
+
+
 
 .switch-view{
   margin: 5rpx 32rpx;

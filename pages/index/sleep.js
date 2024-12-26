@@ -24,7 +24,7 @@ Page({
     columns2: ['舒缓', '轻柔', '渐强', '较强', '强'],
     deviceId: '',
     leftRight: 0,
-    electricSwitch: 0,//负电位开关状态
+    negativeChargeMode: '0',//负电位开关模式;0 自动（默认） 1 手动
     /**异常报警 */
     breathAlert: 0,
     heartAlert: 0,
@@ -41,11 +41,15 @@ Page({
     columns4: ['曲目1', '曲目2', '曲目3', '曲目4', '曲目5'],
     musicIndex: 0,
     status: 0, //1播放，0停止
+    duration: 0,//剩余时长
+
     useType: 1,
 
     realNumber: 0,
     infrerdId: null,
-    sid: ""
+    sid: "",
+    negativeChargeId: null,
+    negativeChargeValue: 0, //0 关；1 开
   },
 
   /**
@@ -88,8 +92,8 @@ Page({
 
     this.getAlert()
     this.getIntervene()
-    this.getBatterySwitch()
-    this.getInfrared()
+    this.getNegativeChargeMode()
+    // this.getInfrared()
     this.getMusicConfig()
 
     let _this = this
@@ -118,9 +122,25 @@ Page({
               })
             }
           }
+          if(res.musicStatus > 0){
+            _this.setData({
+              musicIndex:  res.musicStatus-1,
+            })
+          }
+          _this.setData({
+            duration: res.duration
+          })
+        })
+         //注册负电位监听
+        let negativeChargeId = lm600TcpApi.registeNegativeChargeCallback((res, val) => {
+          console.log('register negativeCharge---', res, val)
+          _this.setData({
+            negativeChargeValue: res.status
+          })
         })
         _this.setData({
-          infrerdId: infrerdId
+          infrerdId: infrerdId,
+          negativeChargeId: negativeChargeId
         })
         lm600TcpApi.queryInfraredState({
           networkDeviceId: deviceId,
@@ -132,7 +152,27 @@ Page({
             if (code == 0) {
               _this.setData({
                 infraredFlag: data.valid,
-                infraredLevel: data.level
+                infraredLevel: data.level,
+                duration: data.duration
+              })
+              if(data.musicStatus > 0){
+                _this.setData({
+                  musicIndex:  data.musicStatus-1,
+                })
+              }
+            }
+          }
+        })
+        lm600TcpApi.queryNegativeCharge({
+          networkDeviceId: deviceId,
+          deviceId: deviceId,
+          deviceType: 0x800C,
+          serialNumber: leftRight,
+          handler: function (code, data) {
+            console.log('queryNegativeCharge----', code, data)
+            if (code == 0) {
+              _this.setData({
+                negativeChargeValue: data.status,
               })
             }
           }
@@ -153,6 +193,9 @@ Page({
     console.log('--onHide----')
     if (this.data.infrerdId) {
       lm600TcpApi.unregisteInfraredStateCallback(this.data.infrerdId)
+    }
+    if (this.data.negativeChargeId) {
+      lm600TcpApi.unregisteNegativeChargeCallback(this.data.negativeChargeId)
     }
   },
 
@@ -183,59 +226,100 @@ Page({
   onShareAppMessage() {
 
   },
+
+  negativeChargeModeChange(val){
+    this.saveNegativeChargeMode(val.detail)
+  },
   /**
-   * 负电位
+   * 负电位模式配置,mode://0 自动（默认） 1 手动
    */
-  negativeElectric() {
+  saveNegativeChargeMode(value) {
     let _this = this
-    deviceService.batteryClick({
+    deviceService.saveNegativeChargeMode({
       data: {
         deviceId: this.data.deviceId,
-        status: this.data.electricSwitch == 1 ? 0 : 1,
+        deviceType: 0x800C,
+        leftRight: this.data.leftRight,
+        mode: parseInt(value)
       },
       success: function (res) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: (_this.data.electricSwitch == 1 ? "关闭" : "开启") + "负电位成功"
+          content: "配置负电位模式成功"
         })
         _this.setData({
-          electricSwitch: _this.data.electricSwitch == 1 ? 0 : 1
-        })
+          negativeChargeMode: value,
+        });
       },
       fail(err) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: (_this.data.electricSwitch == 1 ? "关闭" : "开启") + "负电位失败"
+          content: "配置负电位模式失败"
         })
       }
     })
   },
-  getBatterySwitch() {
+  getNegativeChargeMode() {
     let _this = this
-    deviceService.getBatterySwitch({
+    deviceService.getNegativeChargeMode({
       data: {
         deviceId: this.data.deviceId,
+        deviceType: 0x800C,
+        leftRight: this.data.leftRight,
       },
       success: function (res) {
+        console.log('getNegativeChargeMode----', res)
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "获取负电位成功"
+          content: "获取负电位开关模式成功"
         })
         if (res) {
           _this.setData({
-            electricSwitch: res.status == 1 ? 1 : 0
+            negativeChargeMode: JSON.stringify(res.mode),
           })
         }
+        console.log('negativeChargeMode----',_this.data.negativeChargeMode )
       },
       fail(err) {
         wx.showModal({
           showCancel: false,
           title: '',
-          content: "获取负电位失败"
+          content: "获取负电位开关模式失败"
         })
+      }
+    })
+  },
+  // 开，关闭负电位
+  openNegativeCharge(val){
+    let value = val.currentTarget.dataset.id
+    let _this = this
+    lm600TcpApi.openNegativeCharge({
+      networkDeviceId: this.data.deviceId,
+      deviceId: this.data.deviceId,
+      deviceType: 0x800C,
+      status: value,
+      handler: function (code, data) {
+        console.log('openNegativeCharge----', code, data)
+        if (code == 0) {
+          wx.showModal({
+            showCancel: false,
+            title: '',
+            content: (value ? "开启" : "关闭") + "负电位成功"
+          })
+          _this.setData({
+            negativeChargeValue: data.status
+          })
+        }
+        else{
+          wx.showModal({
+            showCancel: false,
+            title: '',
+            content: (value ? "开启" : "关闭") + "负电位失败"
+          })
+        }
       }
     })
   },
@@ -246,7 +330,7 @@ Page({
     console.log('leftRight-----', this.data.leftRight)
     this.getAlert()
     this.getIntervene()
-    this.getInfrared()
+    // this.getInfrared()
     this.getMusicConfig()
   },
   /**
@@ -331,7 +415,7 @@ Page({
         deviceId: this.data.deviceId,
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
-        interveneFlag: this.data.interveneFlag,
+        interveneFlag: this.data.interfereFlag,
         interveneMode: this.data.interfereMode + 1,
         interveneLevel: this.data.interfereLevel + 1
 
@@ -367,7 +451,7 @@ Page({
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
         valid: on ? 1 : 0,
-        mode: this.data.infraredMode + 1,
+        mode: 0,
         level: this.data.infraredLevel
       },
       success: function (res) {
@@ -407,7 +491,7 @@ Page({
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
         valid: this.data.infraredFlag ? 1 : 0,
-        mode: this.data.infraredMode + 1,
+        mode: 0,
         level: this.data.infraredLevel
       },
       success: function (res) {
