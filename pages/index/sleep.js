@@ -311,9 +311,6 @@ Page({
     let value = val.currentTarget.dataset.id
     let _this = this
     lm600TcpApi.openNegativeCharge({
-      networkDeviceId: this.data.deviceId,
-      deviceId: this.data.deviceId,
-      deviceType: 0x800C,
       status: value,
       handler: function (code, data) {
         console.log('openNegativeCharge----', code)

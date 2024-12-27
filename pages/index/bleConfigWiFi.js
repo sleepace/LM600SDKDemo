@@ -12,10 +12,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    serverIp: "172.16.0.65",
-    serverPort: 29010,
-    // serverIp: "120.77.233.171",
-    // serverPort: "29011",
+    // serverIp: "172.16.0.65",
+    // serverPort: 29010,
+    serverIp: "120.77.233.171",
+    serverPort: "29011",
     ssid: "SAN",
     password: "l1234567890",
     device: null,
