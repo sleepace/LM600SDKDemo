@@ -50,6 +50,7 @@ Page({
     sid: "",
     negativeChargeId: null,
     negativeChargeValue: 0, //0 关；1 开
+    negativeChargeModeId: null,
   },
 
   /**
@@ -118,7 +119,7 @@ Page({
             })
             if (res.valid) {
               _this.setData({
-                infraredLevel: res.level
+                infraredLevel: res.leve
               })
             }
           }
@@ -131,6 +132,15 @@ Page({
             duration: res.duration
           })
         })
+
+         //注册负电位模式监听
+         let negativeChargeModeId = lm600TcpApi.registeNegativeChargeModeCallback((res, val) => {
+          console.log('negativeCharge mode---', res, val)
+          _this.setData({
+            negativeChargeMode: JSON.stringify(res.mode),
+          })
+        })
+
          //注册负电位监听
         let negativeChargeId = lm600TcpApi.registeNegativeChargeCallback((res, val) => {
           console.log('register negativeCharge---', res, val)
@@ -140,7 +150,8 @@ Page({
         })
         _this.setData({
           infrerdId: infrerdId,
-          negativeChargeId: negativeChargeId
+          negativeChargeId: negativeChargeId,
+          negativeChargeModeId: negativeChargeModeId
         })
         lm600TcpApi.queryInfraredState({
           networkDeviceId: deviceId,
@@ -196,6 +207,9 @@ Page({
     }
     if (this.data.negativeChargeId) {
       lm600TcpApi.unregisteNegativeChargeCallback(this.data.negativeChargeId)
+    }
+    if (this.data.negativeChargeModeId) {
+      lm600TcpApi.unregisteNegativeChargeModeCallback(this.data.negativeChargeModeId)
     }
   },
 
@@ -302,7 +316,7 @@ Page({
       deviceType: 0x800C,
       status: value,
       handler: function (code, data) {
-        console.log('openNegativeCharge----', code, data)
+        console.log('openNegativeCharge----', code)
         if (code == 0) {
           wx.showModal({
             showCancel: false,
@@ -310,7 +324,7 @@ Page({
             content: (value ? "开启" : "关闭") + "负电位成功"
           })
           _this.setData({
-            negativeChargeValue: data.status
+            negativeChargeValue: value
           })
         }
         else{
