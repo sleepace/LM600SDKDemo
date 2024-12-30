@@ -122,15 +122,15 @@ Page({
                 infraredLevel: res.leve
               })
             }
-          }
-          if(res.musicStatus > 0){
+            if(res.musicStatus > 0){
+              _this.setData({
+                musicIndex:  res.musicStatus-1,
+              })
+            }
             _this.setData({
-              musicIndex:  res.musicStatus-1,
+              duration: res.duration
             })
           }
-          _this.setData({
-            duration: res.duration
-          })
         })
 
          //注册负电位模式监听
@@ -161,15 +161,17 @@ Page({
           handler: function (code, data) {
             console.log('queryInfraredState----', code, data)
             if (code == 0) {
-              _this.setData({
-                infraredFlag: data.valid,
-                infraredLevel: data.level,
-                duration: data.duration
-              })
-              if(data.musicStatus > 0){
+              if (data && data.serialNumber == _this.data.leftRight) {
                 _this.setData({
-                  musicIndex:  data.musicStatus-1,
+                  infraredFlag: data.valid,
+                  infraredLevel: data.level,
+                  duration: data.duration
                 })
+                if(data.musicStatus > 0){
+                  _this.setData({
+                    musicIndex:  data.musicStatus-1,
+                  })
+                }
               }
             }
           }
@@ -311,6 +313,7 @@ Page({
     let value = val.currentTarget.dataset.id
     let _this = this
     lm600TcpApi.openNegativeCharge({
+      networkDeviceId: this.data.deviceId,
       status: value,
       handler: function (code, data) {
         console.log('openNegativeCharge----', code)

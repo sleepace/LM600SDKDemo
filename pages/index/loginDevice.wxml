@@ -29,7 +29,7 @@
 		<button class="btn" bindtap="getUseType">查询</button>
 	</div>
 	<view class="tip-view">
-		<label>根据设备查询绑定状态</label>
+		<label>根据设备查询绑定状态（0左侧;1右侧;0,1两侧）</label>
 	</view>
 	<div class="button-view">
 		<view class="text-view">{{bindInfoStr}}</view>

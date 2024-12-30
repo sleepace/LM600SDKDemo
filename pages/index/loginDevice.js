@@ -287,7 +287,11 @@ Page({
       success: function (res) {
         console.log('get bindInfo---', res)
         if (res && res.userDevices && res.userDevices.length) {
-          let bindstr = '单/双人:' + res.userDevices[0].useType + ";左/右侧:" + res.userDevices[0].leftRight
+          let leftString = res.userDevices[0].leftRight
+          if(res.userDevices.length>1){
+            leftString = '双侧0,1'
+          }
+          let bindstr = '单/双人:' + res.userDevices[0].useType + ";左/右:" + leftString
           that.setData({
             bindInfoStr: bindstr,
             useType: res.userDevices[0].useType
