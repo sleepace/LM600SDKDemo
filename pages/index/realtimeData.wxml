@@ -15,4 +15,7 @@
     <div class="label-view">
         <button class="normal-btn" bindtap="checkDeviceOnline">查询设备状态</button>
     </div>
+    <div class="label-view">
+        <button class="normal-btn" bindtap="handStopMonitoring">手动结束监测</button>
+    </div>
 </view>

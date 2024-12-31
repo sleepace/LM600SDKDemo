@@ -254,8 +254,6 @@ Page({
     deviceService.saveNegativeChargeMode({
       data: {
         deviceId: this.data.deviceId,
-        deviceType: 0x800C,
-        leftRight: this.data.leftRight,
         mode: parseInt(value)
       },
       success: function (res) {
@@ -281,9 +279,7 @@ Page({
     let _this = this
     deviceService.getNegativeChargeMode({
       data: {
-        deviceId: this.data.deviceId,
-        deviceType: 0x800C,
-        leftRight: this.data.leftRight,
+        deviceId: this.data.deviceId
       },
       success: function (res) {
         console.log('getNegativeChargeMode----', res)

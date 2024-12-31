@@ -359,8 +359,6 @@ function sleepAid(params)
   {
     data: {
       deviceId:
-      deviceType:
-      leftRight:
       mode://0 自动（默认） 1 手动
     }
   }
@@ -383,8 +381,6 @@ function saveNegativeChargeMode(params)
   {
     data: {
       deviceId:
-      deviceType:
-      leftRight:
     }
   }
 */
