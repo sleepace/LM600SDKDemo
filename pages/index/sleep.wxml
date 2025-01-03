@@ -26,14 +26,14 @@
 	<view>
 		<view class="switch-view">
 			<view>干预开关</view>
-			<switch size="24px" checked="{{interfereFlag}}" bind:change="interfereOnchange"></switch>
+			<switch size="24px" checked="{{interveneFlag}}" bind:change="interveneOnchange"></switch>
 		</view>
 		<view class="switch-view">
 			<view class="item-label">
 				干预模式
 			</view>
-			<view class="item-right" bindtap="interfereMode">
-				<view id="deviceid" class="item-value">{{ columns1[interfereMode] }}</view>
+			<view class="item-right" bindtap="interveneModechange">
+				<view id="deviceid" class="item-value">{{ columns1[interveneMode] }}</view>
 				<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
 			</view>
 		</view>
@@ -41,8 +41,8 @@
 			<view class="item-label">
 				干预等级
 			</view>
-			<view class="item-right" bindtap="interfereLevel">
-				<view id="deviceid" class="item-value">{{ columns2[interfereLevel] }}</view>
+			<view class="item-right" bindtap="interveneLevelchange">
+				<view id="deviceid" class="item-value">{{ columns2[interveneLevel] }}</view>
 				<image class='right-arrow' src='../../img/ic_right_arrow.png' mode="aspectFit"></image>
 			</view>
 		</view>

@@ -14,12 +14,10 @@ Page({
   data: {
     show: false,
     columns: [],
-    interfereFlag: 0,
+    interveneFlag: 0,
     interfereIndex: 0,
-    interfereMode: 0,
-    interfereLevel: 0,
-    interfereModeName: '',
-    interfereLevelName: '',
+    interveneMode: 0,
+    interveneLevel: 0,
     columns1: ['慢震', '快震', '声音', '声音+慢震', '声音+快震'],
     columns2: ['舒缓', '轻柔', '渐强', '较强', '强'],
     deviceId: '',
@@ -346,11 +344,11 @@ Page({
   /**
     * 干预开关
     */
-  interfereOnchange(event) {
+   interveneOnchange(event) {
     console.log('---interfereOnchange-', event)
     let on = event.detail.value
     this.setData({
-      interfereFlag: on
+      interveneFlag: on
     })
     userExtService.updateIntervene({
       data: {
@@ -358,8 +356,8 @@ Page({
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
         interveneFlag: on ? 1 : 0,
-        interveneMode: this.data.interfereMode + 1,
-        interveneLevel: this.data.interfereLevel + 1
+        interveneMode: this.data.interveneMode + 1,
+        interveneLevel: this.data.interveneLevel + 1
       },
       success: function (res) {
         wx.showModal({
@@ -377,11 +375,11 @@ Page({
       }
     })
   },
-  interfereMode() {
+  interveneModechange() {
     this.setData({ show: true, columns: this.data.columns1, interfereIndex: 0 })
 
   },
-  interfereLevel() {
+  interveneLevelchange() {
     this.setData({ show: true, columns: this.data.columns2, interfereIndex: 1 })
   },
 
@@ -390,13 +388,13 @@ Page({
     switch (this.data.interfereIndex) {
       case 0:
         {
-          this.setData({ interfereMode: event.detail.index })
+          this.setData({ interveneMode: event.detail.index })
           this.operateSleepInterfere()
         }
         break;
       case 1:
         {
-          this.setData({ interfereLevel: event.detail.index })
+          this.setData({ interveneLevel: event.detail.index })
           this.operateSleepInterfere()
         }
         break;
@@ -425,10 +423,9 @@ Page({
         deviceId: this.data.deviceId,
         deviceType: 0x800C,
         leftRight: this.data.leftRight,
-        interveneFlag: this.data.interfereFlag,
-        interveneMode: this.data.interfereMode + 1,
-        interveneLevel: this.data.interfereLevel + 1
-
+        interveneFlag: this.data.interveneFlag,
+        interveneMode: this.data.interveneMode + 1,
+        interveneLevel: this.data.interveneLevel + 1
       },
       success: function (res) {
         wx.showModal({
@@ -634,13 +631,13 @@ Page({
         console.log('getIntervene----', res)
         if (res) {
           _this.setData({
-            interfereFlag: res.interveneFlag,
+            interveneFlag: res.interveneFlag,
             interveneMode: res.interveneMode > 0 ? res.interveneMode - 1 : 0,
             interveneLevel: res.interveneLevel > 0 ? res.interveneLevel - 1 : 0,
           })
         } else {
           _this.setData({
-            interfereFlag: 0,
+            interveneFlag: 0,
             interveneMode: 0,
             interveneLevel: 0,
           })
