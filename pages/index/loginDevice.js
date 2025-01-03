@@ -294,8 +294,9 @@ Page({
           let bindstr = '单/双人:' + res.userDevices[0].useType + ";左/右:" + leftString
           that.setData({
             bindInfoStr: bindstr,
-            useType: res.userDevices[0].useType
+            useType: res.device.useType
           });
+          wx.setStorageSync('useType', res.device.useType)
         }
         else  {
           that.setData({
