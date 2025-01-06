@@ -123,6 +123,11 @@ Page({
             if(res.musicStatus > 0){
               _this.setData({
                 musicIndex:  res.musicStatus-1,
+                status: 1
+              })
+            }else{
+              _this.setData({
+                status: 0
               })
             }
             _this.setData({
@@ -168,6 +173,11 @@ Page({
                 if(data.musicStatus > 0){
                   _this.setData({
                     musicIndex:  data.musicStatus-1,
+                    status: 1
+                  })
+                }else{
+                  _this.setData({
+                    status: 0
                   })
                 }
               }
