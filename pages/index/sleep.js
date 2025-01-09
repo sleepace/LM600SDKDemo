@@ -51,6 +51,7 @@ Page({
     negativeChargeModeId: null,
 
     playStatus: 0, //实时播放状态
+    version: 0, //固件版本
   },
 
   /**
@@ -138,7 +139,8 @@ Page({
               content: "红外、助眠音乐状态变化"
             })
             _this.setData({
-              duration: res.duration
+              duration: res.duration,
+              version: data.version
             })
           }
         })
@@ -175,7 +177,8 @@ Page({
                 _this.setData({
                   infraredFlag: data.valid,
                   infraredLevel: data.level,
-                  duration: data.duration
+                  duration: data.duration,
+                  version: data.version
                 })
                 if (data.musicStatus > 0) {
                   _this.setData({

@@ -141,6 +141,7 @@
 			<!-- <button class="/small-btn" bindtap="sendVolume">发送</button> -->
 			<view>播放状态：{{playStatus}}</view>
 		</view>
+		<view class="normal-view">固件版本:{{version}}</view>
 		<view class="text-view">
 			<button class="small-btn" bindtap="playMusic">播放</button>
 			<button class="small-btn" bindtap="stopMusic">停止</button>
