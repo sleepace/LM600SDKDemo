@@ -51,7 +51,7 @@ Page({
     negativeChargeModeId: null,
 
     playStatus: 0, //实时播放状态
-    version: 0, //固件版本
+    version: '', //固件版本
   },
 
   /**
