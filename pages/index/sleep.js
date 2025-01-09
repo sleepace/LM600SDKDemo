@@ -49,6 +49,8 @@ Page({
     negativeChargeId: null,
     negativeChargeValue: 0, //0 关；1 开
     negativeChargeModeId: null,
+
+    playStatus: 0, //实时播放状态
   },
 
   /**
@@ -120,31 +122,36 @@ Page({
                 infraredLevel: res.leve
               })
             }
-            if(res.musicStatus > 0){
+            if (res.musicStatus > 0) {
               _this.setData({
-                musicIndex:  res.musicStatus-1,
-                status: 1
+                musicIndex: res.musicStatus - 1,
+                playStatus: 1
               })
-            }else{
+            } else {
               _this.setData({
-                status: 0
+                playStatus: 0
               })
             }
+            wx.showModal({
+              showCancel: false,
+              title: '',
+              content: "红外、助眠音乐状态变化"
+            })
             _this.setData({
               duration: res.duration
             })
           }
         })
 
-         //注册负电位模式监听
-         let negativeChargeModeId = lm600TcpApi.registeNegativeChargeModeCallback((res, val) => {
+        //注册负电位模式监听
+        let negativeChargeModeId = lm600TcpApi.registeNegativeChargeModeCallback((res, val) => {
           console.log('negativeCharge mode---', res, val)
           _this.setData({
             negativeChargeMode: JSON.stringify(res.mode),
           })
         })
 
-         //注册负电位监听
+        //注册负电位监听
         let negativeChargeId = lm600TcpApi.registeNegativeChargeCallback((res, val) => {
           console.log('register negativeCharge---', res, val)
           _this.setData({
@@ -170,14 +177,14 @@ Page({
                   infraredLevel: data.level,
                   duration: data.duration
                 })
-                if(data.musicStatus > 0){
+                if (data.musicStatus > 0) {
                   _this.setData({
-                    musicIndex:  data.musicStatus-1,
-                    status: 1
+                    musicIndex: data.musicStatus - 1,
+                    playStatus: 1
                   })
-                }else{
+                } else {
                   _this.setData({
-                    status: 0
+                    playStatus: 0
                   })
                 }
               }
@@ -251,7 +258,7 @@ Page({
 
   },
 
-  negativeChargeModeChange(val){
+  negativeChargeModeChange(val) {
     this.saveNegativeChargeMode(val.detail)
   },
   /**
@@ -301,7 +308,7 @@ Page({
             negativeChargeMode: JSON.stringify(res.mode),
           })
         }
-        console.log('negativeChargeMode----',_this.data.negativeChargeMode )
+        console.log('negativeChargeMode----', _this.data.negativeChargeMode)
       },
       fail(err) {
         wx.showModal({
@@ -313,7 +320,7 @@ Page({
     })
   },
   // 开，关闭负电位
-  openNegativeCharge(val){
+  openNegativeCharge(val) {
     let value = val.currentTarget.dataset.id
     let _this = this
     lm600TcpApi.openNegativeCharge({
@@ -331,7 +338,7 @@ Page({
             negativeChargeValue: value
           })
         }
-        else{
+        else {
           wx.showModal({
             showCancel: false,
             title: '',
@@ -354,7 +361,7 @@ Page({
   /**
     * 干预开关
     */
-   interveneOnchange(event) {
+  interveneOnchange(event) {
     console.log('---interfereOnchange-', event)
     let on = event.detail.value
     this.setData({
@@ -767,18 +774,8 @@ Page({
       },
       success: function (res) {
         console.log('setMusicConfig----', res)
-        wx.showModal({
-          showCancel: false,
-          title: '',
-          content: "助眠音乐配置设置成功"
-        })
       },
       fail(err) {
-        wx.showModal({
-          showCancel: false,
-          title: '',
-          content: "助眠音乐配置设置失败"
-        })
       }
     })
   },

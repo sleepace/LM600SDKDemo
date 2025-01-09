@@ -139,7 +139,7 @@
 		<view class="normal-view">
 			<input class="input input-level" name="volume" value="{{volume}}" bindinput="volumeOnchange" placeholder="音量1~5" />
 			<!-- <button class="/small-btn" bindtap="sendVolume">发送</button> -->
-			<view>播放状态：{{status}}</view>
+			<view>播放状态：{{playStatus}}</view>
 		</view>
 		<view class="text-view">
 			<button class="small-btn" bindtap="playMusic">播放</button>

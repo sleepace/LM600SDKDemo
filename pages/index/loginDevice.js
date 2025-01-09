@@ -295,7 +295,7 @@ Page({
           that.setData({
             bindInfoStr: bindstr,
             useType: res.device.useType,
-            leftRight: res.userDevices[0].leftRight
+            // leftRight: res.userDevices[0].leftRight
           });
           wx.setStorageSync('useType', res.device.useType)
         }
