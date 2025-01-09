@@ -51,7 +51,8 @@ Page({
     negativeChargeModeId: null,
 
     playStatus: 0, //实时播放状态
-    version: '', //固件版本
+    major_version: '-', //固件版本
+    minor_version: '-'
   },
 
   /**
@@ -120,7 +121,7 @@ Page({
             })
             if (res.valid) {
               _this.setData({
-                infraredLevel: res.leve
+                infraredLevel: res.level
               })
             }
             if (res.musicStatus > 0) {
@@ -140,7 +141,8 @@ Page({
             })
             _this.setData({
               duration: res.duration,
-              version: data.version
+              major_version: data.major_v,
+              minor_version: data.minor_v
             })
           }
         })
@@ -178,7 +180,8 @@ Page({
                   infraredFlag: data.valid,
                   infraredLevel: data.level,
                   duration: data.duration,
-                  version: data.version
+                  major_version: data.major_v,
+                  minor_version: data.minor_v
                 })
                 if (data.musicStatus > 0) {
                   _this.setData({

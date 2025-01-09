@@ -18,7 +18,7 @@ Page({
     token: "ollO5654JnzzpwFMYNAj4_v5_fQU",
     channelID: "57082",
     // deviceId: "ea2qj5ytxplt3",
-    deviceId: "ea2qj5ytxplt3",
+    deviceId: "wgk2zjgsng3vq",
     leftRight: 0, //左边left(0)，右边right(1)
     useType: 1, //单双人模式 1：单人，2：双人; 
     bindInfoStr: ''

@@ -29,6 +29,9 @@
 			<switch size="24px" checked="{{interveneFlag}}" bind:change="interveneOnchange"></switch>
 		</view>
 		<view class="switch-view">
+			<view class="normal-view">干预设备版本:{{major_version}}.{{minor_version}}</view>
+		</view>
+		<view class="switch-view">
 			<view class="item-label">
 				干预模式
 			</view>
@@ -141,7 +144,6 @@
 			<!-- <button class="/small-btn" bindtap="sendVolume">发送</button> -->
 			<view>播放状态：{{playStatus}}</view>
 		</view>
-		<view class="normal-view">固件版本:{{version}}</view>
 		<view class="text-view">
 			<button class="small-btn" bindtap="playMusic">播放</button>
 			<button class="small-btn" bindtap="stopMusic">停止</button>
