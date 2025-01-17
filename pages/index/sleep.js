@@ -141,8 +141,8 @@ Page({
             })
             _this.setData({
               duration: res.duration,
-              major_version: data.major_v,
-              minor_version: data.minor_v
+              major_version: res.major_v,
+              minor_version: res.minor_v
             })
           }
         })
